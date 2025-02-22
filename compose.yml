@@ -1,0 +1,53 @@
+services:
+
+  elttl_react_frontend:
+    container_name: elttl_react_frontend
+    image: elttl_react_frontend
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    depends_on:
+      - elttl_react_backend
+      - elttl_react_mysql
+    volumes:
+      - ./frontend:/app
+
+  elttl_react_backend:
+    container_name: elttl_react_backend
+    image: elttl_react_backend
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: backend.dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      #      @todo is this required?
+      elttl_react_mysql:
+        condition: service_started
+        restart: true
+    environment:
+      - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes:
+      - ./backend:/app
+
+  elttl_react_mysql:
+    container_name: elttl_react_mysql
+    image: mysql:8.0
+    ports:
+      - 33062:3306
+    volumes:
+      - elttl_react_mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+volumes:
+  elttl_react_mysql_data:

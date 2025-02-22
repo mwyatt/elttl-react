@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+docker run \
+  --rm \
+  -w /app \
+  -itv \
+  ${SCRIPTPATH}/../:/app \
+  node:23-alpine $@
