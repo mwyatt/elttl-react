@@ -4,10 +4,9 @@ import ElttlEmblem from "@/components/icons/ElttlEmblem";
 import MenuPrimary from "@/components/MenuPrimary";
 
 export default async function FrontLayout({children}) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const auth = {user: null};
   const appName = 'East Lancashire Table Tennis League';
-  const response = await fetch(`${apiUrl}/frontend`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/frontend`);
   const data = await response.json();
   const headLinks = data.headLinks;
   const menuPrimary = data.menuPrimary;

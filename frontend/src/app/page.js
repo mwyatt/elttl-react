@@ -6,8 +6,7 @@ import DatePretty from "@/components/DatePretty";
 import FixtureCard from "@/components/FixtureCard";
 
 export default async function Home() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const response = await axios.get(`${apiUrl}/homepage`);
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/homepage`);
 
   const latestPress = response.data.latestPress
   const advertisementsPrimary = response.data.advertisementsPrimary
