@@ -5,8 +5,7 @@ services:
     image: elttl_react
     restart: on-failure
     build:
-      context: ./frontend
-      dockerfile: frontend.dockerfile
+      dockerfile: nextjs.dockerfile
     ports:
       - '3000:3000'
     environment:
@@ -14,7 +13,7 @@ services:
     depends_on:
       - elttl_react_mysql
     volumes:
-      - ./frontend:/app
+      - ./:/app
 
   elttl_react_mysql:
     container_name: elttl_react_mysql
