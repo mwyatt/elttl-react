@@ -16,8 +16,8 @@ export default async function Page({params}) {
       <h2 className={'text-2xl mb-4'}>{data.teamLeft.name} vs {data.teamRight.name}</h2>
       <p>Home team venue <Link href={`/result/${year}/venue/${data.venue.slug}`}>{data.venue.name}</Link></p>
       <div>
-        {data.encounters.map((row) => (
-          <div className={'flex gap-4'}>
+        {data.encounters.map((row, index) => (
+          <div key={index} className={'flex gap-4'}>
             <div className={'p-3 basis-1/4'}>
               <Link href={`/result/${year}/player/${row.playerLeftSlug}`}>
                 {row.playerLeftName}

@@ -22,7 +22,7 @@ export async function GET(request, {params}) {
           tt.slug AS teamSlug,
           tt.divisionId
       FROM tennisPlayer tp
-      left join tennisTeam tt on tp.teamId = tt.id
+      left join tennisTeam tt on tp.teamId = tt.id and tt.yearId = tp.yearId
       WHERE tp.yearId = ?
         AND tp.slug = ?
   `, [currentYear.id, slug]);

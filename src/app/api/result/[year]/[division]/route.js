@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import {getConnection} from "@/lib/database";
 import encounterStatus from "@/constants/encounterStatus";
 
-// @todo not working yet
 export async function GET(request, {params}) {
   const connection = await getConnection()
   const {year, division} = await params

@@ -31,8 +31,8 @@ export default async function Page({params}) {
       </div>
             <h2 className={'text-2xl p-4'}>Season Performance</h2>
 
-            {encounters.map((encounter) => (
-              <div>
+            {encounters.map((encounter, index) => (
+              <div key={index}>
                 <div>
                   <Link href={`/result/${year}/player/${encounter.playerLeftSlug}`}>{encounter.playerLeftName}</Link>
                   {encounter.playerRankChangeLeft}

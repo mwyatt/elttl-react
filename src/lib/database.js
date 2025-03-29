@@ -4,15 +4,15 @@ let connection = null;
 
 const getConnection = async () => {
     if (connection) {
-      console.log('returning existing connection')
+      console.log('database: ', 'returning existing connection')
       return connection
     }
-    console.log('creating new connection')
+    console.log('database: ', 'creating new connection')
     connection = await mysql.createConnection({
-      host: 'elttl_react_mysql',
-      user: 'root',
-      password: '123',
-      database: 'elttl'
+      host: process.env.MYSQL_HOSTNAME,
+      user: process.env.MYSQL_ROOT_USER,
+      password: process.env.MYSQL_ROOT_PASSWORD,
+      database: process.env.MYSQL_DATABASE,
     });
     connection.config.namedPlaceholders = true
     return connection

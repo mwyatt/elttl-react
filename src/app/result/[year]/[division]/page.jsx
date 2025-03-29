@@ -42,8 +42,8 @@ export default async function Page({params}) {
         <tr>
           <th></th>
 
-        {teams.map((team) => (
-          <th>
+        {teams.map((team, index) => (
+          <th key={index}>
             <Link href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
           </th>
         ))}
