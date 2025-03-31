@@ -3,6 +3,8 @@ import Link from "next/link";
 import React from 'react';
 import {apiUrl} from "@/constants/url";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({params}) {
   const year = (await params).year
   const division = (await params).division

@@ -1,6 +1,8 @@
 import FrontLayout from "@/app/frontLayout";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({params}) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const {year, slug} = await params

@@ -1,19 +1,21 @@
 import React from 'react';
-import axios from 'axios';
 import FrontLayout from "@/app/frontLayout";
 import Link from "next/link";
 import DatePretty from "@/components/DatePretty";
 import FixtureCard from "@/components/FixtureCard";
 
-export default async function Home() {
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/homepage`);
+export const dynamic = 'force-dynamic';
 
-  const latestPress = response.data.latestPress
-  const advertisementsPrimary = response.data.advertisementsPrimary
-  const advertisementsSecondary = response.data.advertisementsSecondary
-  const latestFixtures = response.data.latestFixtures
-  const galleryImages = response.data.galleryImages
-  const currentYear = response.data.currentYear
+export default async function Page() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/homepage`);
+  const {
+        latestPress,
+    advertisementsPrimary,
+    advertisementsSecondary,
+    latestFixtures,
+    galleryImages,
+    currentYear
+  } = await response.json();
 
   return (
     <FrontLayout>

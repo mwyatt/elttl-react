@@ -3,6 +3,8 @@ import Link from "next/link";
 import ElttlEmblem from "@/components/icons/ElttlEmblem";
 import MenuPrimary from "@/components/MenuPrimary";
 
+export const dynamic = 'force-dynamic';
+
 export default async function FrontLayout({children}) {
   const auth = {user: null};
   const appName = 'East Lancashire Table Tennis League';

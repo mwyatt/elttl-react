@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
     const apiUrl = process.env.NEXT_ADMIN_API_URL;
 

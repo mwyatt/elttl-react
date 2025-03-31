@@ -2,6 +2,8 @@ import Link from "next/link";
 import {adminApiUrl} from "@/constants/url";
 import {Form} from "@/app/admin/team/[id]/Form";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({ params}) {
   const {id} = (await params)
 
