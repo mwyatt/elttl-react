@@ -1,15 +1,15 @@
 import { NextResponse } from 'next/server'
-import {getConnection} from "@/lib/database";
+import { getConnection } from '@/lib/database'
 
-export async function GET(request, {params}) {
+export async function GET (request, { params }) {
   const connection = await getConnection()
-  const {year, slug} = await params
+  const { year, slug } = await params
 
-      const [currentYears] = await connection.execute(`
+  const [currentYears] = await connection.execute(`
       SELECT id
       FROM tennisYear
       WHERE name = ?
-  `, [year]);
+  `, [year])
   const currentYear = currentYears[0]
 
   const [players] = await connection.execute(`
@@ -25,10 +25,10 @@ export async function GET(request, {params}) {
       left join tennisTeam tt on tp.teamId = tt.id and tt.yearId = tp.yearId
       WHERE tp.yearId = ?
         AND tp.slug = ?
-  `, [currentYear.id, slug]);
-  const player  =players[0]
+  `, [currentYear.id, slug])
+  const player = players[0]
 
-    const [fixtures] = await connection.execute(`
+  const [fixtures] = await connection.execute(`
     select
         ttl.name teamLeftName,
         ttl.slug teamLeftSlug,
@@ -49,10 +49,10 @@ export async function GET(request, {params}) {
     group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
   `, {
     yearId: currentYear.id,
-      teamId: player.teamId,
-  });
+    teamId: player.teamId
+  })
 
-    const [encounters] = await connection.execute(`
+  const [encounters] = await connection.execute(`
     select
         tte.id,
         scoreLeft,
@@ -70,12 +70,12 @@ export async function GET(request, {params}) {
       and (tte.playerIdLeft = :playerId OR tte.playerIdRight = :playerId)
   `, {
     yearId: currentYear.id,
-      playerId: player.id
-  });
+    playerId: player.id
+  })
 
   return NextResponse.json({
-    player: player,
-    encounters: encounters,
-    fixtures: fixtures
+    player,
+    encounters,
+    fixtures
   }, { status: 200 })
 }

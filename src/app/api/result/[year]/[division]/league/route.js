@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import {getConnection} from "@/lib/database";
-import encounterStatus from "@/constants/encounterStatus";
-import {getYearDivisionId} from "@/app/lib/year";
-import {getOtherSide, getOtherSideCapitalized, getSidesCapitalized} from "@/constants/encounter";
+import { getConnection } from '@/lib/database'
+import encounterStatus from '@/constants/encounterStatus'
+import { getYearDivisionId } from '@/app/lib/year'
+import { getOtherSide, getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 
-export async function GET(request, {params}) {
+export async function GET (request, { params }) {
   const connection = await getConnection()
-  const {year, division} = await params
+  const { year, division } = await params
 
   const yearDivisionId = await getYearDivisionId(year, division)
 
@@ -29,27 +29,27 @@ export async function GET(request, {params}) {
 
   `, {
     divisionId: yearDivisionId.divisionId,
-    yearId: yearDivisionId.yearId,
-  });
+    yearId: yearDivisionId.yearId
+  })
 
-  const sides = getSidesCapitalized();
+  const sides = getSidesCapitalized()
   let stats = {}
 
   for (const league of leagueTable) {
     for (const side of sides) {
       const teamSlug = league[`team${side}Slug`]
       if (!(teamSlug in stats)) {
-          stats[teamSlug] = {
-            team: {
-              name: league[`team${side}Name`],
-              slug: teamSlug
-            },
-            won: 0,
-            draw: 0,
-            loss: 0,
-            played: 0,
-            points: 0,
-          };
+        stats[teamSlug] = {
+          team: {
+            name: league[`team${side}Name`],
+            slug: teamSlug
+          },
+          won: 0,
+          draw: 0,
+          loss: 0,
+          played: 0,
+          points: 0
+        }
       }
       const score = parseInt(league[`score${side}`])
       const opposingScore = parseInt(league[`score${getOtherSideCapitalized(side)}`])
@@ -74,6 +74,6 @@ export async function GET(request, {params}) {
   })
 
   return NextResponse.json({
-    stats: stats,
+    stats
   }, { status: 200 })
 }

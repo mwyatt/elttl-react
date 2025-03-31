@@ -1,7 +1,7 @@
 const encounterStatus = {
   EXCLUDE: 'exclude',
   DOUBLES: 'doubles',
-  DRAFT: 'draft',
+  DRAFT: 'draft'
 }
 
 export default encounterStatus

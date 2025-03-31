@@ -1,31 +1,31 @@
 import { NextResponse } from 'next/server'
-import {getConnection} from "@/lib/database";
-import encounterStatus from "@/constants/encounterStatus";
+import { getConnection } from '@/lib/database'
+import encounterStatus from '@/constants/encounterStatus'
 
-export async function GET(request, {params}) {
+export async function GET (request, { params }) {
   const connection = await getConnection()
-  const {year, division} = await params
+  const { year, division } = await params
 
-        const [yearDivisionIds] = await connection.execute(`
+  const [yearDivisionIds] = await connection.execute(`
       SELECT td.id AS divisionId,
              ty.id AS yearId
       FROM tennisDivision td
                LEFT JOIN tennisYear ty ON ty.id = td.yearId
       WHERE ty.name = ?
         AND td.name = ?
-  `, [year, division]);
+  `, [year, division])
 
   const yearDivisionId = yearDivisionIds[0]
 
-    const [teams] = await connection.execute(`
+  const [teams] = await connection.execute(`
       SELECT name, slug
       FROM tennisTeam
         WHERE yearId = :yearId
         AND divisionId = :divisionId
   `, {
     divisionId: yearDivisionId.divisionId,
-    yearId: yearDivisionId.yearId,
-  });
+    yearId: yearDivisionId.yearId
+  })
 
   const [leagueTable] = await connection.execute(`
     select
@@ -46,11 +46,11 @@ export async function GET(request, {params}) {
 
   `, {
     divisionId: yearDivisionId.divisionId,
-    yearId: yearDivisionId.yearId,
-  });
+    yearId: yearDivisionId.yearId
+  })
 
   return NextResponse.json({
-    leagueTable: leagueTable,
-    teams: teams
+    leagueTable,
+    teams
   }, { status: 200 })
 }

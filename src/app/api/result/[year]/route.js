@@ -1,15 +1,15 @@
 import { NextResponse } from 'next/server'
-import {getConnection} from "@/lib/database";
+import { getConnection } from '@/lib/database'
 
-export async function GET(request, {params}) {
+export async function GET (request, { params }) {
   const connection = await getConnection()
-  const {year} = await params
+  const { year } = await params
 
-    const [currentYears] = await connection.execute(`
+  const [currentYears] = await connection.execute(`
       SELECT id
       FROM tennisYear
       WHERE name = ?
-  `, [year]);
+  `, [year])
 
   if (currentYears.length === 0) {
     return NextResponse.json(`Unable to find year with name '${year}'`, { status: 404 })
@@ -20,7 +20,7 @@ export async function GET(request, {params}) {
       SELECT name
       FROM tennisDivision
       WHERE yearId = ?
-  `, [currentYear.id]);
+  `, [currentYear.id])
 
   return NextResponse.json(divisions, { status: 200 })
 }

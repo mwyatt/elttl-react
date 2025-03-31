@@ -2,8 +2,8 @@
 const nextConfig = {
   output: 'standalone',
   devIndicators: {
-    appIsrStatus: false,
-  },
-};
+    appIsrStatus: false
+  }
+}
 
-export default nextConfig;
+export default nextConfig

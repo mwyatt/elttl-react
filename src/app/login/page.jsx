@@ -1,9 +1,9 @@
-import { LoginForm } from "./LoginForm";
+import { LoginForm } from './LoginForm'
 
-export default function Login() {
+export default function Login () {
   return (
     <div>
       <LoginForm />
     </div>
-  );
+  )
 }

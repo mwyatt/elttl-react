@@ -1,7 +1,6 @@
-import FrontLayout from "@/app/frontLayout";
+import FrontLayout from '@/app/frontLayout'
 
-export default async function Page({params}) {
+export default async function Page ({ params }) {
   // @todo
 
-  return;
 }

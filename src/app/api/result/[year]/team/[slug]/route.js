@@ -1,15 +1,15 @@
 import { NextResponse } from 'next/server'
-import {getConnection} from "@/lib/database";
+import { getConnection } from '@/lib/database'
 
-export async function GET(request, {params}) {
+export async function GET (request, { params }) {
   const connection = await getConnection()
-  const {year, slug} = await params
+  const { year, slug } = await params
 
-      const [currentYears] = await connection.execute(`
+  const [currentYears] = await connection.execute(`
       SELECT id
       FROM tennisYear
       WHERE name = ?
-  `, [year]);
+  `, [year])
   const currentYear = currentYears[0]
   console.log(currentYear)
 
@@ -31,8 +31,8 @@ export async function GET(request, {params}) {
                LEFT JOIN tennisPlayer tp ON tt.secretaryId = tp.id AND tp.yearId = tt.yearId
       WHERE tt.yearId = ?
         AND tt.slug = ?
-  `, [currentYear.id, slug]);
-  const team  =teams[0]
+  `, [currentYear.id, slug])
+  const team = teams[0]
 
   const [players] = await connection.execute(`
       SELECT
@@ -41,10 +41,10 @@ export async function GET(request, {params}) {
       FROM tennisPlayer
       WHERE yearId = ?
         AND teamId = ?
-  `, [currentYear.id, team.id]);
+  `, [currentYear.id, team.id])
 
   return NextResponse.json({
-    team: team,
-    players: players
+    team,
+    players
   }, { status: 200 })
 }

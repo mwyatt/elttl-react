@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import {getConnection} from "@/lib/database";
-import encounterStatus from "@/constants/encounterStatus";
-import {getYearDivisionId} from "@/app/lib/year";
-import {getOtherSide, getOtherSideCapitalized, getSidesCapitalized} from "@/constants/encounter";
+import { getConnection } from '@/lib/database'
+import encounterStatus from '@/constants/encounterStatus'
+import { getYearDivisionId } from '@/app/lib/year'
+import { getOtherSide, getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 
-export async function GET(request, {params}) {
+export async function GET (request, { params }) {
   const connection = await getConnection()
-  const {year, division} = await params
+  const { year, division } = await params
 
   const yearDivisionId = await getYearDivisionId(year, division)
 
@@ -39,31 +39,31 @@ export async function GET(request, {params}) {
     and tpr.id > 0
   `, {
     divisionId: yearDivisionId.divisionId,
-    yearId: yearDivisionId.yearId,
-  });
+    yearId: yearDivisionId.yearId
+  })
 
-  const sides = getSidesCapitalized();
+  const sides = getSidesCapitalized()
   let stats = {}
 
   for (const encounter of encounters) {
     for (const side of sides) {
       const playerSlug = encounter[`player${side}Slug`]
       if (!(playerSlug in stats)) {
-          stats[playerSlug] = {
-            player: {
-              name: encounter[`player${side}Name`],
-              slug: playerSlug,
-              rank: encounter[`player${side}Rank`],
-            },
-            team: {
-              name: encounter[`team${side}Name`],
-              slug: encounter[`team${side}Slug`]
-            },
-            won: 0,
-            played: 0,
-            encounter: 0,
-            average: 0,
-          };
+        stats[playerSlug] = {
+          player: {
+            name: encounter[`player${side}Name`],
+            slug: playerSlug,
+            rank: encounter[`player${side}Rank`]
+          },
+          team: {
+            name: encounter[`team${side}Name`],
+            slug: encounter[`team${side}Slug`]
+          },
+          won: 0,
+          played: 0,
+          encounter: 0,
+          average: 0
+        }
       }
 
       const score = parseInt(encounter[`score${side}`])
@@ -85,6 +85,6 @@ export async function GET(request, {params}) {
   })
 
   return NextResponse.json({
-    stats: stats,
+    stats
   }, { status: 200 })
 }

@@ -1,6 +1,6 @@
-import {getConnection} from "@/lib/database";
+import { getConnection } from '@/lib/database'
 
-export async function getCurrentYear() {
+export async function getCurrentYear () {
   const connection = await getConnection()
 
   const [currentYears] = await connection.execute(`
@@ -9,22 +9,22 @@ from options o
 inner join tennisYear ty on ty.id = o.value
 where o.name = 'year_id'
 
-  `);
+  `)
 
-  return currentYears[0];
+  return currentYears[0]
 }
 
-export async function getYearDivisionId(yearName, divisionSlug) {
+export async function getYearDivisionId (yearName, divisionSlug) {
   const connection = await getConnection()
 
-          const [yearDivisionIds] = await connection.execute(`
+  const [yearDivisionIds] = await connection.execute(`
       SELECT td.id AS divisionId,
              ty.id AS yearId
       FROM tennisDivision td
                LEFT JOIN tennisYear ty ON ty.id = td.yearId
       WHERE ty.name = ?
         AND td.name = ?
-  `, [yearName, divisionSlug]);
+  `, [yearName, divisionSlug])
 
-  return yearDivisionIds[0];
+  return yearDivisionIds[0]
 }
