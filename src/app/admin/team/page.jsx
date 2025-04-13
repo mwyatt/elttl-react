@@ -1,11 +1,10 @@
 import Link from 'next/link'
+import {adminApiFetch} from "@/constants/url";
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page () {
-  const apiUrl = process.env.NEXT_ADMIN_API_URL
-
-  const response = await fetch(`${apiUrl}/team`)
+  const response = await adminApiFetch('/team')
   const { teams } = await response.json()
 
   return (

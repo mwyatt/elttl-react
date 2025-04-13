@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Arrow from '@/components/icons/Arrow'
-import Link from 'next/link'
+import MenuPrimarySubItem from "@/components/MenuPrimarySubItem";
 
 export default function MenuPrimary ({ items }) {
   const [menuPrimaryOpenStatuses, setMenuPrimaryOpenStatuses] = useState(
@@ -20,37 +20,28 @@ export default function MenuPrimary ({ items }) {
   }
 
   return (
-    <div className=''>
+    <div className={'flex-grow'}>
       <nav className='flex text-xl'>
         {items.map((item, index) => (
           <div
-            key={index} className='relative p-4 border-l flex grow gap-4 items-center'
+            key={index} className='relative p-4 border-l flex grow gap-4 items-center cursor-pointer'
             onClick={() => handleClick(index)}
           >
             <span className='grow'>{item.name}</span>
             <span className='content-center'><Arrow /></span>
-            <div className='relative'>
 
-              <ul
-                key={index}
-                className={[
-                  menuPrimaryOpenStatuses.length && menuPrimaryOpenStatuses[index].isOpen ? 'block' : 'hidden',
-                  'absolute top-0 left-0 bg-white border border-gray-200 shadow '
-                ].join(' ')}
-              >
-                {item.children.map((subItem) => (
-                  <li key={subItem.name}>
-                    <Link className='px-4 py-2 block' href={subItem.url}>{subItem.name}</Link>
-                  </li>
-                ))}
-              </ul>
+                  <div className={'hidden sm:block absolute top-0 left-0 bg-white border border-gray-200 shadow'}>
+         <MenuPrimarySubItem key={index} index={index} item={item} menuPrimaryOpenStatuses={menuPrimaryOpenStatuses} />
             </div>
 
           </div>
         ))}
       </nav>
-      {/* {items.map((item, index) => ( */}
-      {/* ))} */}
+      <div className={'sm:hidden'}>
+       {items.map((item, index) => (
+         <MenuPrimarySubItem key={index} index={index} item={item} menuPrimaryOpenStatuses={menuPrimaryOpenStatuses} />
+       ))}
+      </div>
     </div>
   )
 }

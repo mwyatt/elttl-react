@@ -1,11 +1,11 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
-import axios from 'axios'
+import RankChange from "@/components/player/RankChange";
+import {apiUrl} from "@/constants/url";
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const year = (await params).year
   const teamLeftSlug = (await params).teamLeftSlug
   const teamRightSlug = (await params).teamRightSlug
@@ -21,18 +21,18 @@ export default async function Page ({ params }) {
         {data.encounters.map((row, index) => (
           <div key={index} className='flex gap-4'>
             <div className='p-3 basis-1/4'>
-              <Link href={`/result/${year}/player/${row.playerLeftSlug}`}>
+              <Link className={'text-orange-500 font-bold border-b border-b-orange-500'} href={`/result/${year}/player/${row.playerLeftSlug}`}>
                 {row.playerLeftName}
               </Link>
-              {row.playerRankChangeLeft}
             </div>
+            <RankChange rankChange={row.playerRankChangeLeft} />
             <div className='p-3 basis-1/4'>{row.scoreLeft}</div>
             <div className='p-3 basis-1/4'>{row.scoreRight}</div>
             <div className='p-3 basis-1/4'>
-              <Link href={`/result/${year}/player/${row.playerRightSlug}`}>
+              <Link className={'text-orange-500 font-bold border-b border-b-orange-500'} href={`/result/${year}/player/${row.playerRightSlug}`}>
                 {row.playerRightName}
               </Link>
-              {row.playerRankChangeRight}
+            <RankChange rankChange={row.playerRankChangeRight} />
             </div>
           </div>
         ))}

@@ -8,8 +8,9 @@ const encodedKey = new TextEncoder().encode(secretKey)
 export async function createSession (userId) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
   const session = await encrypt({ userId, expiresAt })
+  const cookieStore = await cookies()
 
-  cookies().set('session', session, {
+  cookieStore.set('session', session, {
     httpOnly: true,
     secure: true,
     expires: expiresAt
@@ -17,7 +18,9 @@ export async function createSession (userId) {
 }
 
 export async function deleteSession () {
-  cookies().delete('session')
+  const cookieStore = await cookies()
+
+  cookieStore.delete('session')
 }
 
 export async function encrypt (payload) {
@@ -35,6 +38,6 @@ export async function decrypt (session) {
     })
     return payload
   } catch (error) {
-    console.log('Failed to verify session')
+    // console.log('Failed to verify session')
   }
 }

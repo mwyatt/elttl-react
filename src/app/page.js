@@ -18,16 +18,16 @@ export default async function Page () {
   } = await response.json()
 
   return (
-    <FrontLayout>
-      <div className=''>
-        <div className=''>
+    <FrontLayout paddedContent={false} maxWidth={true}>
+      <div className='md:flex'>
+        <div className='md:p-6 '>
           {advertisementsPrimary.map((advertisement) => (
-            <div key={advertisement.id} className='p-6 flex-1 bg-orange-500 text-center text-white'>
-              <h2 className='my-4 text-6xl'>{advertisement.title}</h2>
+            <div key={advertisement.id} className='p-6 flex-1 bg-orange-500 text-center md:text-left text-white md:rounded border-b-4 border-b-amber-400'>
+              <h2 className='mb-4 text-6xl'>{advertisement.title}</h2>
               <p className='my-3 text-3xl'>{advertisement.description}</p>
               <div className='mt-6 flex justify-end'>
                 <Link
-                  className='bg-gray-600 rounded-sm px-3 py-2 text-white font-bold capitalize'
+                  className='bg-stone-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'
                   href={advertisement.url}
                 >{advertisement.action}
                 </Link>
@@ -78,9 +78,9 @@ export default async function Page () {
           ))}
         </div>
       </div>
-      <div className='flex gap-4'>
+      <div className='md:flex md:gap-4'>
         {advertisementsSecondary.map((advertisement, index) => (
-          <div key={index} className='p-4 bg-orange-500 text-white'>
+          <div key={index} className='p-4 bg-orange-500 text-white rounded'>
             <h2 className='my-4 text-2xl'>{advertisement.title}</h2>
             <p className='my-3 text-lg'>{advertisement.description}</p>
             <div className='mt-6 flex justify-end'>

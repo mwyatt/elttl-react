@@ -11,51 +11,47 @@ export default async function Page ({ params }) {
   const year = (await params).year
   const division = (await params).division
 
-  const response = await fetch(`${apiUrl}/result/${year}/${division}/merit`)
+  const response = await fetch(`${apiUrl}/result/${year}/${division}/doubles-merit`)
   const { stats } = await response.json()
 
   return (
     <FrontLayout>
-      <Breadcrumbs
+            <Breadcrumbs
         items={
           [
             { name: 'Results', href: '/result' },
             { name: year, href: `/result/${year}` },
             { name: division, href: `/result/${year}/${division}` },
-            { name: 'Merit', href: `/result/${year}/${division}/merit` },
+            { name: 'Doubles Merit', href: `/result/${year}/${division}/doubles-merit` },
           ]
         }
         />
-      <h2 className='text-2xl mb-4'><span className='capitalize'>{division}</span> Division Merit Table</h2>
-      <p>This is the merit table for the <span className='capitalize'>{division}</span> division.</p>
+      <h2 className='text-2xl mb-4'><span className='capitalize'>{division}</span> Division Doubles Merit Table</h2>
+      <p>This is the doubles merit table for the <span className='capitalize'>{division}</span> division.</p>
       <SubMenu year={year} division={division} />
       <table className='table'>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Team</th>
-            <th>R<span className={'hidden sm:inline'}>a</span>nk</th>
-            <th>W<span className={'hidden sm:inline'}>on</span></th>
-            <th>Pl<span className={'hidden sm:inline'}>aye</span>d</th>
-            <th>Av<span className={'hidden sm:inline'}>era</span>g<span className={'hidden sm:inline'}>e</span></th>
-            <th>Encounters</th>
+            <th>Won</th>
+            <th>Draw</th>
+            <th>Loss</th>
+            <th>Played</th>
+            <th>Points</th>
           </tr>
         </thead>
         <tbody>
 
-          {stats.map((stat, index) => (
-            <tr key={index}>
-              <td className='border border-amber-400'>
-                <Link href={`/result/${year}/player/${stat.player.slug}`}>{stat.player.name}</Link>
-              </td>
+          {stats.map((stat) => (
+            <tr>
               <td className='border border-amber-400'>
                 <Link href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
               </td>
-              <td>{stat.rank}</td>
               <td>{stat.won}</td>
+              <td>{stat.draw}</td>
+              <td>{stat.loss}</td>
               <td>{stat.played}</td>
-              <td>{stat.average}</td>
-              <td>{stat.encounter}</td>
+              <td>{stat.points}</td>
             </tr>
           ))}
 

@@ -1,5 +1,5 @@
-export default function DatePretty ({ timestampString }) {
-  const date = new Date(timestampString)
+export default function DatePretty ({ time }) {
+  const date = new Date(parseInt(time + '000'))
 
   return (
     <time dateTime={date.toISOString()}>

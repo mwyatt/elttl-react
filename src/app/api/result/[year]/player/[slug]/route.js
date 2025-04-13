@@ -17,6 +17,7 @@ export async function GET (request, { params }) {
           tp.id,
           concat(nameFirst, ' ', nameLast) AS name,
           tp.slug,
+          tp.rank,
           teamId,
           tt.name AS teamName,
           tt.slug AS teamSlug,

@@ -1,6 +1,9 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import React from 'react'
+import SubMenu from "@/app/result/[year]/[division]/SubMenu";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import {linkStyles} from "@/lib/styles";
 
 export const dynamic = 'force-dynamic'
 
@@ -22,31 +25,27 @@ export default async function Page ({ params }) {
 
   return (
     <FrontLayout>
-      <div>
-        <Link href='/result'>Results</Link>
-        <Link href={`/result/${year}}`}>{year}</Link>
-      </div>
+
+              <Breadcrumbs items={
+          [
+            { name: 'Results', href: '/result' },
+            { name: year, href: `/result/${year}` },
+            { name: division, href: `/result/${year}/${division}` },
+          ]
+        }
+        />
+
       <h2 className='text-2xl mb-4'><span className='capitalize'>{division}</span> Division</h2>
       <p>This is an overview for the {division} division.</p>
-      <div>
-        <Link href={`/result/${year}/${division}/league`}>
-          League Table
-        </Link>
-        <Link href={`/result/${year}/${division}/merit`}>
-          Merit Table
-        </Link>
-        <Link href={`/result/${year}/${division}/merit-doubles`}>
-          Doubles Merit Table
-        </Link>
-      </div>
-      <table className='table'>
+      <SubMenu year={year} division={division} />
+      <table className='table w-full'>
         <thead>
           <tr>
-            <th />
+            <th className={'border border-stone-400 p-2'} />
 
             {teams.map((team, index) => (
-              <th key={index}>
-                <Link href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
+              <th className={'border border-stone-400 p-2'} key={index}>
+                <Link className={`${linkStyles}`} href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
               </th>
             ))}
 
@@ -56,17 +55,17 @@ export default async function Page ({ params }) {
 
           {teams.map((teamLeft) => (
             <tr>
-              <td className='border border-amber-400'>
-                <Link href={`/result/${year}/team/${teamLeft.slug}`}>{teamLeft.name}</Link>
+              <td className='border border-stone-400 p-2'>
+                <Link className={linkStyles} href={`/result/${year}/team/${teamLeft.slug}`}>{teamLeft.name}</Link>
               </td>
               {teams.map((teamRight) => {
                 const leagueTableRow = getLeagueTableRow(teamLeft.slug, teamRight.slug)
                 let scoresContent = ''
                 if (leagueTableRow) {
-                  scoresContent = <Link href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}>{leagueTableRow.scoreLeft} - {leagueTableRow.scoreRight}</Link>
+                  scoresContent = <Link className={linkStyles} href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}>{leagueTableRow.scoreLeft} - {leagueTableRow.scoreRight}</Link>
                 }
                 return (
-                  <td className='border border-amber-400'>
+                  <td className='border border-stone-400 p-2 text-center'>
                     {scoresContent}
                   </td>
                 )

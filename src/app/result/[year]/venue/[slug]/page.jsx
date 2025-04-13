@@ -1,10 +1,13 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
+import {apiUrl} from "@/constants/url";
+import MainHeading from "@/components/MainHeading";
+import SubHeading from "@/components/SubHeading";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const { year, slug } = await params
 
   const response = await fetch(`${apiUrl}/result/${year}/venue/${slug}`)
@@ -12,9 +15,19 @@ export default async function Page ({ params }) {
 
   return (
     <FrontLayout>
-      <h2 className='text-2xl mb-4'>{data.venue.name}</h2>
+                    <Breadcrumbs items={
+          [
+            { name: 'Results', href: '/result' },
+            { name: year, href: `/result/${year}` },
+            { name: data.venue.name, href: `/result/${year}/venue/${data.venue.name}` },
+          ]
+        }
+        />
+
+      <MainHeading name={data.venue.name} />
       <p>{data.venue.location}</p>
-      <h2 className='text-2xl p-4'>Teams playing at this venue</h2>
+
+      <SubHeading name={'Teams Playing Here'} />
       <div className='flex flex-wrap'>
 
         {data.teams.map((team) => (

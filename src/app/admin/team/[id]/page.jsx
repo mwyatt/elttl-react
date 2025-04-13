@@ -1,13 +1,12 @@
-import Link from 'next/link'
-import { adminApiUrl } from '@/constants/url'
 import { Form } from '@/app/admin/team/[id]/Form'
+import {adminApiFetch} from "@/constants/url";
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { id } = (await params)
 
-  const response = await fetch(`${adminApiUrl}/team/${id}`)
+  const response = await adminApiFetch(`/team/${id}`)
   const { team } = await response.json()
 
   return (

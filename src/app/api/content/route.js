@@ -5,7 +5,7 @@ import { getConnection } from '@/lib/database'
 export async function GET (request) {
   const connection = await getConnection()
 
-  // paginated
+  // @todo paginated
 
   const [presses] = await connection.execute(`
       SELECT title, timePublished, CONCAT(user.nameFirst, ' ', user.nameLast) AS author

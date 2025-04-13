@@ -31,38 +31,53 @@ export async function GET (request) {
     })
   })
 
+  const commonLinks = {
+    prePractice: { name: 'Prepaid Practice Scheme', url: '/page/pre-practice-scheme' },
+    resultArchive: { name: 'Results Archive', url: '/result' },
+    contactUs: { name: 'Contact Us', url: '/contact-us' },
+    townTeams: { name: 'Town Teams', url: '/page/town-teams' },
+    lancsCountyTTAssoc: { name: 'Lancashire County TT Assoc', url: 'https://lancashirecounty.ttleagues.com/page/affiliationtolancashirecountytta' },
+
+      // @todo get assets - shftp could be easiest method to store initially
+    // would be ideal to allow updating of these for logged in users
+    gdpr: { name: 'Gdpr', url: '/asset/GDPR-2018-2019.pdf' },
+    diciplineProcedure: { name: 'Code of Conduct', url: 'https://eastlancstt.org.uk/asset/disciplinary-procedure.pdf' },
+    safeguardingPolicy: { name: 'Safeguarding Policy', url: 'https://eastlancstt.org.uk/asset/safeguarding-guidance-2020.pdf' }
+  }
+
   return NextResponse.json({
     headLinks: [
-      { name: 'Prepaid Practice Scheme', url: '/page/pepaid-practice-scheme' },
-      { name: 'Results Archive', url: '/results' },
-      { name: 'Contact Us', url: '/contact-us' },
-      { name: 'Town Teams', url: '/contact-us' },
-      { name: 'Lancashire County TT Assoc', url: '/contact-us' },
-      { name: 'GDPR', url: '/contact-us' },
-      { name: 'Code of Conduct', url: '/contact-us' },
-      { name: 'Safeguarding Policy', url: '/contact-us' }
+      commonLinks.prePractice,
+      commonLinks.resultArchive,
+      commonLinks.contactUs,
+      commonLinks.townTeams,
+      commonLinks.lancsCountyTTAssoc,
+      commonLinks.gdpr,
+      commonLinks.diciplineProcedure,
+      commonLinks.safeguardingPolicy,
     ],
     footLinks: [
-      { area: 1, name: 'Coaching', url: '/page/pepaid-practice-scheme' },
-      { area: 1, name: 'Schools', url: '/results' },
-      { area: 1, name: 'Summer League', url: '/contact-us' },
-      { area: 1, name: 'Fred Holden Cup', url: '/contact-us' },
-      { area: 1, name: 'Local Clubs', url: '/contact-us' },
-      { area: 1, name: 'Rules', url: '/contact-us' },
-      { area: 2, name: 'Prepaid Practice Scheme', url: '/page/pepaid-practice-scheme' },
-      { area: 2, name: 'Results Archive', url: '/page/pepaid-practice-scheme' },
-      { area: 2, name: 'Contact Us', url: '/page/pepaid-practice-scheme' },
-      { area: 2, name: 'Town Teams', url: '/page/pepaid-practice-scheme' },
-      { area: 2, name: 'Lancashire County TT Assoc', url: '/page/pepaid-practice-scheme' },
-      { area: 2, name: 'GDPR', url: '/page/pepaid-practice-scheme' },
-      { area: 2, name: 'Code of Conduct', url: '/page/pepaid-practice-scheme' },
-      { area: 2, name: 'Safeguarding Policy', url: '/page/pepaid-practice-scheme' }
+      { area: 1, name: 'Coaching', url: '/page/coaching' },
+      { area: 1, name: 'Schools', url: '/page/schools' },
+      { area: 1, name: 'Summer League', url: '/page/summer-league' },
+      { area: 1, name: 'Fred Holden Cup', url: '/page/fred-holden-cup' },
+      { area: 1, name: 'Local Clubs', url: '/page/local-clubs' },
+      { area: 1, name: 'Rules', url: 'https://eastlancstt.org.uk/asset/constitution-and-rules-2024-2025.pdf' },
+      { area: 2, ...commonLinks.prePractice},
+      { area: 2, ...commonLinks.resultArchive },
+      { area: 2, ...commonLinks.contactUs },
+      { area: 2, ...commonLinks.townTeams },
+      { area: 2, ...commonLinks.lancsCountyTTAssoc },
+      { area: 2, ...commonLinks.gdpr },
+      { area: 2, ...commonLinks.diciplineProcedure },
+      { area: 2, ...commonLinks.safeguardingPolicy },
     ],
     menuPrimary: [
       {
         name: 'The League',
         url: '/',
         children: [
+          // @todo get and store assets
           { name: 'Handbook', url: '/asset/elttl-handbook.pdf' },
           { name: 'Fixtures', url: '/asset/league-fixtures-2023-2024.xlsx' },
           { name: 'Press Releases', url: '/press' },
@@ -71,7 +86,7 @@ export async function GET (request) {
         ]
       },
       {
-        name: 'Results', url: '/results', children: divisionsChildren
+        name: 'Results', url: '/result', children: divisionsChildren
       }
     ]
   }, { status: 200 })
