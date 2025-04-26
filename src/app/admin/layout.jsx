@@ -1,19 +1,29 @@
 import React from 'react'
 import Link from 'next/link'
-import {LogoutForm} from "@/app/admin/LogoutForm";
+import { LogoutForm } from '@/app/admin/LogoutForm'
+import ElttlEmblem from "@/components/icons/ElttlEmblem";
 
 export default async function Layout ({ children }) {
-
   return (
     <div>
-      <div>
-        <LogoutForm />
+      <div className={'flex'}>
+        <div>
+        <div className='w-20 mx-auto mb-6'>
+          <Link href='/'>
+            <ElttlEmblem />
+          </Link>
+        </div>
+        </div>
+        <div className={'flex-1 flex gap-8 m-6'}>
+          <Link className={'text-orange-500 border-b'} href='/admin'>Dash</Link>
+          <Link className={'text-orange-500 border-b'} href='/admin/team'>Teams</Link>
+          <Link className={'text-orange-500 border-b'} href='/admin/fixture'>Fixtures</Link>
+        </div>
+        <div className={'flex justify-end m-6'}>
+          <LogoutForm />
+        </div>
       </div>
-      <div>
-        <Link href='/admin'>Dash</Link>
-        <Link href='/admin/team'>Teams</Link>
-      </div>
-      <div>
+      <div className={'max-w-[1440px] mx-auto'}>
         {children}
       </div>
     </div>

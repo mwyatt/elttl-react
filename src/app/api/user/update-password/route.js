@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt'
 
 export async function GET (request) {
   const connection = await getConnection()
@@ -10,25 +10,23 @@ export async function GET (request) {
   let theHash
   const saltRounds = 10
 
-  await bcrypt.hash(password, saltRounds).then(function(hash) {
+  await bcrypt.hash(password, saltRounds).then(function (hash) {
     theHash = hash
-  });
-
-  console.log(theHash)
+  })
 
   const response = await connection.execute(`
       UPDATE user SET password = :password
       WHERE email = :email
   `, {
     email,
-    password: theHash,
+    password: theHash
   })
 
-  bcrypt.compare(password, theHash, async function(err, result) {
+  bcrypt.compare(password, theHash, async function (err, result) {
     console.log({
       password,
       theHash,
-      result,
+      result
     })
   })
 

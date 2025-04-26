@@ -18,7 +18,7 @@ export default async function Page () {
   } = await response.json()
 
   return (
-    <FrontLayout paddedContent={false} maxWidth={true}>
+    <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
         <div className='md:p-6 '>
           {advertisementsPrimary.map((advertisement) => (
@@ -62,7 +62,7 @@ export default async function Page () {
               slug: fixture.teamRightSlug
             }}
             timeFulfilled={fixture.timeFulfilled}
-                                           />)}
+                                                  />)}
         </div>
       </div>
       <div>

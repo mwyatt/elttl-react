@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Arrow from '@/components/icons/Arrow'
-import MenuPrimarySubItem from "@/components/MenuPrimarySubItem";
+import MenuPrimarySubItem from '@/components/MenuPrimarySubItem'
 
 export default function MenuPrimary ({ items }) {
   const [menuPrimaryOpenStatuses, setMenuPrimaryOpenStatuses] = useState(
@@ -20,7 +20,7 @@ export default function MenuPrimary ({ items }) {
   }
 
   return (
-    <div className={'flex-grow'}>
+    <div className='flex-grow'>
       <nav className='flex text-xl'>
         {items.map((item, index) => (
           <div
@@ -30,17 +30,17 @@ export default function MenuPrimary ({ items }) {
             <span className='grow'>{item.name}</span>
             <span className='content-center'><Arrow /></span>
 
-                  <div className={'hidden sm:block absolute top-0 left-0 bg-white border border-gray-200 shadow'}>
-         <MenuPrimarySubItem key={index} index={index} item={item} menuPrimaryOpenStatuses={menuPrimaryOpenStatuses} />
+            <div className='hidden sm:block absolute top-0 left-0 bg-white border border-gray-200 shadow'>
+              <MenuPrimarySubItem key={index} index={index} item={item} menuPrimaryOpenStatuses={menuPrimaryOpenStatuses} />
             </div>
 
           </div>
         ))}
       </nav>
-      <div className={'sm:hidden'}>
-       {items.map((item, index) => (
-         <MenuPrimarySubItem key={index} index={index} item={item} menuPrimaryOpenStatuses={menuPrimaryOpenStatuses} />
-       ))}
+      <div className='sm:hidden'>
+        {items.map((item, index) => (
+          <MenuPrimarySubItem key={index} index={index} item={item} menuPrimaryOpenStatuses={menuPrimaryOpenStatuses} />
+        ))}
       </div>
     </div>
   )

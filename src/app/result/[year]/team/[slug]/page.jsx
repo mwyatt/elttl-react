@@ -1,7 +1,7 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
-import MainHeading from "@/components/MainHeading";
-import SubHeading from "@/components/SubHeading";
+import MainHeading from '@/components/MainHeading'
+import SubHeading from '@/components/SubHeading'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,37 +16,37 @@ export default async function Page ({ params }) {
     <FrontLayout>
       <MainHeading name={team.name} />
 
-            <SubHeading name={'General Information'} />
-      <table className={'w-full border border-stone-500'}>
+      <SubHeading name='General Information' />
+      <table className='w-full border border-stone-500'>
         <tbody>
           <tr>
-            <th className={'p-3 border border-stone-500 bg-stone-400'}>Division</th>
-            <td className={'p-3 border border-stone-500'}>
+            <th className='p-3 border border-stone-500 bg-stone-400'>Division</th>
+            <td className='p-3 border border-stone-500'>
               <Link href={`/result/${year}/${team.divisionSlug}`}>{team.divisionName}</Link>
             </td>
           </tr>
           <tr>
-            <th className={'p-3 border border-stone-500 bg-stone-400'}>Home Night</th>
-            <td className={'p-3 border border-stone-500'}>
+            <th className='p-3 border border-stone-500 bg-stone-400'>Home Night</th>
+            <td className='p-3 border border-stone-500'>
               {team.homeWeekday}
             </td>
           </tr>
           <tr>
-            <th className={'p-3 border border-stone-500 bg-stone-400'}>Venue</th>
-            <td className={'p-3 border border-stone-500'}>
+            <th className='p-3 border border-stone-500 bg-stone-400'>Venue</th>
+            <td className='p-3 border border-stone-500'>
               <Link href={`/result/${year}/venue/${team.venueSlug}`}>{team.venueName}</Link>
             </td>
           </tr>
           <tr>
-            <th className={'p-3 border border-stone-500 bg-stone-400'}>Secretary</th>
-            <td className={'p-3 border border-stone-500'}>
+            <th className='p-3 border border-stone-500 bg-stone-400'>Secretary</th>
+            <td className='p-3 border border-stone-500'>
               <Link href={`/result/${year}/player/${team.secretarySlug}`}>{team.secretaryName}</Link>
             </td>
           </tr>
         </tbody>
       </table>
 
-            <SubHeading name={'Registered Players'} />
+      <SubHeading name='Registered Players' />
       <div className='flex flex-wrap'>
 
         {players.map((player) => (

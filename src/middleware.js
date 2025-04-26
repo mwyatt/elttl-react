@@ -27,11 +27,11 @@ export default async function middleware (req) {
   const session = await decrypt(jwt)
 
   if (isProtectedRoute && !session?.userId) {
-    return NextResponse.redirect(new URL(loginPath, req.nextUrl));
+    return NextResponse.redirect(new URL(loginPath, req.nextUrl))
   }
 
   if (isPublicRoute && session?.userId) {
-    return NextResponse.redirect(new URL(protectedPath, req.nextUrl));
+    return NextResponse.redirect(new URL(protectedPath, req.nextUrl))
   }
 
   return NextResponse.next()
@@ -39,5 +39,5 @@ export default async function middleware (req) {
 
 // Routes Middleware should not run on
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)']
 }

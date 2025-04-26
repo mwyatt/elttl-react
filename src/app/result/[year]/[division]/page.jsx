@@ -1,9 +1,9 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import React from 'react'
-import SubMenu from "@/app/result/[year]/[division]/SubMenu";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import {linkStyles} from "@/lib/styles";
+import SubMenu from '@/app/result/[year]/[division]/SubMenu'
+import Breadcrumbs from '@/components/Breadcrumbs'
+import { linkStyles } from '@/lib/styles'
 
 export const dynamic = 'force-dynamic'
 
@@ -26,14 +26,14 @@ export default async function Page ({ params }) {
   return (
     <FrontLayout>
 
-              <Breadcrumbs items={
+      <Breadcrumbs items={
           [
             { name: 'Results', href: '/result' },
             { name: year, href: `/result/${year}` },
-            { name: division, href: `/result/${year}/${division}` },
+            { name: division, href: `/result/${year}/${division}` }
           ]
         }
-        />
+      />
 
       <h2 className='text-2xl mb-4'><span className='capitalize'>{division}</span> Division</h2>
       <p>This is an overview for the {division} division.</p>
@@ -41,10 +41,10 @@ export default async function Page ({ params }) {
       <table className='table w-full'>
         <thead>
           <tr>
-            <th className={'border border-stone-400 p-2'} />
+            <th className='border border-stone-400 p-2' />
 
             {teams.map((team, index) => (
-              <th className={'border border-stone-400 p-2'} key={index}>
+              <th className='border border-stone-400 p-2' key={index}>
                 <Link className={`${linkStyles}`} href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
               </th>
             ))}

@@ -1,25 +1,17 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { adminApiUrl } from '@/constants/url'
+import {adminApiFetch} from '@/constants/url'
 
 export async function update (prevState, formData) {
   const id = formData.get('id')
   const payload = {
     name: formData.get('name'),
     slug: formData.get('slug'),
-    yearId: formData.get('yearId')
+    divisionId: formData.get('divisionId'),
   }
 
-  // if (formData.get('email') !== testUser.email || formData.get('password') !== testUser.password) {
-  //   return {
-  //     errors: {
-  //       email: ["Invalid email or password"],
-  //     },
-  //   };
-  // }
-
-  const response = await fetch(`${adminApiUrl}/team/${id}`, {
+  const response = await adminApiFetch(`/team/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -27,7 +19,10 @@ export async function update (prevState, formData) {
     body: JSON.stringify(payload)
   })
 
-  const { ok } = await response.json()
+  const { affectedRows } = await response.json()
 
-  redirect('/admin/')
+  // @todo remove
+  console.log({affectedRows})
+
+  redirect(`/admin/team/${id}`)
 }

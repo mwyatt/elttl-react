@@ -1,7 +1,7 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
-import RankChange from "@/components/player/RankChange";
-import {apiUrl} from "@/constants/url";
+import RankChange from '@/components/player/RankChange'
+import { apiUrl } from '@/constants/url'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,7 +21,7 @@ export default async function Page ({ params }) {
         {data.encounters.map((row, index) => (
           <div key={index} className='flex gap-4'>
             <div className='p-3 basis-1/4'>
-              <Link className={'text-orange-500 font-bold border-b border-b-orange-500'} href={`/result/${year}/player/${row.playerLeftSlug}`}>
+              <Link className='text-orange-500 font-bold border-b border-b-orange-500' href={`/result/${year}/player/${row.playerLeftSlug}`}>
                 {row.playerLeftName}
               </Link>
             </div>
@@ -29,10 +29,10 @@ export default async function Page ({ params }) {
             <div className='p-3 basis-1/4'>{row.scoreLeft}</div>
             <div className='p-3 basis-1/4'>{row.scoreRight}</div>
             <div className='p-3 basis-1/4'>
-              <Link className={'text-orange-500 font-bold border-b border-b-orange-500'} href={`/result/${year}/player/${row.playerRightSlug}`}>
+              <Link className='text-orange-500 font-bold border-b border-b-orange-500' href={`/result/${year}/player/${row.playerRightSlug}`}>
                 {row.playerRightName}
               </Link>
-            <RankChange rankChange={row.playerRankChangeRight} />
+              <RankChange rankChange={row.playerRankChangeRight} />
             </div>
           </div>
         ))}

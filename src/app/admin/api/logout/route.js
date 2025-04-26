@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server'
-import {logout} from "@/app/login/actions";
-
-
+import { logout } from '@/app/login/actions'
 
 export async function GET (request) {
   logout()

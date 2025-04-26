@@ -38,7 +38,7 @@ export async function GET (request) {
     townTeams: { name: 'Town Teams', url: '/page/town-teams' },
     lancsCountyTTAssoc: { name: 'Lancashire County TT Assoc', url: 'https://lancashirecounty.ttleagues.com/page/affiliationtolancashirecountytta' },
 
-      // @todo get assets - shftp could be easiest method to store initially
+    // @todo get assets - shftp could be easiest method to store initially
     // would be ideal to allow updating of these for logged in users
     gdpr: { name: 'Gdpr', url: '/asset/GDPR-2018-2019.pdf' },
     diciplineProcedure: { name: 'Code of Conduct', url: 'https://eastlancstt.org.uk/asset/disciplinary-procedure.pdf' },
@@ -54,7 +54,7 @@ export async function GET (request) {
       commonLinks.lancsCountyTTAssoc,
       commonLinks.gdpr,
       commonLinks.diciplineProcedure,
-      commonLinks.safeguardingPolicy,
+      commonLinks.safeguardingPolicy
     ],
     footLinks: [
       { area: 1, name: 'Coaching', url: '/page/coaching' },
@@ -63,14 +63,14 @@ export async function GET (request) {
       { area: 1, name: 'Fred Holden Cup', url: '/page/fred-holden-cup' },
       { area: 1, name: 'Local Clubs', url: '/page/local-clubs' },
       { area: 1, name: 'Rules', url: 'https://eastlancstt.org.uk/asset/constitution-and-rules-2024-2025.pdf' },
-      { area: 2, ...commonLinks.prePractice},
+      { area: 2, ...commonLinks.prePractice },
       { area: 2, ...commonLinks.resultArchive },
       { area: 2, ...commonLinks.contactUs },
       { area: 2, ...commonLinks.townTeams },
       { area: 2, ...commonLinks.lancsCountyTTAssoc },
       { area: 2, ...commonLinks.gdpr },
       { area: 2, ...commonLinks.diciplineProcedure },
-      { area: 2, ...commonLinks.safeguardingPolicy },
+      { area: 2, ...commonLinks.safeguardingPolicy }
     ],
     menuPrimary: [
       {

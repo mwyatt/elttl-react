@@ -1,9 +1,9 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
-import {apiUrl} from "@/constants/url";
-import MainHeading from "@/components/MainHeading";
-import SubHeading from "@/components/SubHeading";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { apiUrl } from '@/constants/url'
+import MainHeading from '@/components/MainHeading'
+import SubHeading from '@/components/SubHeading'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,19 +15,19 @@ export default async function Page ({ params }) {
 
   return (
     <FrontLayout>
-                    <Breadcrumbs items={
+      <Breadcrumbs items={
           [
             { name: 'Results', href: '/result' },
             { name: year, href: `/result/${year}` },
-            { name: data.venue.name, href: `/result/${year}/venue/${data.venue.name}` },
+            { name: data.venue.name, href: `/result/${year}/venue/${data.venue.name}` }
           ]
         }
-        />
+      />
 
       <MainHeading name={data.venue.name} />
       <p>{data.venue.location}</p>
 
-      <SubHeading name={'Teams Playing Here'} />
+      <SubHeading name='Teams Playing Here' />
       <div className='flex flex-wrap'>
 
         {data.teams.map((team) => (

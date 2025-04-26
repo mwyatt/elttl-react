@@ -19,28 +19,39 @@ export async function GET (request, { params }) {
     id
   })
 
+  const [divisions] = await connection.execute(`
+      SELECT id, name
+      FROM tennisDivision
+        WHERE yearId = :yearId
+  `, {
+    yearId: currentYear.id,
+  })
+
   return NextResponse.json({
-    team: teams[0]
+    team: teams[0],
+    divisions
   }, { status: 200 })
 }
 
 export async function PUT (request, { params }) {
   const connection = await getConnection()
   const { id } = await params
-  const { name, slug } = await request.json()
+  const { name, slug, divisionId } = await request.json()
 
   const currentYear = await getCurrentYear()
 
   const [response] = await connection.execute(`
        UPDATE tennisTeam
        SET name = :name,
-           slug = :slug
+           slug = :slug,
+           divisionId = :divisionId
       WHERE yearId = :yearId and id = :id
   `, {
     yearId: currentYear.id,
     id,
     name,
-    slug
+    slug,
+    divisionId
   })
 
   return NextResponse.json({

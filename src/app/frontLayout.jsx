@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import ElttlEmblem from '@/components/icons/ElttlEmblem'
 import MenuPrimary from '@/components/MenuPrimary'
-import {apiUrl} from "@/constants/url";
+import { apiUrl } from '@/constants/url'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,47 +19,47 @@ export default async function FrontLayout ({ children, paddedContent = true, max
 
   return (
     <div>
-        <div className='flex border-b border-neutral-400 text-sm bg-neutral-200'>
-          <ul className='flex-1'>
-            {headLinks.map((item) => (
+      <div className='flex border-b border-neutral-400 text-sm bg-neutral-200'>
+        <ul className='flex-1'>
+          {headLinks.map((item) => (
+            <Link
+              className='py-1 px-2 text-sm border-r text-neutral-600 border-gray-400 inline-block' key={item.name}
+              href={item.url}
+            >{item.name}
+            </Link>
+          ))}
+        </ul>
+        <div className='flex'>
+          {auth.user
+            ? (
               <Link
-                className='py-1 px-2 text-sm border-r text-neutral-600 border-gray-400 inline-block' key={item.name}
-                href={item.url}
-              >{item.name}
+                className='p-2'
+                href='/account/'
+              >
+                My Account
               </Link>
-            ))}
-          </ul>
-          <div className='flex'>
-            {auth.user
-              ? (
+              )
+            : (
+              <div className='hidden'>
                 <Link
                   className='p-2'
-                  href='/account/'
+                  href='/login/'
                 >
-                  My Account
+                  Log in
                 </Link>
-                )
-              : (
-                <div className={'hidden'}>
-                  <Link
-                    className='p-2'
-                    href='/login/'
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    className='p-2'
-                    href='/register/'
-                  >
-                    Register
-                  </Link>
-                </div>
-                )}
-          </div>
+                <Link
+                  className='p-2'
+                  href='/register/'
+                >
+                  Register
+                </Link>
+              </div>
+              )}
         </div>
+      </div>
 
-        <header className='border-b border-b-slate-300 bg-white drop-shadow-sm'>
-          <div className={'max-w-[1440px] sm:flex mx-auto border-l border-l-slate-200'}>
+      <header className='border-b border-b-slate-300 bg-white drop-shadow-sm'>
+        <div className='max-w-[1440px] sm:flex mx-auto border-l border-l-slate-200'>
           <Link
             href='/'
             className='flex-1 flex flex-grow gap-2 sm:gap-4 p-4 items-center justify-center sm:justify-start border-b sm:border-none sm:max-w-[500px]'
@@ -72,21 +72,21 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             </span>
           </Link>
           <MenuPrimary items={menuPrimary} />
-          </div>
-        </header>
-
-        <div className={`${paddedContent ? 'p-8' : '' } ${maxWidth ? 'max-w-[1440px] mx-auto' : ''}`}>
-          {children}
         </div>
+      </header>
 
-        <footer className='bg-stone-500 mt-8'>
-          <div className={'bg-stone-400 md:flex max-w-[1440px] mx-auto'}>
+      <div className={`${paddedContent ? 'p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''}`}>
+        {children}
+      </div>
+
+      <footer className='bg-stone-500 mt-8'>
+        <div className='bg-stone-400 md:flex max-w-[1440px] mx-auto'>
           <div className='basis-1/4 p-4 text-white'>
-            <div><Link href='/contact-us' className={'text-orange-500 border-b border-b-orange-500'}>&copy; {appName}</Link></div>
-            Hyndburn Sports Centre<br/>
-            Henry Street<br/>
-            Church<br/>
-            Accrington<br/>
+            <div><Link href='/contact-us' className='text-orange-500 border-b border-b-orange-500'>&copy; {appName}</Link></div>
+            Hyndburn Sports Centre<br />
+            Henry Street<br />
+            Church<br />
+            Accrington<br />
             Telephone: 01254 385945
           </div>
           <div className='basis-1/4 p-4'>
@@ -116,8 +116,8 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             <Link href=''>Facebook</Link>
             <Link href=''>Table Tennis England</Link>
           </div>
-          </div>
-        </footer>
+        </div>
+      </footer>
     </div>
   )
 }

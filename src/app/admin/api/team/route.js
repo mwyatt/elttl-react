@@ -7,9 +7,11 @@ export async function GET (request) {
   const currentYear = await getCurrentYear()
 
   const [teams] = await connection.execute(`
-      SELECT id, name, slug, homeWeekday, secretaryId, venueId, divisionId, yearId
-      FROM tennisTeam
-        WHERE yearId = :yearId
+      SELECT tt.id, tt.name, slug, homeWeekday, secretaryId, venueId, divisionId, tt.yearId, td.name as divisionName
+      FROM tennisTeam tt
+      left join tennisDivision td on tt.divisionId = td.id and td.yearId = tt.yearId
+        WHERE tt.yearId = :yearId
+      order by td.id
   `, {
     yearId: currentYear.id
   })

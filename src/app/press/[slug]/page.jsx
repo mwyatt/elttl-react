@@ -1,7 +1,7 @@
 import FrontLayout from '@/app/frontLayout'
-import {apiUrl} from "@/constants/url";
-import DatePretty from "@/components/DatePretty";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { apiUrl } from '@/constants/url'
+import DatePretty from '@/components/DatePretty'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,7 +13,7 @@ export default async function Page ({ params }) {
 
   return (
     <FrontLayout>
-      <div className={'max-w-[768px] mx-auto'}>
+      <div className='max-w-[768px] mx-auto'>
         <Breadcrumbs items={
           [
             { name: 'Press Releases', href: '/press' },
@@ -21,9 +21,9 @@ export default async function Page ({ params }) {
           ]
         }
         />
-      <h2 className='text-3xl mb-4'>{data.title}</h2>
-      <p className='mb-4 text-neutral-600'>Published <DatePretty time={data.timePublished} /> by {data.author}</p>
-      <div className={'text-base/7 text-neutral-700'} dangerouslySetInnerHTML={{ __html: data.html }} />
+        <h2 className='text-3xl mb-4'>{data.title}</h2>
+        <p className='mb-4 text-neutral-600'>Published <DatePretty time={data.timePublished} /> by {data.author}</p>
+        <div className='text-base/7 text-neutral-700' dangerouslySetInnerHTML={{ __html: data.html }} />
       </div>
     </FrontLayout>
   )

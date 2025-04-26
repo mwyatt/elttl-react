@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import DatePretty from "@/components/DatePretty";
+import DatePretty from '@/components/DatePretty'
 
 export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled }) {
   return (
@@ -12,8 +12,8 @@ export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled 
       <span className='float-right text-stone-300 text-sm'>
         <DatePretty time={timeFulfilled} />
       </span>
-      <div className={'font-bold border-b border-dashed border-orange-300 pb-2 mb-2'}>{teamLeft.name}</div>
-      <div className={'font-bold'}>{teamRight.name}</div>
+      <div className='font-bold border-b border-dashed border-orange-300 pb-2 mb-2'>{teamLeft.name}</div>
+      <div className='font-bold'>{teamRight.name}</div>
       <div>{teamLeft.score}</div>
       <div>{teamRight.score}</div>
     </Link>

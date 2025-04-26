@@ -27,9 +27,9 @@ export async function login (prevState, formData) {
   const user = users[0]
   let compareResult
 
-  await bcrypt.compare(formData.get('password'), user.password).then(function(result) {
+  await bcrypt.compare(formData.get('password'), user.password).then(function (result) {
     compareResult = result
-  });
+  })
 
   if (compareResult === true) {
     await createSession(user.id)
