@@ -4,6 +4,8 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Link from "next/link";
 import DatePretty from "@/components/DatePretty";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page ({ params, searchParams }) {
   let { page } = await searchParams
   if (!page) {

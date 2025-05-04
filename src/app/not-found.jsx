@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import FrontLayout from '@/app/frontLayout'
 
+export const dynamic = 'force-dynamic'
+
 export default function Page () {
   return (
     <FrontLayout>

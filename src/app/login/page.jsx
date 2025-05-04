@@ -2,6 +2,8 @@ import { LoginForm } from './LoginForm'
 import ElttlEmblem from '@/components/icons/ElttlEmblem'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 export default function Login () {
   return (
     <div className='flex flex-row min-h-screen justify-center items-center pb-14'>
