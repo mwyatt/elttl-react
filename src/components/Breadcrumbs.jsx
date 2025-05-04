@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function Breadcrumbs ({ items }) {
+export default function Breadcrumbs ({ items = [] }) {
   return (
     <div className='flex pb-4'>
       <Link className='text-orange-500' href='/'>Home</Link>

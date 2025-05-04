@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getYearDivisionId } from '@/app/lib/year'
 import { getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
-import encounterStatus from '@/constants/encounterStatus'
+import EncounterStatus from '@/constants/EncounterStatus'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -30,7 +30,7 @@ export async function GET (request, { params }) {
   `, {
     divisionId: yearDivisionId.divisionId,
     yearId: yearDivisionId.yearId,
-    doublesStatus: encounterStatus.DOUBLES
+    doublesStatus: EncounterStatus.DOUBLES
   })
 
   const sides = getSidesCapitalized()

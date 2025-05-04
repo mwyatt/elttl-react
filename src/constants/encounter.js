@@ -56,4 +56,3 @@ export function getSideIndex (side) {
   const normalisedSide = side.toLowerCase()
   return side === SIDE_LEFT ? 0 : 1
 }
-

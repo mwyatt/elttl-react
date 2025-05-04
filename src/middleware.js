@@ -17,6 +17,8 @@ export default async function middleware (req) {
   let jwt = cookiePromise.get('session')?.value
   let usedHeader = false
 
+  console.info('Middleware running for authentication checking')
+
   // If not set in the cookie then it might be set in the header as an authentication token
   // If we are on the authentication route then we can use the header
   if (!jwt && isAuthenticationRoute) {

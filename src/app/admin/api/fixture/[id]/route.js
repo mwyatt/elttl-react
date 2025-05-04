@@ -10,8 +10,7 @@ import {
   SIDE_RIGHT
 } from "@/constants/encounter";
 import {getRankChanges} from "@/lib/encounter";
-import encounterStatus from "@/constants/encounterStatus";
-import {StatusCodes} from "http-status-codes";
+import EncounterStatus from "@/constants/EncounterStatus";
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -151,7 +150,7 @@ export async function PUT (request, { params }) {
           rankChange: encounter[`playerRankChange${sideCapitalized}`]
         }
 
-        if (playerId == null || encounter.status === encounterStatus.DOUBLES) {
+        if (playerId == null || encounter.status === EncounterStatus.DOUBLES) {
           // @todo will exclude also work like this for rank changes?
           console.info('Rolling back skip as cant find player or is doubles', updatePlayerData)
 
@@ -187,7 +186,7 @@ export async function PUT (request, { params }) {
   for (const encounter of encounterStruct) {
     let rankChanges = [0, 0]
 
-    if (encounter.status === encounterStatus.DOUBLES || encounter.playerIdLeft == null || encounter.playerIdRight == null) {
+    if (encounter.status === EncounterStatus.DOUBLES || encounter.playerIdLeft == null || encounter.playerIdRight == null) {
       console.info('Skipping apply rank changes for doubles or missing player', encounter)
     } else {
       rankChanges = getRankChanges(

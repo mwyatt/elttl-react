@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
-import encounterStatus from '@/constants/encounterStatus'
+import EncounterStatus from '@/constants/EncounterStatus'
 import { getYearDivisionId } from '@/app/lib/year'
 import { getOtherSide, getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 

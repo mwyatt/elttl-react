@@ -9,7 +9,7 @@ import {
   SIDE_LEFT,
   SIDE_RIGHT
 } from "@/constants/encounter";
-import encounterStatus from "@/constants/encounterStatus";
+import EncounterStatus from "@/constants/EncounterStatus";
 import {update} from "@/app/admin/fixture/[id]/actions";
 
 export function ScoreCardForm ({ fixture, players, encounters }) {
@@ -37,7 +37,7 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
             checked={isChecked}
             onChange={(e) => {
               const newEncounterStruct = [...encounterStruct]
-              newEncounterStruct[encounterIndex].status = e.target.checked ? encounterStatus.EXCLUDE : encounterStatus.NONE
+              newEncounterStruct[encounterIndex].status = e.target.checked ? EncounterStatus.EXCLUDE : EncounterStatus.NONE
               setEncounterStruct(newEncounterStruct)
             }}
           />
@@ -122,8 +122,8 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
           <div className={'flex flex-1 items-center'}>
             <ExcludeCheckbox
               encounterIndex={index}
-              isDoubles={encounterRow[0] === encounterStatus.DOUBLES}
-              isChecked={encounterStruct[index].status === encounterStatus.EXCLUDE}
+              isDoubles={encounterRow[0] === EncounterStatus.DOUBLES}
+              isChecked={encounterStruct[index].status === EncounterStatus.EXCLUDE}
             />
             <div className={'flex-1 flex justify-end'}>
               <label>
@@ -233,7 +233,7 @@ function getDefaultEncounterStruct(encounters) {
       playerIdRight: 0,
       scoreLeft: 0,
       scoreRight: 0,
-      status: encounterStatus.DOUBLES
+      status: EncounterStatus.DOUBLES
     },
     {
       playerIdLeft: 0,

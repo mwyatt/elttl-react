@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
-import encounterStatus from '@/constants/encounterStatus'
+import EncounterStatus from '@/constants/EncounterStatus'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()

@@ -2,6 +2,21 @@ import FrontLayout from '@/app/frontLayout'
 import { apiUrl } from '@/constants/url'
 import DatePretty from '@/components/DatePretty'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import {getMetaTitle} from "@/constants/MetaData";
+
+export async function generateMetadata(
+  { params },
+) {
+  const slug = (await params).slug
+
+  const response = await fetch(`${apiUrl}/content/${slug}?type=press`)
+  const data = await response.json()
+
+  return {
+    title: getMetaTitle(data.title),
+    description: '@todo',
+  }
+}
 
 export const dynamic = 'force-dynamic'
 

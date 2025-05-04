@@ -3,6 +3,12 @@ import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import DatePretty from '@/components/DatePretty'
 import FixtureCard from '@/components/FixtureCard'
+import {getMetaTitle} from "@/constants/MetaData";
+
+export const metadata = {
+  title: getMetaTitle(),
+  description: 'Welcome to the official website of the club. Here you can find all the latest news, fixtures, and results.',
+}
 
 export const dynamic = 'force-dynamic'
 
