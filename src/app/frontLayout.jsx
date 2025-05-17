@@ -1,14 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
-import ElttlEmblem from '@/components/icons/ElttlEmblem'
-import MenuPrimary from '@/components/MenuPrimary'
 import { apiUrl } from '@/constants/url'
+import {getMetaTitle} from "@/constants/MetaData";
+import {BiLogoFacebook, BiLogoTwitter} from "react-icons/bi";
+import Header from "@/components/Header";
 
 export const dynamic = 'force-dynamic'
 
 export default async function FrontLayout ({ children, paddedContent = true, maxWidth = true }) {
   const auth = { user: null }
-  const appName = 'East Lancashire Table Tennis League'
+  const appName = getMetaTitle()
   const response = await fetch(`${apiUrl}/frontend`)
   const data = await response.json()
   const headLinks = data.headLinks
@@ -19,61 +20,48 @@ export default async function FrontLayout ({ children, paddedContent = true, max
 
   return (
     <div>
-      <div className='flex border-b border-neutral-400 text-sm bg-neutral-200'>
-        <ul className='flex-1'>
-          {headLinks.map((item) => (
-            <Link
-              className='py-1 px-2 text-sm border-r text-neutral-600 border-gray-400 inline-block' key={item.name}
-              href={item.url}
-            >{item.name}
-            </Link>
-          ))}
-        </ul>
-        <div className='flex'>
-          {auth.user
-            ? (
-              <Link
-                className='p-2'
-                href='/account/'
-              >
-                My Account
-              </Link>
-              )
-            : (
-              <div className='hidden'>
-                <Link
-                  className='p-2'
-                  href='/login/'
-                >
-                  Log in
-                </Link>
-                <Link
-                  className='p-2'
-                  href='/register/'
-                >
-                  Register
-                </Link>
-              </div>
-              )}
-        </div>
-      </div>
+      {/*<div className='flex border-b border-neutral-400 text-sm bg-neutral-200'>*/}
+      {/*  <div className={'max-w-[1440px] mx-auto hidden'}>*/}
+      {/*    <div className='flex-1 hidden lg:block'>*/}
+      {/*      {headLinks.map((item) => (*/}
+      {/*        <Link*/}
+      {/*          className='p-2 px-3 text-sm border-r text-neutral-600 border-gray-400 inline-block' key={item.name}*/}
+      {/*          href={item.url}*/}
+      {/*        >{item.name}*/}
+      {/*        </Link>*/}
+      {/*      ))}*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className='flex'>*/}
+      {/*    {auth.user*/}
+      {/*      ? (*/}
+      {/*        <Link*/}
+      {/*          className='p-2'*/}
+      {/*          href='/account/'*/}
+      {/*        >*/}
+      {/*          My Account*/}
+      {/*        </Link>*/}
+      {/*        )*/}
+      {/*      : (*/}
+      {/*        <div className='hidden'>*/}
+      {/*          <Link*/}
+      {/*            className='p-2'*/}
+      {/*            href='/login/'*/}
+      {/*          >*/}
+      {/*            Log in*/}
+      {/*          </Link>*/}
+      {/*          <Link*/}
+      {/*            className='p-2'*/}
+      {/*            href='/register/'*/}
+      {/*          >*/}
+      {/*            Register*/}
+      {/*          </Link>*/}
+      {/*        </div>*/}
+      {/*        )}*/}
+      {/*  </div>*/}
+      {/*</div>*/}
 
-      <header className='border-b border-b-slate-300 bg-white drop-shadow-sm'>
-        <div className='max-w-[1440px] sm:flex mx-auto border-l border-l-slate-200'>
-          <Link
-            href='/'
-            className='flex-1 flex flex-grow gap-2 sm:gap-4 p-4 items-center justify-center sm:justify-start border-b sm:border-none sm:max-w-[500px]'
-          >
-            <ElttlEmblem className='sm:hidden' width='50px' />
-            <ElttlEmblem className='hidden sm:block' width='75px' />
-            <span className=''>
-              <span className='hidden sm:block text-4xl'>{appName}</span>
-              <span className='sm:hidden text-5xl font-bold'>ELTTL</span>
-            </span>
-          </Link>
-          <MenuPrimary items={menuPrimary} />
-        </div>
-      </header>
+      <Header menuPrimary={menuPrimary} />
 
       <div className={`${paddedContent ? 'p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''}`}>
         {children}
@@ -112,9 +100,9 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             </nav>
           </div>
           <div className='basis-1/4'>
-            <Link href=''>Twitter</Link>
-            <Link href=''>Facebook</Link>
-            <Link href=''>Table Tennis England</Link>
+            <Link href=''><BiLogoTwitter /></Link>
+            <Link href=''><BiLogoFacebook /></Link>
+            <Link href=''><img src="https://www.tabletennisengland.co.uk/content/themes/table-tennis-england/img/main-logo.svg" /></Link>
           </div>
         </div>
       </footer>

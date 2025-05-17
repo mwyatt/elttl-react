@@ -42,10 +42,12 @@ export default async function Page () {
           ))}
         </div>
         <div className=''>
-          <div className='flex justify-end p-2'>
-            <Link className='text-gray-500 border-b border-b-gray-400' href='/press/'>View all</Link>
+          <div className='flex p-4'>
+            <h2 className='text-2xl grow'>Press Releases</h2>
+            <div>
+              <Link className='text-gray-500 border-b border-b-gray-400' href='/press/'>View all</Link>
+            </div>
           </div>
-          <h2 className='text-2xl p-4'>Press Releases</h2>
           {latestPress.map((press) => (
             <div className='p-4 border-b' key={press.id}>
               <p className='text-sm text-gray-500'>{press.createdAt}</p>
@@ -84,7 +86,7 @@ export default async function Page () {
           ))}
         </div>
       </div>
-      <div className='md:flex md:gap-4'>
+      <div className='p-4 flex flex-wrap md:gap-4'>
         {advertisementsSecondary.map((advertisement, index) => (
           <div key={index} className='p-4 bg-orange-500 text-white rounded'>
             <h2 className='my-4 text-2xl'>{advertisement.title}</h2>

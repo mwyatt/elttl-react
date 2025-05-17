@@ -59,11 +59,11 @@ export async function GET (request) {
     latestFixtures,
     currentYear,
     galleryImages: [
-      { id: 1, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0857.jpg' },
-      { id: 2, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0575.jpg' },
-      { id: 3, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0635.jpg' },
-      { id: 2, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0575.jpg' },
-      { id: 3, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0635.jpg' }
+      // { id: 1, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0857.jpg' },
+      // { id: 2, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0575.jpg' },
+      // { id: 3, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0635.jpg' },
+      // { id: 2, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0575.jpg' },
+      // { id: 3, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0635.jpg' }
     ]
   }, { status: 200 })
 }

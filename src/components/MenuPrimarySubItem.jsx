@@ -3,9 +3,10 @@
 import React from 'react'
 import Link from 'next/link'
 
+// @todo remove?
 export default function MenuPrimarySubItem ({ item, index, menuPrimaryOpenStatuses }) {
   return (
-    <div className='relative'>
+    <div className=''>
       <ul
         className={[
           menuPrimaryOpenStatuses.length && menuPrimaryOpenStatuses[index].isOpen ? 'block' : 'hidden'
