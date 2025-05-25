@@ -24,7 +24,7 @@ export async function GET (request, { params }) {
       FROM tennisDivision
         WHERE yearId = :yearId
   `, {
-    yearId: currentYear.id,
+    yearId: currentYear.id
   })
 
   return NextResponse.json({

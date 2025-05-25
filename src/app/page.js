@@ -3,11 +3,14 @@ import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import DatePretty from '@/components/DatePretty'
 import FixtureCard from '@/components/FixtureCard'
-import {getMetaTitle} from "@/constants/MetaData";
+import { getMetaTitle } from '@/constants/MetaData'
+import CarouselElttl from "@/components/CarouselElttl";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 export const metadata = {
   title: getMetaTitle(),
-  description: 'Welcome to the official website of the club. Here you can find all the latest news, fixtures, and results.',
+  description: 'Welcome to the official website of the club. Here you can find all the latest news, fixtures, and results.'
 }
 
 export const dynamic = 'force-dynamic'
@@ -23,13 +26,17 @@ export default async function Page () {
     currentYear
   } = await response.json()
 
+  dayjs.extend(relativeTime)
+
   return (
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
         <div className='md:p-6 '>
+          {/*<CarouselElttl advertisements={advertisementsPrimary} />*/}
+
           {advertisementsPrimary.map((advertisement) => (
             <div key={advertisement.id} className='p-6 flex-1 bg-orange-500 text-center md:text-left text-white md:rounded border-b-4 border-b-amber-400'>
-              <h2 className='mb-4 text-6xl'>{advertisement.title}</h2>
+              <h2 className='mb-4 text-5xl font-bold'>{advertisement.title}</h2>
               <p className='my-3 text-3xl'>{advertisement.description}</p>
               <div className='mt-6 flex justify-end'>
                 <Link
@@ -50,7 +57,10 @@ export default async function Page () {
           </div>
           {latestPress.map((press) => (
             <div className='p-4 border-b' key={press.id}>
-              <p className='text-sm text-gray-500'>{press.createdAt}</p>
+              <p
+                className='text-sm text-gray-500'
+                title={dayjs.unix(press.timePublished).format('DD/MM/YYYY HH:mm')}
+              >{dayjs.unix(press.timePublished).fromNow()}</p>
               <h3 className='text-lg text-orange-500'><Link href={press.url}>{press.title}</Link></h3>
             </div>
           ))}
@@ -86,17 +96,21 @@ export default async function Page () {
           ))}
         </div>
       </div>
-      <div className='p-4 flex flex-wrap md:gap-4'>
+      <div className='p-4 flex md:gap-4'>
         {advertisementsSecondary.map((advertisement, index) => (
-          <div key={index} className='p-4 bg-orange-500 text-white rounded'>
-            <h2 className='my-4 text-2xl'>{advertisement.title}</h2>
+          <div key={index} className='p-4 bg-orange-500 text-white rounded bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3'>
+            <h2 className='mb-4 text-2xl font-bold'>{advertisement.title}</h2>
             <p className='my-3 text-lg'>{advertisement.description}</p>
             <div className='mt-6 flex justify-end'>
-              <Link
-                className='bg-gray-600 rounded-sm px-3 py-2 text-white font-bold capitalize'
-                href={advertisement.url}
-              >{advertisement.action}
-              </Link>
+              {advertisement.action && (
+                <Link
+                  className='bg-gray-600 rounded-sm px-3 py-2 text-white font-bold capitalize'
+                  href={advertisement.url}
+                >{advertisement.action}
+                </Link>
+
+              )
+              }
             </div>
           </div>
         ))}

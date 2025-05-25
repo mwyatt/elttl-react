@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import {getSides, getSideCapitalized, getSidesCapitalized, SIDE_LEFT, getOtherSide, getSideIndex} from "@/constants/encounter";
+import { getSides, getSideCapitalized, getSidesCapitalized, SIDE_LEFT, getOtherSide, getSideIndex } from '@/constants/encounter'
 
 describe('encounter', () => {
   it('has sides and can transform them', () => {

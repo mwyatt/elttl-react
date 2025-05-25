@@ -8,9 +8,9 @@ import {
   getSidesCapitalized,
   SIDE_LEFT,
   SIDE_RIGHT
-} from "@/constants/encounter";
-import {getRankChanges} from "@/lib/encounter";
-import EncounterStatus from "@/constants/EncounterStatus";
+} from '@/constants/encounter'
+import { getRankChanges } from '@/lib/encounter'
+import EncounterStatus from '@/constants/EncounterStatus'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -146,14 +146,13 @@ export async function PUT (request, { params }) {
 
         const updatePlayerData = {
           yearId: currentYear.id,
-          playerId: playerId,
+          playerId,
           rankChange: encounter[`playerRankChange${sideCapitalized}`]
         }
 
         if (playerId == null || encounter.status === EncounterStatus.DOUBLES) {
           // @todo will exclude also work like this for rank changes?
           console.info('Rolling back skip as cant find player or is doubles', updatePlayerData)
-
         } else {
           console.info('Rolling back rank for player', updatePlayerData)
 
@@ -193,23 +192,23 @@ export async function PUT (request, { params }) {
         encounter.scoreLeft,
         encounter.scoreRight,
         playerRanks[encounter.playerIdLeft],
-        playerRanks[encounter.playerIdRight],
+        playerRanks[encounter.playerIdRight]
       )
 
       console.info('Rank changes generated', rankChanges)
 
       for (const sideCapitalized of getSidesCapitalized()) {
         const sideIndex = getSideIndex(sideCapitalized)
-              const updateData = {
+        const updateData = {
           yearId: currentYear.id,
           playerId: encounter[`playerId${sideCapitalized}`],
           rankChange: rankChanges[sideIndex]
         }
 
-      console.info('Updating rank for player', {
-        updateData,
-        sideIndex
-      })
+        console.info('Updating rank for player', {
+          updateData,
+          sideIndex
+        })
 
         await connection.execute(`
             UPDATE tennisPlayer tp
@@ -220,21 +219,21 @@ export async function PUT (request, { params }) {
       }
     }
 
-              const insertData = {
-        yearId: currentYear.id,
-        fixtureId: id,
-        playerIdLeft: encounter.playerIdLeft,
-        playerIdRight: encounter.playerIdRight,
-        playerRankChangeLeft: rankChanges[getSideIndex(SIDE_LEFT)],
-        playerRankChangeRight: rankChanges[getSideIndex(SIDE_RIGHT)],
-        scoreLeft: encounter.scoreLeft,
-        scoreRight: encounter.scoreRight,
-        status: encounter.status
-      }
+    const insertData = {
+      yearId: currentYear.id,
+      fixtureId: id,
+      playerIdLeft: encounter.playerIdLeft,
+      playerIdRight: encounter.playerIdRight,
+      playerRankChangeLeft: rankChanges[getSideIndex(SIDE_LEFT)],
+      playerRankChangeRight: rankChanges[getSideIndex(SIDE_RIGHT)],
+      scoreLeft: encounter.scoreLeft,
+      scoreRight: encounter.scoreRight,
+      status: encounter.status
+    }
 
-      console.info('Inserting encounter', insertData)
+    console.info('Inserting encounter', insertData)
 
-      await connection.execute(`
+    await connection.execute(`
           INSERT INTO tennisEncounter
           (yearId, fixtureId, playerIdLeft, playerIdRight, scoreLeft, scoreRight, status)
           VALUES (:yearId, :fixtureId, :playerIdLeft, :playerIdRight, :scoreLeft, :scoreRight, :status)

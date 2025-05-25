@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
-import ContentStatus from "@/constants/ContentStatus";
+import ContentStatus from '@/constants/ContentStatus'
 
 export async function GET (request) {
   const connection = await getConnection()

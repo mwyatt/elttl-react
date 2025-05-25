@@ -2,10 +2,10 @@ import FrontLayout from '@/app/frontLayout'
 import { apiUrl } from '@/constants/url'
 import DatePretty from '@/components/DatePretty'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import {getMetaTitle} from "@/constants/MetaData";
+import { getMetaTitle } from '@/constants/MetaData'
 
-export async function generateMetadata(
-  { params },
+export async function generateMetadata (
+  { params }
 ) {
   const slug = (await params).slug
 
@@ -14,7 +14,7 @@ export async function generateMetadata(
 
   return {
     title: getMetaTitle(data.title),
-    description: '@todo',
+    description: '@todo'
   }
 }
 

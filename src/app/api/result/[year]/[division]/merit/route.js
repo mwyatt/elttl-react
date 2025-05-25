@@ -14,13 +14,13 @@ export async function GET (request, { params }) {
     select
         ttl.name teamLeftName,
         ttl.slug teamLeftSlug,
-        tpl.nameFirst playerLeftName,
+        concat(tpl.nameFirst, ' ', tpl.nameLast) AS playerLeftName,
         tpl.slug playerLeftSlug,
         tpl.rank playerLeftRank,
         tte.scoreLeft,
         ttr.name teamRightName,
         ttr.slug teamRightSlug,
-        tpr.nameFirst playerRightName,
+        concat(tpr.nameFirst, ' ', tpr.nameLast) AS playerRightName,
         tpr.slug playerRightSlug,
         tpr.rank playerRightRank,
         tte.scoreRight

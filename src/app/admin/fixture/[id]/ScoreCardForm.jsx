@@ -1,6 +1,6 @@
 'use client'
 
-import {useActionState, useState} from 'react'
+import { useActionState, useState } from 'react'
 import { PlayerSelect } from '@/app/admin/fixture/[id]/PlayerSelect'
 import {
   getOtherSideCapitalized,
@@ -8,42 +8,42 @@ import {
   scorecardStructure,
   SIDE_LEFT,
   SIDE_RIGHT
-} from "@/constants/encounter";
-import EncounterStatus from "@/constants/EncounterStatus";
-import {update} from "@/app/admin/fixture/[id]/actions";
+} from '@/constants/encounter'
+import EncounterStatus from '@/constants/EncounterStatus'
+import { update } from '@/app/admin/fixture/[id]/actions'
 
 export function ScoreCardForm ({ fixture, players, encounters }) {
   const [state, updateAction, pending] = useActionState(update, undefined)
-  const [playerStruct, setPlayerStruct] = useState(getDefaultPlayerStruct(encounters));
-  const [encounterStruct, setEncounterStruct] = useState(getDefaultEncounterStruct(encounters));
+  const [playerStruct, setPlayerStruct] = useState(getDefaultPlayerStruct(encounters))
+  const [encounterStruct, setEncounterStruct] = useState(getDefaultEncounterStruct(encounters))
 
   const getGrandTotal = (side) => {
     const sideCapitalized = getSideCapitalized(side)
     const sideScoreKey = `score${sideCapitalized}`
 
-    return encounterStruct.reduce((a, b) => +a + +b[sideScoreKey], 0);
+    return encounterStruct.reduce((a, b) => +a + +b[sideScoreKey], 0)
   }
 
   const ExcludeCheckbox = ({ encounterIndex, isDoubles, isChecked }) => {
-      if (isDoubles) {
-        return null
-      }
+    if (isDoubles) {
+      return null
+    }
 
-      return (
-        <label className={'text-sm'}>
-          <input
-            className={'mr-1'}
-            type={'checkbox'}
-            checked={isChecked}
-            onChange={(e) => {
-              const newEncounterStruct = [...encounterStruct]
-              newEncounterStruct[encounterIndex].status = e.target.checked ? EncounterStatus.EXCLUDE : EncounterStatus.NONE
-              setEncounterStruct(newEncounterStruct)
-            }}
-          />
-          Exclude
-        </label>
-      )
+    return (
+      <label className='text-sm'>
+        <input
+          className='mr-1'
+          type='checkbox'
+          checked={isChecked}
+          onChange={(e) => {
+            const newEncounterStruct = [...encounterStruct]
+            newEncounterStruct[encounterIndex].status = e.target.checked ? EncounterStatus.EXCLUDE : EncounterStatus.NONE
+            setEncounterStruct(newEncounterStruct)
+          }}
+        />
+        Exclude
+      </label>
+    )
   }
 
   const handleChangeScore = (e, index, side, encounter) => {
@@ -73,7 +73,7 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
 
     const newEncounterStruct = [...encounterStruct]
     newEncounterStruct[index] = {
-      ...encounter,
+      ...encounter
     }
     setEncounterStruct(newEncounterStruct)
   }
@@ -85,9 +85,9 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
 
   return (
     <form action={updateAction} className='p-6 max-w-4xl mx-auto'>
-      <input name={'fixtureId'} type={'hidden'} value={fixture.id} />
-      <input name={'playerStruct'} type={'hidden'} value={JSON.stringify(playerStruct)} />
-      <input name={'encounterStruct'} type={'hidden'} value={JSON.stringify(encounterStruct)} />
+      <input name='fixtureId' type='hidden' value={fixture.id} />
+      <input name='playerStruct' type='hidden' value={JSON.stringify(playerStruct)} />
+      <input name='encounterStruct' type='hidden' value={JSON.stringify(encounterStruct)} />
       <div className='flex gap-4 mb-4'>
         <div className='flex-1'>
           <PlayerSelect teamId={fixture.teamLeftId} structPosition={[0, 1]} playerSelectedId={playerStruct[0][1]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
@@ -112,25 +112,24 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
           <PlayerSelect teamId={fixture.teamRightId} structPosition={[1, 3]} playerSelectedId={playerStruct[1][3]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
         </div>
       </div>
-      <hr className={'my-6'} />
+      <hr className='my-6' />
       {scorecardStructure.map((encounterRow, index) => (
 
         // if index does not exist then skip
 
-
         <div key={index} className='flex gap-4 mb-4'>
-          <div className={'flex flex-1 items-center'}>
+          <div className='flex flex-1 items-center'>
             <ExcludeCheckbox
               encounterIndex={index}
               isDoubles={encounterRow[0] === EncounterStatus.DOUBLES}
               isChecked={encounterStruct[index].status === EncounterStatus.EXCLUDE}
             />
-            <div className={'flex-1 flex justify-end'}>
+            <div className='flex-1 flex justify-end'>
               <label>
                 {getPlayerName(playerStruct[0][encounterRow[0]])}
                 <input
-                  className={'border border-stone-500 rounded w-14 text-center text-2xl ml-4 py-1'}
-                  type="text"
+                  className='border border-stone-500 rounded w-14 text-center text-2xl ml-4 py-1'
+                  type='text'
                   value={encounterStruct[index].scoreLeft}
                   onChange={() => {}}
                   onKeyUp={(e) => handleChangeScore(e, index, SIDE_LEFT, encounterStruct[index])}
@@ -138,13 +137,13 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
               </label>
             </div>
           </div>
-          <div className={'flex-1'}>
+          <div className='flex-1'>
             <label>
               <input
-                className={'border border-stone-500 rounded w-14 text-center text-2xl mr-4 py-1'}
-                type="text"
+                className='border border-stone-500 rounded w-14 text-center text-2xl mr-4 py-1'
+                type='text'
                 value={encounterStruct[index].scoreRight}
-                  onChange={() => {}}
+                onChange={() => {}}
                 onKeyUp={(e) => handleChangeScore(e, index, SIDE_RIGHT, encounterStruct[index])}
               />
               {getPlayerName(playerStruct[1][encounterRow[1]])}
@@ -152,11 +151,11 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
           </div>
         </div>
       ))}
-      <div className={'flex text-4xl gap-6 my-6'}>
-        <div className={'flex-1 text-right'}>{getGrandTotal(SIDE_LEFT)}</div>
-        <div className={'flex-1'}>{getGrandTotal(SIDE_RIGHT)}</div>
+      <div className='flex text-4xl gap-6 my-6'>
+        <div className='flex-1 text-right'>{getGrandTotal(SIDE_LEFT)}</div>
+        <div className='flex-1'>{getGrandTotal(SIDE_RIGHT)}</div>
       </div>
-      <div className={'flex justify-center'}>
+      <div className='flex justify-center'>
         <button disabled={pending} type='submit' className='w-32 bg-orange-500 border-b-orange-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-orange-600'>
           Fulfil
         </button>
@@ -165,29 +164,29 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
   )
 }
 
-function getDefaultPlayerStruct(encounters) {
+function getDefaultPlayerStruct (encounters) {
   if (encounters.length > 2) {
     return [
       {
         1: encounters[0].playerIdLeft,
         2: encounters[2].playerIdLeft,
-        3: encounters[1].playerIdLeft,
+        3: encounters[1].playerIdLeft
       },
       {
         1: encounters[1].playerIdRight,
         2: encounters[0].playerIdRight,
-        3: encounters[2].playerIdRight,
-      },
+        3: encounters[2].playerIdRight
+      }
     ]
   }
 
   return [
-    {1: 0, 2: 0, 3: 0},
-    {1: 0, 2: 0, 3: 0}
+    { 1: 0, 2: 0, 3: 0 },
+    { 1: 0, 2: 0, 3: 0 }
   ]
 }
 
-function getDefaultEncounterStruct(encounters) {
+function getDefaultEncounterStruct (encounters) {
   if (encounters.length) {
     return encounters
   }
@@ -262,6 +261,6 @@ function getDefaultEncounterStruct(encounters) {
       scoreLeft: 0,
       scoreRight: 0,
       status: ''
-    },
+    }
   ]
 }

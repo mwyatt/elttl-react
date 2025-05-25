@@ -12,11 +12,11 @@ export function PlayerSelect ({ teamId, structPosition, players, playerSelectedI
 
   const options = playersInTeam.map(player => ({
     value: player.id,
-    label: player.name,
+    label: player.name
   })).concat(
     otherPlayers.map(player => ({
       value: player.id,
-      label: player.name,
+      label: player.name
     }))
   )
 

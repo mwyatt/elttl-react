@@ -4,6 +4,8 @@ import React from 'react'
 import { apiUrl } from '@/constants/url'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import {linkStyles} from "@/lib/styles";
+import {capitalizeFirstLetter} from "@/lib/misc";
 
 export const dynamic = 'force-dynamic'
 
@@ -21,41 +23,43 @@ export default async function Page ({ params }) {
           [
             { name: 'Results', href: '/result' },
             { name: year, href: `/result/${year}` },
-            { name: division, href: `/result/${year}/${division}` },
-            { name: 'Merit', href: `/result/${year}/${division}/merit` }
+            { name: capitalizeFirstLetter(division), href: `/result/${year}/${division}` },
+            { name: 'Merit Table', href: `/result/${year}/${division}/merit` }
           ]
         }
       />
-      <h2 className='text-2xl mb-4'><span className='capitalize'>{division}</span> Division Merit Table</h2>
+          <h2 className='text-4xl mb-8'>
+      <span className='capitalize'>{division}</span> Division League Table
+    </h2>
       <p>This is the merit table for the <span className='capitalize'>{division}</span> division.</p>
       <SubMenu year={year} division={division} />
-      <table className='table'>
+      <table className='table-auto w-full mt-4'>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Team</th>
-            <th>R<span className='hidden sm:inline'>a</span>nk</th>
-            <th>W<span className='hidden sm:inline'>on</span></th>
-            <th>Pl<span className='hidden sm:inline'>aye</span>d</th>
-            <th>Av<span className='hidden sm:inline'>era</span>g<span className='hidden sm:inline'>e</span></th>
-            <th>Encounters</th>
+            <th className={'p-4'}>Name</th>
+            <th className={'p-4'}>Team</th>
+            <th className={'p-4'}>R<span className='hidden sm:inline'>a</span>nk</th>
+            <th className={'p-4'}>W<span className='hidden sm:inline'>on</span></th>
+            <th className={'p-4'}>Pl<span className='hidden sm:inline'>aye</span>d</th>
+            <th className={'p-4'}>Av<span className='hidden sm:inline'>era</span>g<span className='hidden sm:inline'>e</span></th>
+            <th className={'p-4'}>Encounters</th>
           </tr>
         </thead>
         <tbody>
 
           {stats.map((stat, index) => (
-            <tr key={index}>
-              <td className='border border-amber-400'>
-                <Link href={`/result/${year}/player/${stat.player.slug}`}>{stat.player.name}</Link>
+            <tr key={index} className={'border-t border-dashed hover:bg-gray-100'}>
+              <td className={'p-4'}>
+                <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${stat.player.slug}`}>{stat.player.name}</Link>
               </td>
-              <td className='border border-amber-400'>
-                <Link href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
+              <td className={'p-4'}>
+                <Link className={`${linkStyles.join(' ')} text-stone-500 border-b-stone-500`} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
               </td>
-              <td>{stat.rank}</td>
-              <td>{stat.won}</td>
-              <td>{stat.played}</td>
-              <td>{stat.average}</td>
-              <td>{stat.encounter}</td>
+              <td className={'p-4 text-center'}>{stat.rank}</td>
+              <td className={'p-4 text-center'}>{stat.won}</td>
+              <td className={'p-4 text-center'}>{stat.played}</td>
+              <td className={'p-4 text-center'}>{Math.floor(stat.average * 100)}</td>
+              <td className={'p-4 text-center'}>{stat.encounter}</td>
             </tr>
           ))}
 

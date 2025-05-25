@@ -5,6 +5,8 @@ import { apiUrl } from '@/constants/url'
 import SubHeading from '@/components/SubHeading'
 import RankChange from '@/components/player/RankChange'
 import MainHeading from '@/components/MainHeading'
+import {linkStyles} from "@/lib/styles";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-dynamic'
 
@@ -14,22 +16,46 @@ export default async function Page ({ params }) {
   const response = await fetch(`${apiUrl}/result/${year}/player/${slug}`)
   const { player, encounters, fixtures } = await response.json()
 
+  const getPlayerLink = (playerSlug, playerName) => {
+    if (playerSlug === slug) {
+      return <span className='text-stone-500'>{playerName}</span>
+    }
+    return (
+      <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
+        {playerName}
+      </Link>
+    )
+  }
+
   return (
     <FrontLayout>
+               <Breadcrumbs
+        items={
+          [
+            { name: 'Results', href: '/result' },
+            { name: year, href: `/result/${year}` },
+            { name: player.name }
+          ]
+        }
+      />
+
+
       <MainHeading name={player.name} />
+      <div className={'flex gap-16'}>
+        <div className={'flex-1'}>
 
       <SubHeading name='General Information' />
-      <table className='w-full border border-stone-500'>
+      <table className='w-full'>
         <tbody>
           <tr>
-            <th className='p-3 border border-stone-500 bg-stone-400'>Team</th>
-            <td className='p-3 border border-stone-500'>
-              <Link href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</Link>
+            <th className='p-3 border-b border-r  border-dashed text-right'>Team</th>
+            <td className='p-3 border-b border-dashed '>
+              <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</Link>
             </td>
           </tr>
           <tr>
-            <th className='p-3 border border-stone-500 bg-stone-400'>Rank</th>
-            <td className='p-3 border border-stone-500'>
+            <th className='p-3 border-r text-right'>Rank</th>
+            <td className='p-3'>
               {player.rank}
             </td>
           </tr>
@@ -37,7 +63,7 @@ export default async function Page ({ params }) {
       </table>
 
       <SubHeading name='Team Fixtures' />
-      <div className='flex flex-wrap'>
+      <div className='flex flex-wrap gap-2'>
 
         {fixtures.map((fixture, index) => (
           <FixtureCard
@@ -50,23 +76,30 @@ export default async function Page ({ params }) {
         ))}
 
       </div>
+        </div>
+
+        <div className={'flex-1'}>
 
       <SubHeading name='Season Performance' />
 
       {encounters.map((encounter, index) => (
-        <div key={index} className='flex border-b border-b-stone-500 p-3 gap-4'>
+        <div key={index} className='flex border-b border-dashed border-b-stone-300 p-3 gap-4'>
           <div className='flex-2'>
-            <Link href={`/result/${year}/player/${encounter.playerLeftSlug}`}>{encounter.playerLeftName}</Link>
+            {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
             <RankChange rankChange={encounter.playerRankChangeLeft} />
           </div>
-          <div className='flex-1'>{encounter.scoreLeft}</div>
+          <div className='flex-1 text-right'>{encounter.scoreLeft}</div>
           <div className='flex-1'>{encounter.scoreRight}</div>
           <div className='flex-2'>
-            <Link href={`/result/${year}/player/${encounter.playerRightSlug}`}>{encounter.playerRightName}</Link>
             <RankChange rankChange={encounter.playerRankChangeRight} />
+            {getPlayerLink(encounter.playerRightSlug, encounter.playerRightName)}
           </div>
         </div>
       ))}
+        </div>
+      </div>
+
+
     </FrontLayout>
   )
 }

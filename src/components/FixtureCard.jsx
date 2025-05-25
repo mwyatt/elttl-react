@@ -7,15 +7,17 @@ export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled 
   return (
     <Link
       href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}
-      className='m-2 p-4 border bg-orange-500 text-white min-w-64 rounded'
+      className='p-4 border-orange-500 border text-orange-500 w-64 rounded'
     >
-      <span className='float-right text-stone-300 text-sm'>
+      <span className={'flex'}>
+        <span className='font-bold'>{teamLeft.name}</span>
+        <span className={'ml-2 mr-1'}>{teamLeft.score}</span>
+        <span className={'mr-2 ml-1'}>{teamRight.score}</span>
+        <span className='font-bold'>{teamRight.name}</span>
+      </span>
+      <span className='text-stone-500 text-sm'>
         <DatePretty time={timeFulfilled} />
       </span>
-      <div className='font-bold border-b border-dashed border-orange-300 pb-2 mb-2'>{teamLeft.name}</div>
-      <div className='font-bold'>{teamRight.name}</div>
-      <div>{teamLeft.score}</div>
-      <div>{teamRight.score}</div>
     </Link>
   )
 }

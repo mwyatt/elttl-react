@@ -4,6 +4,7 @@ import React from 'react'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
+import {capitalizeFirstLetter} from "@/lib/misc";
 
 export const dynamic = 'force-dynamic'
 
@@ -30,12 +31,13 @@ export default async function Page ({ params }) {
           [
             { name: 'Results', href: '/result' },
             { name: year, href: `/result/${year}` },
-            { name: division, href: `/result/${year}/${division}` }
+            { name: capitalizeFirstLetter(division) }
           ]
         }
       />
-
-      <h2 className='text-2xl mb-4'><span className='capitalize'>{division}</span> Division</h2>
+          <h2 className='text-4xl mb-8'>
+      <span className='capitalize'>{division}</span> Division
+    </h2>
       <p>This is an overview for the {division} division.</p>
       <SubMenu year={year} division={division} />
       <table className='table w-full'>
@@ -45,7 +47,7 @@ export default async function Page ({ params }) {
 
             {teams.map((team, index) => (
               <th className='border border-stone-400 p-2' key={index}>
-                <Link className={`${linkStyles}`} href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
+                <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
               </th>
             ))}
 
@@ -53,19 +55,19 @@ export default async function Page ({ params }) {
         </thead>
         <tbody>
 
-          {teams.map((teamLeft) => (
-            <tr>
+          {teams.map((teamLeft, index) => (
+            <tr key={index}>
               <td className='border border-stone-400 p-2'>
-                <Link className={linkStyles} href={`/result/${year}/team/${teamLeft.slug}`}>{teamLeft.name}</Link>
+                <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${teamLeft.slug}`}>{teamLeft.name}</Link>
               </td>
-              {teams.map((teamRight) => {
+              {teams.map((teamRight, trIndex) => {
                 const leagueTableRow = getLeagueTableRow(teamLeft.slug, teamRight.slug)
                 let scoresContent = ''
                 if (leagueTableRow) {
-                  scoresContent = <Link className={linkStyles} href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}>{leagueTableRow.scoreLeft} - {leagueTableRow.scoreRight}</Link>
+                  scoresContent = <Link className={linkStyles.join(' ')} href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}>{leagueTableRow.scoreLeft} - {leagueTableRow.scoreRight}</Link>
                 }
                 return (
-                  <td className='border border-stone-400 p-2 text-center'>
+                  <td key={trIndex} className='border border-stone-400 p-2 text-center'>
                     {scoresContent}
                   </td>
                 )

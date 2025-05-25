@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "standard",
@@ -12,8 +12,10 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.10",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
+    "dayjs": "^1.11.13",
     "http-status-codes": "^2.3.0",
     "jose": "^6.0.10",
     "mysql2": "^3.13.0",
@@ -22,6 +24,7 @@
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-select": "^5.10.1",
+    "swiper": "^11.2.7",
     "zod": "^3.24.2"
   },
   "devDependencies": {

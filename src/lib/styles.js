@@ -7,4 +7,4 @@ export const linkStyles = [
   'focus:ring-2',
   'focus:ring-pink-500',
   'focus:ring-opacity-50'
-].join(' ')
+]

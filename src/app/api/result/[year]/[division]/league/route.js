@@ -23,7 +23,6 @@ export async function GET (request, { params }) {
         left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = tte.yearId
         left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = tte.yearId
     where tte.yearId = :yearId
-    and status != 'exclude'
     and ttl.divisionId = :divisionId
     group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug
 

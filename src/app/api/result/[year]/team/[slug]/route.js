@@ -37,6 +37,7 @@ export async function GET (request, { params }) {
   const [players] = await connection.execute(`
       SELECT
           concat(nameFirst, ' ', nameLast) AS name,
+          tennisPlayer.rank,
           slug
       FROM tennisPlayer
       WHERE yearId = ?

@@ -1,8 +1,8 @@
 import FrontLayout from '@/app/frontLayout'
-import {apiUrl} from "@/constants/url";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import Link from "next/link";
-import DatePretty from "@/components/DatePretty";
+import { apiUrl } from '@/constants/url'
+import Breadcrumbs from '@/components/Breadcrumbs'
+import Link from 'next/link'
+import DatePretty from '@/components/DatePretty'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,8 +21,8 @@ export default async function Page ({ params, searchParams }) {
       <div className='max-w-[768px] mx-auto'>
         <Breadcrumbs />
         <h2 className='text-3xl mb-4'>Press Releases</h2>
-        <Link href={`/press?page=${prevPage}`} >Previous</Link>
-        <Link href={`/press?page=${nextPage}`} >Next</Link>
+        <Link href={`/press?page=${prevPage}`}>Previous</Link>
+        <Link href={`/press?page=${nextPage}`}>Next</Link>
         {contents.map((content) => (
           <div className='p-4 border-b' key={content.title}>
             <p className='text-sm text-gray-500'>

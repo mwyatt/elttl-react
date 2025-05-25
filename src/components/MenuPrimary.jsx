@@ -1,32 +1,38 @@
 'use client'
 
-import React, { useState } from 'react'
-import MenuPrimarySubItem from '@/components/MenuPrimarySubItem'
-import {BiSolidChevronDown, BiSolidChevronUp} from "react-icons/bi";
+import React from 'react'
+import { BiSolidChevronDown, BiSolidChevronUp } from 'react-icons/bi'
 
-export default function MenuPrimary ({ items, menuPrimaryOpenStatuses, setMenuPrimaryOpenStatuses }) {
-
+export default function MenuPrimary ({ items, primaryOpenStatuses, setPrimaryOpenStatuses }) {
   const handleClick = (index) => {
-    menuPrimaryOpenStatuses.forEach((status, i) => {
+    primaryOpenStatuses.forEach((status, i) => {
       if (i !== index) {
         status.isOpen = false
       }
     })
-    menuPrimaryOpenStatuses[index].isOpen = !menuPrimaryOpenStatuses[index].isOpen
-    setMenuPrimaryOpenStatuses([...menuPrimaryOpenStatuses])
+    primaryOpenStatuses[index].isOpen = !primaryOpenStatuses[index].isOpen
+    setPrimaryOpenStatuses([...primaryOpenStatuses])
   }
 
   return (
-    <div className='flex-grow flex-wrap'>
-      <nav className='flex text-xl'>
+    <div className='flex-grow flex-wrap basis-0'>
+      <nav className='flex h-full text-xl'>
         {items.map((item, index) => (
           <div
-            key={index} className='relative p-4 border-l flex grow gap-4 items-center cursor-pointer'
+            key={index}
+            className={[
+              'relative p-4 border-l flex grow gap-4 items-center cursor-pointer',
+                            primaryOpenStatuses[index].isOpen
+                ? 'bg-stone-100'
+                : '',
+            ].join(' ')}
             onClick={() => handleClick(index)}
           >
             <span className='grow'>{item.name}</span>
-            <span className='content-center'>
-              {menuPrimaryOpenStatuses[index].isOpen
+            <span className={[
+              'content-center'
+            ].join(' ')}>
+              {primaryOpenStatuses[index].isOpen
                 ? <BiSolidChevronUp size={30} />
                 : <BiSolidChevronDown size={30} />}
             </span>

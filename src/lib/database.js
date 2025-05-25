@@ -25,8 +25,8 @@ const getNewConnection = async (connectPool = true) => {
       idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
       queueLimit: 0,
       enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
-    });
+      keepAliveInitialDelay: 0
+    })
     connection = await pool.getConnection()
     connection.config.namedPlaceholders = true
     return connection
@@ -42,7 +42,5 @@ const getNewConnection = async (connectPool = true) => {
   }
   return connection
 }
-
-
 
 export { getConnection, getNewConnection }

@@ -57,8 +57,8 @@ export async function GET (request, { params }) {
              te.scoreRight,
              te.status
       from tennisEncounter te
-               inner join tennisPlayer tp on te.playerIdLeft = tp.id and tp.yearId = :yearId
-               inner join tennisPlayer tpr on te.playerIdRight = tpr.id AND tpr.yearId = :yearId
+               left join tennisPlayer tp on te.playerIdLeft = tp.id and tp.yearId = :yearId
+               left join tennisPlayer tpr on te.playerIdRight = tpr.id AND tpr.yearId = :yearId
       where te.fixtureId = :fixtureId
         and te.yearId = :yearId
   `, {
