@@ -2,13 +2,13 @@ import Link from 'next/link'
 
 export default function Breadcrumbs ({ items = [] }) {
   const getLink = (item) => {
-if (item.href) {
-            return <Link className='text-orange-500' href={item.href}>{item.name}</Link>
-}
+    if (item.href) {
+      return <Link className='text-orange-500' href={item.href}>{item.name}</Link>
+    }
     return <span className='text-neutral-400 cursor-auto'>{item.name}</span>
   }
   return (
-    <div className='flex pb-4'>
+    <div className='flex pb-4 hidden sm:block'>
       <Link className='text-orange-500' href='/'>Home</Link>
       {items.map((item, index) => (
         <span key={index}>

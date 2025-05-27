@@ -4,9 +4,9 @@ import Link from 'next/link'
 import DatePretty from '@/components/DatePretty'
 import FixtureCard from '@/components/FixtureCard'
 import { getMetaTitle } from '@/constants/MetaData'
-import CarouselElttl from "@/components/CarouselElttl";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import CarouselElttl from '@/components/CarouselElttl'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -32,7 +32,7 @@ export default async function Page () {
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
         <div className='md:p-6 '>
-          {/*<CarouselElttl advertisements={advertisementsPrimary} />*/}
+          {/* <CarouselElttl advertisements={advertisementsPrimary} /> */}
 
           {advertisementsPrimary.map((advertisement) => (
             <div key={advertisement.id} className='p-6 flex-1 bg-orange-500 text-center md:text-left text-white md:rounded border-b-4 border-b-amber-400'>
@@ -56,11 +56,12 @@ export default async function Page () {
             </div>
           </div>
           {latestPress.map((press) => (
-            <div className='p-4 border-b' key={press.id}>
+            <div className='p-4 border-b border-dashed' key={press.id}>
               <p
                 className='text-sm text-gray-500'
                 title={dayjs.unix(press.timePublished).format('DD/MM/YYYY HH:mm')}
-              >{dayjs.unix(press.timePublished).fromNow()}</p>
+              >{dayjs.unix(press.timePublished).fromNow()}
+              </p>
               <h3 className='text-lg text-orange-500'><Link href={press.url}>{press.title}</Link></h3>
             </div>
           ))}
@@ -68,7 +69,7 @@ export default async function Page () {
       </div>
       <div>
         <h2 className='text-2xl p-4'>Latest Fixtures</h2>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap gap-3 mb-6 p-4'>
           {latestFixtures.map((fixture, index) => <FixtureCard
             key={index}
             year={currentYear} teamLeft={{
@@ -83,7 +84,7 @@ export default async function Page () {
                                                   />)}
         </div>
       </div>
-      <div>
+      <div className='hidden'>
         <h2 className='text-2xl p-4'>Gallery</h2>
         <div className='flex flex-wrap'>
           {galleryImages.map((image, index) => (
@@ -96,7 +97,7 @@ export default async function Page () {
           ))}
         </div>
       </div>
-      <div className='p-4 flex md:gap-4'>
+      <div className='p-4 flex flex-col md:flex-row gap-4'>
         {advertisementsSecondary.map((advertisement, index) => (
           <div key={index} className='p-4 bg-orange-500 text-white rounded bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3'>
             <h2 className='mb-4 text-2xl font-bold'>{advertisement.title}</h2>
@@ -109,8 +110,7 @@ export default async function Page () {
                 >{advertisement.action}
                 </Link>
 
-              )
-              }
+              )}
             </div>
           </div>
         ))}

@@ -1,7 +1,7 @@
 import FrontLayout from '@/app/frontLayout'
 import { apiUrl } from '@/constants/url'
-import DatePretty from "@/components/DatePretty";
-import MainHeading from "@/components/MainHeading";
+import DatePretty from '@/components/DatePretty'
+import MainHeading from '@/components/MainHeading'
 
 export const dynamic = 'force-dynamic'
 

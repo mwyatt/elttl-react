@@ -13,6 +13,14 @@ export default async function Page ({ params }) {
   const response = await fetch(`${apiUrl}/result/${year}/venue/${slug}`)
   const data = await response.json()
 
+  // @todo not sure if these links are temporary?
+  const getDirectionsUrl = (location) => {
+    // Kay Street Baptist Church
+    if (location === '53.702059,-2.283925') {
+      return 'https://maps.app.goo.gl/q6vui9xd3GriEwAT7'
+    }
+  }
+
   return (
     <FrontLayout>
       <Breadcrumbs items={
@@ -25,7 +33,9 @@ export default async function Page ({ params }) {
       />
 
       <MainHeading name={data.venue.name} />
-      <p>{data.venue.location}</p>
+
+      <SubHeading name='Directions' />
+      <Link href={getDirectionsUrl(data.venue.location)} target='_blank' rel='noreferrer'>Google Maps Directions</Link>
 
       <SubHeading name='Teams Playing Here' />
       <div className='flex flex-wrap'>

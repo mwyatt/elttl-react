@@ -4,7 +4,7 @@ import React from 'react'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
-import {capitalizeFirstLetter} from "@/lib/misc";
+import { capitalizeFirstLetter } from '@/lib/misc'
 
 export const dynamic = 'force-dynamic'
 
@@ -26,7 +26,6 @@ export default async function Page ({ params }) {
 
   return (
     <FrontLayout>
-
       <Breadcrumbs items={
           [
             { name: 'Results', href: '/result' },
@@ -35,12 +34,15 @@ export default async function Page ({ params }) {
           ]
         }
       />
-          <h2 className='text-4xl mb-8'>
-      <span className='capitalize'>{division}</span> Division
-    </h2>
+      <h2 className='text-4xl mb-8'>
+        <span className='capitalize'>{division}</span> Division
+      </h2>
       <p>This is an overview for the {division} division.</p>
       <SubMenu year={year} division={division} />
-      <table className='table w-full'>
+      <div className='lg:hidden mb-4'>
+        <p>Please visit this page using a larger screen to view the divisonal overview.</p>
+      </div>
+      <table className='w-full hidden lg:table'>
         <thead>
           <tr>
             <th className='border border-stone-400 p-2' />

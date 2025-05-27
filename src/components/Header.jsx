@@ -60,7 +60,7 @@ export default function Header ({ menuPrimary }) {
               ].join(' ')}
             >
               {primaryItem.children && (
-                <div className='lg:flex lg:gap-4 lg:justify-center lg:items-center pb-6 bg-stone-100'>
+                <div className='lg:flex lg:gap-4 lg:justify-center lg:items-center bg-stone-100'>
                   {primaryItem.children.map((secondaryItem) => (
                     <div key={secondaryItem.name} className=' lg:p-6 lg:text-lg'>
                       <Link
@@ -76,8 +76,8 @@ export default function Header ({ menuPrimary }) {
                         <div className='sm:flex lg:block'>
                           {secondaryItem.children.map((tertiaryItem) => (
                             <div key={tertiaryItem.name}>
-                            <Link className='px-4 py-2 block text-lg p-4 border-t border-t-neutral-300' href={tertiaryItem.url}>{tertiaryItem.name}</Link>
-                          </div>
+                              <Link className='px-4 py-2 block text-lg p-4 border-t border-t-neutral-300' href={tertiaryItem.url}>{tertiaryItem.name}</Link>
+                            </div>
                           ))}
                         </div>
                       )}

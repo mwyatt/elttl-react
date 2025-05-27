@@ -4,7 +4,7 @@ import { apiUrl } from '@/constants/url'
 import { getMetaTitle } from '@/constants/MetaData'
 import { BiLogoFacebook, BiLogoTwitter } from 'react-icons/bi'
 import Header from '@/components/Header'
-import Address from "@/components/Address";
+import Address from '@/components/Address'
 
 export const dynamic = 'force-dynamic'
 
@@ -64,7 +64,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
 
       <Header menuPrimary={menuPrimary} />
 
-      <div className={`${paddedContent ? 'p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''}`}>
+      <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''}`}>
         {children}
       </div>
 
@@ -98,14 +98,14 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             </nav>
           </div>
           <div className='basis-1/4'>
-            <Link href='https://twitter.com/eastlancstt' target={'_blank'} className={'p-2 bg-stone-100 rounded-full m-2 inline-block'}>
+            <Link href='https://twitter.com/eastlancstt' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
               <BiLogoTwitter size={30} />
             </Link>
-            <Link href='https://www.facebook.com/pages/East-Lancashire-Table-Tennis-League/118206128284149' target={'_blank'} className={'p-2 bg-stone-100 rounded-full m-2 inline-block'}>
+            <Link href='https://www.facebook.com/pages/East-Lancashire-Table-Tennis-League/118206128284149' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
               <BiLogoFacebook size={30} />
             </Link>
-            <Link href='http://tabletennisengland.co.uk/' target={'_blank'} className={'inline-block m-2 w-32'}>
-              <img className={'block w-20 md:w-32'} src='https://www.tabletennisengland.co.uk/content/themes/table-tennis-england/img/main-logo.svg' alt={'Table Tennnis England logo'} />
+            <Link href='http://tabletennisengland.co.uk/' target='_blank' className='inline-block m-2 w-32' rel='noreferrer'>
+              <img className='block w-20 md:w-32' src='https://www.tabletennisengland.co.uk/content/themes/table-tennis-england/img/main-logo.svg' alt='Table Tennnis England logo' />
             </Link>
           </div>
         </div>

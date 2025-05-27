@@ -5,8 +5,8 @@ import { apiUrl } from '@/constants/url'
 import SubHeading from '@/components/SubHeading'
 import RankChange from '@/components/player/RankChange'
 import MainHeading from '@/components/MainHeading'
-import {linkStyles} from "@/lib/styles";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { linkStyles } from '@/lib/styles'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,7 +29,7 @@ export default async function Page ({ params }) {
 
   return (
     <FrontLayout>
-               <Breadcrumbs
+      <Breadcrumbs
         items={
           [
             { name: 'Results', href: '/result' },
@@ -39,66 +39,50 @@ export default async function Page ({ params }) {
         }
       />
 
-
       <MainHeading name={player.name} />
-      <div className={'flex gap-16'}>
-        <div className={'flex-1'}>
+      <div className='lg:flex gap-16'>
+        <div className='flex-1'>
 
-      <SubHeading name='General Information' />
-      <table className='w-full'>
-        <tbody>
-          <tr>
-            <th className='p-3 border-b border-r  border-dashed text-right'>Team</th>
-            <td className='p-3 border-b border-dashed '>
-              <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</Link>
-            </td>
-          </tr>
-          <tr>
-            <th className='p-3 border-r text-right'>Rank</th>
-            <td className='p-3'>
-              {player.rank}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <SubHeading name='General Information' />
+          <p>Plays for the <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</Link> team with a rank of <span className='font-bold'>{player.rank}</span> and has had <span className='font-bold'>{encounters.length}</span> encounters with other players so far this season.</p>
 
-      <SubHeading name='Team Fixtures' />
-      <div className='flex flex-wrap gap-2'>
+          {/* @todo make this only fixtures that the player has been involved in */}
+          <SubHeading name='Team Fixtures' />
+          <div className='flex flex-wrap gap-3'>
 
-        {fixtures.map((fixture, index) => (
-          <FixtureCard
-            key={index}
-            year={year}
-            teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
-            teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
-            timeFulfilled={fixture.timeFulfilled}
-          />
-        ))}
+            {fixtures.map((fixture, index) => (
+              <FixtureCard
+                key={index}
+                year={year}
+                teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
+                teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
+                timeFulfilled={fixture.timeFulfilled}
+              />
+            ))}
 
-      </div>
-        </div>
-
-        <div className={'flex-1'}>
-
-      <SubHeading name='Season Performance' />
-
-      {encounters.map((encounter, index) => (
-        <div key={index} className='flex border-b border-dashed border-b-stone-300 p-3 gap-4'>
-          <div className='flex-2'>
-            {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
-            <RankChange rankChange={encounter.playerRankChangeLeft} />
-          </div>
-          <div className='flex-1 text-right'>{encounter.scoreLeft}</div>
-          <div className='flex-1'>{encounter.scoreRight}</div>
-          <div className='flex-2'>
-            <RankChange rankChange={encounter.playerRankChangeRight} />
-            {getPlayerLink(encounter.playerRightSlug, encounter.playerRightName)}
           </div>
         </div>
-      ))}
+
+        <div className='flex-1'>
+
+          <SubHeading name='Season Performance' />
+
+          {encounters.map((encounter, index) => (
+            <div key={index} className='flex p-4 gap-4 border-t border-dashed hover:bg-gray-100'>
+              <div className='flex-2'>
+                {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
+                <RankChange rankChange={encounter.playerRankChangeLeft} />
+              </div>
+              <div className='flex-1 text-right'>{encounter.scoreLeft}</div>
+              <div className='flex-1'>{encounter.scoreRight}</div>
+              <div className='flex-2'>
+                <RankChange rankChange={encounter.playerRankChangeRight} />
+                {getPlayerLink(encounter.playerRightSlug, encounter.playerRightName)}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-
 
     </FrontLayout>
   )

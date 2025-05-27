@@ -36,13 +36,13 @@ export async function GET (request) {
     resultArchive: { name: 'Results Archive', url: '/result' },
     contactUs: { name: 'Contact Us', url: '/contact-us' },
     townTeams: { name: 'Town Teams', url: '/page/town-teams' },
-    lancsCountyTTAssoc: { name: 'Lancashire County TT Assoc', url: 'https://lancashirecounty.ttleagues.com/page/affiliationtolancashirecountytta', target: '_blank'},
+    lancsCountyTTAssoc: { name: 'Lancashire County TT Assoc', url: 'https://lancashirecounty.ttleagues.com/page/affiliationtolancashirecountytta', target: '_blank' },
 
     // @todo get assets - shftp could be easiest method to store initially
     // would be ideal to allow updating of these for logged in users
     gdpr: { name: 'GDPR', url: '/GDPR-2018-2019.pdf', target: '_blank' },
     diciplineProcedure: { name: 'Code of Conduct', url: '/disciplinary-procedure.pdf', target: '_blank' },
-    safeguardingPolicy: { name: 'Safeguarding Policy', url: '/safeguarding-guidance-2020.pdf', target: '_blank' },
+    safeguardingPolicy: { name: 'Safeguarding Policy', url: '/safeguarding-guidance-2020.pdf', target: '_blank' }
   }
 
   return NextResponse.json({

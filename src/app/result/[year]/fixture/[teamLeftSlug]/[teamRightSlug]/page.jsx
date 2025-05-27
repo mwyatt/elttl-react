@@ -2,10 +2,10 @@ import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import RankChange from '@/components/player/RankChange'
 import { apiUrl } from '@/constants/url'
-import encounterStatus from "@/constants/EncounterStatus";
-import {linkStyles} from "@/lib/styles";
-import MainHeading from "@/components/MainHeading";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import encounterStatus from '@/constants/EncounterStatus'
+import { linkStyles } from '@/lib/styles'
+import MainHeading from '@/components/MainHeading'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,43 +31,43 @@ export default async function Page ({ params }) {
     }
     return (
       <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
-        {playerName ? playerName : 'Unknown Player'}
+        {playerName || 'Unknown Player'}
       </Link>
     )
   }
 
   return (
     <FrontLayout>
-                  <Breadcrumbs
+      <Breadcrumbs
         items={
           [
             { name: 'Results', href: '/result' },
             { name: year, href: `/result/${year}` },
-            { name:  `${teamLeft.name} vs ${teamRight.name}`  }
+            { name: `${teamLeft.name} vs ${teamRight.name}` }
           ]
         }
       />
 
       <div className='max-w-[768px] mx-auto'>
         <MainHeading name={`${teamLeft.name} vs ${teamRight.name}`} />
-      <p className={'mb-8'}>Home team venue <Link className={linkStyles.join(' ')} href={`/result/${year}/venue/${venue.slug}`}>{venue.name}</Link></p>
-      <div>
-        {encounters.map((row, index) => (
-          <div key={index} className='flex gap-2 mt-4 border-b border-dashed border-gray-300 pb-3'>
-            <div className='basis-1/4'>
-              {getPlayerLink(row.playerLeftSlug, row.playerLeftName, row.status)}
-              <RankChange rankChange={row.playerRankChangeLeft} />
+        <p className='mb-8'>Home team venue <Link className={linkStyles.join(' ')} href={`/result/${year}/venue/${venue.slug}`}>{venue.name}</Link></p>
+        <div>
+          {encounters.map((row, index) => (
+            <div key={index} className='flex gap-2 mt-4 border-b border-dashed border-gray-300 pb-3'>
+              <div className='basis-1/4'>
+                {getPlayerLink(row.playerLeftSlug, row.playerLeftName, row.status)}
+                <RankChange rankChange={row.playerRankChangeLeft} />
+              </div>
+              <div className='basis-1/4 font-bold text-right text-xl pr-4 border-r'>{row.scoreLeft}</div>
+              {/* <div className='basis-1/4 font-bold text-right text-xl'>-</div> */}
+              <div className='basis-1/4 font-bold text-xl pl-2'>{row.scoreRight}</div>
+              <div className='basis-1/4'>
+                {getPlayerLink(row.playerRightSlug, row.playerRightName, row.status)}
+                <RankChange rankChange={row.playerRankChangeRight} />
+              </div>
             </div>
-            <div className='basis-1/4 font-bold text-right text-xl pr-4 border-r'>{row.scoreLeft}</div>
-            {/*<div className='basis-1/4 font-bold text-right text-xl'>-</div>*/}
-            <div className='basis-1/4 font-bold text-xl pl-2'>{row.scoreRight}</div>
-            <div className='basis-1/4'>
-              {getPlayerLink(row.playerRightSlug, row.playerRightName, row.status)}
-              <RankChange rankChange={row.playerRankChangeRight} />
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
       </div>
     </FrontLayout>
   )

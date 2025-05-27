@@ -21,17 +21,18 @@ export default function MenuPrimary ({ items, primaryOpenStatuses, setPrimaryOpe
           <div
             key={index}
             className={[
-              'relative p-4 border-l flex grow gap-4 items-center cursor-pointer',
-                            primaryOpenStatuses[index].isOpen
+              'relative p-3 sm:p-4 border-l flex grow gap-4 items-center cursor-pointer',
+              primaryOpenStatuses[index].isOpen
                 ? 'bg-stone-100'
-                : '',
+                : ''
             ].join(' ')}
             onClick={() => handleClick(index)}
           >
             <span className='grow'>{item.name}</span>
             <span className={[
               'content-center'
-            ].join(' ')}>
+            ].join(' ')}
+            >
               {primaryOpenStatuses[index].isOpen
                 ? <BiSolidChevronUp size={30} />
                 : <BiSolidChevronDown size={30} />}
