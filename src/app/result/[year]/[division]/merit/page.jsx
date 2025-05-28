@@ -6,6 +6,7 @@ import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
 import { capitalizeFirstLetter } from '@/lib/misc'
+import { getShortPlayerName } from '@/lib/player'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,11 +16,6 @@ export default async function Page ({ params }) {
 
   const response = await fetch(`${apiUrl}/result/${year}/${division}/merit`)
   const { stats } = await response.json()
-
-  const getShortPlayerName = (name) => {
-    const [firstName, lastName] = name.split(' ')
-    return `${firstName.charAt(0).toUpperCase()}. ${lastName}`
-  }
 
   return (
     <FrontLayout>

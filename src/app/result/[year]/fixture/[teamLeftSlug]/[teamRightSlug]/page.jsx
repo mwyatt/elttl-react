@@ -6,6 +6,7 @@ import encounterStatus from '@/constants/EncounterStatus'
 import { linkStyles } from '@/lib/styles'
 import MainHeading from '@/components/MainHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { getShortPlayerName } from '@/lib/player'
 
 export const dynamic = 'force-dynamic'
 
@@ -27,11 +28,14 @@ export default async function Page ({ params }) {
       return 'Doubles'
     }
     if (!playerSlug) {
-      return <span className='text-gray-500 line-through'>Absent Player</span>
+      return <span className='text-gray-500 line-through'>Absent<span className='hidden sm:inline'> Player</span></span>
     }
     return (
       <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
-        {playerName || 'Unknown Player'}
+
+        <span className='sm:hidden'>{getShortPlayerName(playerName)}</span>
+        <span className='hidden sm:inline'>{playerName}</span>
+
       </Link>
     )
   }
@@ -54,16 +58,16 @@ export default async function Page ({ params }) {
         <div>
           {encounters.map((row, index) => (
             <div key={index} className='flex gap-2 mt-4 border-b border-dashed border-gray-300 pb-3'>
-              <div className='basis-1/4'>
+              <div className='w-1/3'>
                 {getPlayerLink(row.playerLeftSlug, row.playerLeftName, row.status)}
                 <RankChange rankChange={row.playerRankChangeLeft} />
               </div>
-              <div className='basis-1/4 font-bold text-right text-xl pr-4 border-r'>{row.scoreLeft}</div>
-              {/* <div className='basis-1/4 font-bold text-right text-xl'>-</div> */}
-              <div className='basis-1/4 font-bold text-xl pl-2'>{row.scoreRight}</div>
-              <div className='basis-1/4'>
-                {getPlayerLink(row.playerRightSlug, row.playerRightName, row.status)}
+              <div className='flex-grow font-bold text-right text-xl pr-4 border-r'>{row.scoreLeft}</div>
+              {/* <div className='font-bold text-right text-xl'>-</div> */}
+              <div className='flex-grow font-bold text-xl pl-2'>{row.scoreRight}</div>
+              <div className='w-1/3 text-right'>
                 <RankChange rankChange={row.playerRankChangeRight} />
+                {getPlayerLink(row.playerRightSlug, row.playerRightName, row.status)}
               </div>
             </div>
           ))}

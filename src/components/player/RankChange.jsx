@@ -4,49 +4,56 @@ export default function RankChange ({ rankChange }) {
   }
 
   const classNames = [
-    'rounded-full text-white p-1 inline-block w-10 h-7 text-center mx-2 text-sm'
+    'rounded-full p-1 inline-block w-10 h-7 text-center mx-2 text-sm'
   ]
 
-  const getBgColor = (change) => {
-    let className = 'bg-stone-500 opacity-50'
+  const getRankChangeText = (change) => {
     if (change < 0) {
-      className = 'bg-stone-500 opacity-50'
+      return change
+    }
+    return `+${change}`
+  }
+
+  const getBgColor = (change) => {
+    let className = 'border text-green-500 border-green opacity-50'
+    if (change < 0) {
+      className = 'border border-stone-500 text-stone-500 opacity-50'
     }
     if (change < -10) {
-      className = 'bg-stone-500 opacity-50'
+      className = 'border border-stone-500 text-stone-500 opacity-50'
     }
     if (change < -20) {
-      className = 'bg-stone-500 opacity-50'
+      className = 'border border-stone-500 text-stone-500 opacity-50'
     }
     if (change < -30) {
-      className = 'bg-stone-500 opacity-50'
+      className = 'border border-stone-500 text-stone-500 opacity-50'
     }
     if (change < -40) {
-      className = 'bg-stone-500 opacity-50'
+      className = 'border border-stone-500 text-stone-500 opacity-50'
     }
     if (change < -50) {
-      className = 'bg-stone-500 opacity-50'
+      className = 'border border-stone-500 text-stone-500 opacity-50'
     }
     if (change > 0) {
-      className = 'bg-orange-500 opacity-50'
+      className = 'border text-green-500 border-green-500 opacity-50'
     }
     if (change > 10) {
-      className = 'bg-orange-500 opacity-60'
+      className = 'border text-green-500 border-green-500 opacity-60'
     }
     if (change > 20) {
-      className = 'bg-orange-500 opacity-70'
+      className = 'border text-green-500 border-green-500 opacity-70'
     }
     if (change > 30) {
-      className = 'bg-orange-500 opacity-80'
+      className = 'border text-green-500 border-green-500 opacity-80'
     }
     if (change > 40) {
-      className = 'bg-orange-500 opacity-90'
+      className = 'border text-green-500 border-green-500 opacity-90'
     }
     if (change > 50) {
-      className = 'bg-orange-500 opacity-100'
+      className = 'border text-green-500 border-green-500 opacity-100'
     }
     if (change > 60) {
-      className = 'bg-orange-500'
+      className = 'border text-green-500 border-green-500'
     }
     return className
   }
@@ -58,7 +65,7 @@ export default function RankChange ({ rankChange }) {
       className={classNames.join(' ')}
       title='Players ranking change as a result of this encounter'
     >
-      {rankChange}
+      {getRankChangeText(rankChange)}
     </span>
   )
 }

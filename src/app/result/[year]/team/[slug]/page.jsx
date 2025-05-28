@@ -30,38 +30,18 @@ export default async function Page ({ params }) {
 
       <MainHeading name={team.name} />
 
-      <div className='flex gap-8'>
+      <div className='md:flex gap-8'>
         <div className='flex-1'>
 
           <SubHeading name='General Information' />
-          <table className='w-full border border-stone-500'>
-            <tbody>
-              <tr>
-                <th className='p-3 border border-stone-500 bg-stone-400'>Division</th>
-                <td className='p-3 border border-stone-500'>
-                  <Link className={linkStyles.join(' ')} href={`/result/${year}/${team.divisionSlug}`}>{team.divisionName}</Link>
-                </td>
-              </tr>
-              <tr>
-                <th className='p-3 border border-stone-500 bg-stone-400'>Home Night</th>
-                <td className='p-3 border border-stone-500'>
-                  {homeNightMap[team.homeWeekday]}
-                </td>
-              </tr>
-              <tr>
-                <th className='p-3 border border-stone-500 bg-stone-400'>Venue</th>
-                <td className='p-3 border border-stone-500'>
-                  <Link className={linkStyles.join(' ')} href={`/result/${year}/venue/${team.venueSlug}`}>{team.venueName}</Link>
-                </td>
-              </tr>
-              <tr>
-                <th className='p-3 border border-stone-500 bg-stone-400'>Secretary</th>
-                <td className='p-3 border border-stone-500'>
-                  <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${team.secretarySlug}`}>{team.secretaryName}</Link>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <p className='my-2'>Team in the <Link className={linkStyles.join(' ')} href={`/result/${year}/${team.divisionSlug}`}>{team.divisionName}</Link> division playing at the <Link className={linkStyles.join(' ')} href={`/result/${year}/venue/${team.venueSlug}`}>{team.venueName}</Link> venue on a <strong>{homeNightMap[team.homeWeekday]}</strong> night.</p>
+
+          {team.secretaryName && (
+            <p>Secretary is <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${team.secretarySlug}`}>{team.secretaryName}</Link></p>
+          )}
+          {!team.secretaryName && (
+            <p>There is no team secretary currently.</p>
+          )}
 
           <SubHeading name='Team Fixtures' />
           <div className='flex flex-wrap gap-3'>

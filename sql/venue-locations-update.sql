@@ -1,0 +1,16 @@
+update tennisVenue set location = 'https://maps.app.goo.gl/EwvviMzKi7HQpyom6' where slug = 'hyndburn-leisure-centre';
+update tennisVenue set location = 'https://maps.app.goo.gl/8Ji4FG42vFkCKJiw6' where slug = 'kay-street-baptist-church';
+update tennisVenue set location = 'https://maps.app.goo.gl/Y6n2uF1T3vEC5Vc27' where slug = 'ramsbottom-cricket-club';
+update tennisVenue set location = 'https://maps.app.goo.gl/z3BZEWqnFK9PPwoK7' where slug = 'burnley-boys-club';
+update tennisVenue set location = 'https://maps.app.goo.gl/t7Ljo5mdCM842r6e7' where slug = 'low-moor-club';
+update tennisVenue set location = 'https://maps.app.goo.gl/VpwiwRZZMnn7j8av7' where slug = 'east-lancashire-cricket-club';
+update tennisVenue set location = 'https://maps.app.goo.gl/rHDBaPdMv6SjTar16' where slug = 'whalley-village-hall';
+update tennisVenue set location = 'https://maps.app.goo.gl/NXr6FbduNq9fZNU49' where slug = 'methodist-church-brierfield';
+update tennisVenue set location = 'https://maps.app.goo.gl/HnRPxvizQyJkY7wVA' where slug = 'adpak-machinery-systems';
+update tennisVenue set location = 'https://maps.app.goo.gl/rkfLyBvNUJKdELBm6' where slug = 'doals-community-centre';
+update tennisVenue set location = 'https://maps.app.goo.gl/BYJhEuMo6cjJkT2n7' where slug = 'the-best-centre';
+update tennisVenue set location = 'https://maps.app.goo.gl/bXQY1wvde1Ecy5na7' where slug = 'whalley-old-grammar-school';
+update tennisVenue set location = 'https://maps.app.goo.gl/qLV6Htvt6fuLTKMi6' where slug = 'st-augustines-rc-high-school';
+update tennisVenue set location = 'https://maps.app.goo.gl/eQJeuqtbPU2L1U646' where slug = 'st-peters-sports-centre';
+update tennisVenue set location = 'https://maps.app.goo.gl/gY9LcL2aN4SXmKmC6' where slug = 'sion-church';
+update tennisVenue set location = 'https://maps.app.goo.gl/HG1Ut8kwqpg3zcCS6' where slug = 'barley-methodist-church';

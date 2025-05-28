@@ -26,7 +26,7 @@ export async function GET (request) {
       children: [
         { name: 'League Table', url: `/result/${currentYear.name}/${division.name.toLowerCase()}` },
         { name: 'Merit Table', url: `/result/${currentYear.name}/${division.name.toLowerCase()}/merit` },
-        { name: 'Doubles Merit Table', url: `/result/${currentYear.name}/${division.name.toLowerCase()}/merit-doubles` }
+        { name: 'Doubles Merit Table', url: `/result/${currentYear.name}/${division.name.toLowerCase()}/doubles-merit` }
       ]
     })
   })

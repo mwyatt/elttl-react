@@ -46,8 +46,8 @@ export default async function Page ({ params }) {
         </thead>
         <tbody>
 
-          {stats.map((stat) => (
-            <tr className='border-t border-dashed'>
+          {stats.map((stat, index) => (
+            <tr key={index} className='border-t border-dashed'>
               <td className='p-1 sm:p-2 md:p-4'>
                 <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
               </td>

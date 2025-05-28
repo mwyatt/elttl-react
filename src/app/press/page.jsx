@@ -19,7 +19,12 @@ export default async function Page ({ params, searchParams }) {
   return (
     <FrontLayout>
       <div className='max-w-[768px] mx-auto'>
-        <Breadcrumbs />
+        <Breadcrumbs items={
+          [
+            { name: 'Press Releases' }
+          ]
+        }
+        />
         <h2 className='text-3xl mb-4'>Press Releases</h2>
         <Link href={`/press?page=${prevPage}`}>Previous</Link>
         <Link href={`/press?page=${nextPage}`}>Next</Link>

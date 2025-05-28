@@ -4,6 +4,7 @@ import { apiUrl } from '@/constants/url'
 import MainHeading from '@/components/MainHeading'
 import SubHeading from '@/components/SubHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { BiMap } from 'react-icons/bi'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,14 +13,6 @@ export default async function Page ({ params }) {
 
   const response = await fetch(`${apiUrl}/result/${year}/venue/${slug}`)
   const data = await response.json()
-
-  // @todo not sure if these links are temporary?
-  const getDirectionsUrl = (location) => {
-    // Kay Street Baptist Church
-    if (location === '53.702059,-2.283925') {
-      return 'https://maps.app.goo.gl/q6vui9xd3GriEwAT7'
-    }
-  }
 
   return (
     <FrontLayout>
@@ -34,22 +27,34 @@ export default async function Page ({ params }) {
 
       <MainHeading name={data.venue.name} />
 
-      <SubHeading name='Directions' />
-      <Link href={getDirectionsUrl(data.venue.location)} target='_blank' rel='noreferrer'>Google Maps Directions</Link>
-
-      <SubHeading name='Teams Playing Here' />
-      <div className='flex flex-wrap'>
-
-        {data.teams.map((team) => (
-          <Link
-            href={`/result/${year}/team/${team.slug}`}
-            className='m-2 p-4 border border-orange-500 text-orange-500 min-w-64 rounded-sm'
-            key={team.slug}
-          >
-            <span className='float-right text-gray-500 text-sm'>{team.divisionName}</span>
-            <div>{team.name}</div>
+      <div className='flex'>
+        <div className='flex-1'>
+          <SubHeading name='Directions' />
+          <Link href={data.venue.location} target='_blank' rel='noreferrer' className='border border-orange-500 text-orange-500 p-2 flex items-center gap-2 rounded'>
+            <BiMap />
+            Google Maps Directions
           </Link>
-        ))}
+
+        </div>
+
+        <div className='flex-1'>
+
+          <SubHeading name='Teams Playing Here' />
+          <div className='flex flex-wrap'>
+
+            {data.teams.map((team) => (
+              <Link
+                href={`/result/${year}/team/${team.slug}`}
+                className='m-2 p-4 border border-orange-500 text-orange-500 min-w-64 rounded-sm'
+                key={team.slug}
+              >
+                <span className='float-right text-gray-500 text-sm'>{team.divisionName}</span>
+                <div>{team.name}</div>
+              </Link>
+            ))}
+          </div>
+
+        </div>
 
       </div>
     </FrontLayout>

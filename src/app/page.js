@@ -7,6 +7,7 @@ import { getMetaTitle } from '@/constants/MetaData'
 import CarouselElttl from '@/components/CarouselElttl'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import SubHeading from '@/components/SubHeading'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -31,16 +32,16 @@ export default async function Page () {
   return (
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
-        <div className='md:p-6 '>
+        <div className='md:p-6'>
           {/* <CarouselElttl advertisements={advertisementsPrimary} /> */}
 
           {advertisementsPrimary.map((advertisement) => (
-            <div key={advertisement.id} className='p-6 flex-1 bg-orange-500 text-center md:text-left text-white md:rounded border-b-4 border-b-amber-400'>
+            <div key={advertisement.id} className='p-6 flex-1 bg-orange-500 text-center md:text-left text-white md:rounded'>
               <h2 className='mb-4 text-5xl font-bold'>{advertisement.title}</h2>
               <p className='my-3 text-3xl'>{advertisement.description}</p>
               <div className='mt-6 flex justify-end'>
                 <Link
-                  className='bg-stone-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'
+                  className='bg-stone-500 border-b-stone-700 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'
                   href={advertisement.url}
                 >{advertisement.action}
                 </Link>
@@ -49,16 +50,16 @@ export default async function Page () {
           ))}
         </div>
         <div className=''>
-          <div className='flex p-4'>
+          <div className='flex p-4 items-center'>
             <h2 className='text-2xl grow'>Press Releases</h2>
             <div>
-              <Link className='text-gray-500 border-b border-b-gray-400' href='/press/'>View all</Link>
+              <Link className='text-gray-500 border-b border-b-gray-400 ,mb' href='/press/'>View all</Link>
             </div>
           </div>
           {latestPress.map((press) => (
             <div className='p-4 border-b border-dashed' key={press.id}>
               <p
-                className='text-sm text-gray-500'
+                className='text-sm text-gray-500 mb-2'
                 title={dayjs.unix(press.timePublished).format('DD/MM/YYYY HH:mm')}
               >{dayjs.unix(press.timePublished).fromNow()}
               </p>
@@ -67,6 +68,10 @@ export default async function Page () {
           ))}
         </div>
       </div>
+      {/* <div> */}
+      {/*  <SubHeading name={'Rising Stars'} /> */}
+      {/*  <p>@todo this can be a list of players who have attained the most rank this season</p> */}
+      {/* </div> */}
       <div>
         <h2 className='text-2xl p-4'>Latest Fixtures</h2>
         <div className='flex flex-wrap gap-3 mb-6 p-4'>
