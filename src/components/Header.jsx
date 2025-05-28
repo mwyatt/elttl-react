@@ -4,13 +4,9 @@ import Link from 'next/link'
 import ElttlEmblem from '@/components/icons/ElttlEmblem'
 import MenuPrimary from '@/components/MenuPrimary'
 import { useState } from 'react'
-import { getMetaTitle } from '@/constants/MetaData'
 import { BiBook, BiCode, BiMap, BiNews, BiTrophy } from 'react-icons/bi'
-import { VscCode } from 'react-icons/vsc'
 
-export default function Header ({ menuPrimary }) {
-  const appName = getMetaTitle()
-
+export default function Header ({ appName, menuPrimary }) {
   const [primaryOpenStatuses, setPrimaryOpenStatuses] = useState(
     menuPrimary.map(() => ({ isOpen: false }))
   )

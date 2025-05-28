@@ -62,7 +62,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
       {/*  </div> */}
       {/* </div> */}
 
-      <Header menuPrimary={menuPrimary} />
+      <Header appName={appName} menuPrimary={menuPrimary} />
 
       <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''}`}>
         {children}
