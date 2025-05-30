@@ -3,7 +3,7 @@ import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import DatePretty from '@/components/DatePretty'
 import FixtureCard from '@/components/FixtureCard'
-import { getMetaTitle } from '@/constants/MetaData'
+import { getMetaDescription, getMetaTitle } from '@/constants/MetaData'
 import CarouselElttl from '@/components/CarouselElttl'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -11,7 +11,7 @@ import SubHeading from '@/components/SubHeading'
 
 export const metadata = {
   title: getMetaTitle(),
-  description: 'Welcome to the official website of the club. Here you can find all the latest news, fixtures, and results.'
+  description: getMetaDescription()
 }
 
 export const dynamic = 'force-dynamic'
@@ -32,7 +32,7 @@ export default async function Page () {
   return (
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
-        <div className='md:p-6'>
+        <div className='md:p-6 flex-1'>
           {/* <CarouselElttl advertisements={advertisementsPrimary} /> */}
 
           {advertisementsPrimary.map((advertisement) => (
@@ -49,7 +49,7 @@ export default async function Page () {
             </div>
           ))}
         </div>
-        <div className=''>
+        <div className='flex-1'>
           <div className='flex p-4 items-center'>
             <h2 className='text-2xl grow'>Press Releases</h2>
             <div>

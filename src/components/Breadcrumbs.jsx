@@ -5,14 +5,14 @@ export default function Breadcrumbs ({ items = [] }) {
     if (item.href) {
       return <Link className='text-orange-500' href={item.href}>{item.name}</Link>
     }
-    return <span className='text-neutral-400 cursor-auto'>{item.name}</span>
+    return <span className='text-stone-400 cursor-auto'>{item.name}</span>
   }
   return (
     <div className='flex pb-4 hidden sm:block'>
       <Link className='text-orange-500' href='/'>Home</Link>
       {items.map((item, index) => (
         <span key={index}>
-          <span className='text-neutral-400 mx-4'>/</span>
+          <span className='text-stone-400 mx-4'>/</span>
           {getLink(item)}
         </span>
       ))}

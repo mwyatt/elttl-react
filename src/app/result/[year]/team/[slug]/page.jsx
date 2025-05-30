@@ -75,12 +75,15 @@ export default async function Page ({ params }) {
                   </Link>
                 </div>
                 <div className='flex-1 text-right'>
-                  <span className='float-right text-gray-500 text-sm'>{player.rank}</span>
+                  <span className='float-right text-stone-500'>{player.rank}</span>
                 </div>
               </div>
             ))}
 
           </div>
+
+          {/* <SubHeading name='Directions' /> */}
+          {/* <DirectionsButton url={data.venue.location} /> */}
 
         </div>
       </div>

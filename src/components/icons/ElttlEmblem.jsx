@@ -7,6 +7,7 @@ export default function ElttlEmblem (props) {
       width={props.width || '100%'}
       height={props.height || '100%'}
       viewBox='0 0 400 400'
+      fill={props.fill || 'currentColor'}
     >
       <g>
         <path d='M185.987,143.328c-0.553,3.944,0.751,6.036,3.394,6.782c-7.765,7.186-12.021-1.511-23.761,3.395

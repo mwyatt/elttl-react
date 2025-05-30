@@ -5,6 +5,7 @@ import { getMetaTitle } from '@/constants/MetaData'
 import { BiLogoFacebook, BiLogoTwitter } from 'react-icons/bi'
 import Header from '@/components/Header'
 import Address from '@/components/Address'
+import { PiXLogoFill } from 'react-icons/pi'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,9 +18,8 @@ export default async function FrontLayout ({ children, paddedContent = true, max
   const menuPrimary = data.menuPrimary
   const footLinks = data.footLinks
 
-  console.log('@todo frontlayout is being called, should it be?')
-
   return (
+
     <div>
       {/* <div className='flex border-b border-neutral-400 text-sm bg-neutral-200'> */}
       {/*  <div className={'max-w-[1440px] mx-auto hidden'}> */}
@@ -71,7 +71,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
       <footer className='bg-stone-500 mt-8'>
         <div className='bg-stone-600 md:flex max-w-[1440px] mx-auto'>
           <div className='basis-1/4 p-4 text-white'>
-            <div><Link href='/contact-us' className='text-orange-500 border-b border-b-orange-500'>&copy; {appName}</Link></div>
+            <div className='mb-1'><Link href='/contact-us' className='text-orange-500 border-b border-b-orange-500'>&copy; {appName}</Link></div>
             <Address />
           </div>
           <div className='basis-1/4 p-4'>
@@ -97,9 +97,9 @@ export default async function FrontLayout ({ children, paddedContent = true, max
               ))}
             </nav>
           </div>
-          <div className='basis-1/4'>
-            <Link href='https://twitter.com/eastlancstt' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
-              <BiLogoTwitter size={30} />
+          <div className='basis-1/4 mt-4'>
+            <Link href='https://x.com/eastlancstt' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
+              <PiXLogoFill size={30} />
             </Link>
             <Link href='https://www.facebook.com/pages/East-Lancashire-Table-Tennis-League/118206128284149' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
               <BiLogoFacebook size={30} />

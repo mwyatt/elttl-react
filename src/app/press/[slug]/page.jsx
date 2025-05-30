@@ -37,8 +37,13 @@ export default async function Page ({ params }) {
         }
         />
         <h2 className='text-3xl mb-4'>{data.title}</h2>
-        <p className='mb-4 text-neutral-600'>Published <DatePretty time={data.timePublished} /> by {data.author}</p>
-        <div className='text-base/7 text-neutral-700' dangerouslySetInnerHTML={{ __html: data.html }} />
+        <p className='mb-4 text-stone-400'>
+          Published <DatePretty time={data.timePublished} />
+          {data.author && (
+            ' by ' + data.author
+          )}
+        </p>
+        <div className='text-base/7 text-stone-600' dangerouslySetInnerHTML={{ __html: data.html }} />
       </div>
     </FrontLayout>
   )
