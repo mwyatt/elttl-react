@@ -6,6 +6,18 @@ import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
 import { capitalizeFirstLetter } from '@/lib/misc'
+import { getMetaTitle } from '@/constants/MetaData'
+
+export async function generateMetadata (
+  { params }
+) {
+  const division = (await params).division
+
+  return {
+    title: getMetaTitle(capitalizeFirstLetter(division) + ' Division Doubles Merit Table'),
+    description: `This is the doubles merit table for the ${division} division.`
+  }
+}
 
 export const dynamic = 'force-dynamic'
 

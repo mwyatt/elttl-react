@@ -9,7 +9,7 @@
     "lint": "standard",
     "lint-fix": "standard --fix",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch --detectOpenHandles"
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.10",

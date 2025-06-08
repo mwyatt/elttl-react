@@ -11,7 +11,28 @@ export default {
     extend: {
       colors: {
         background: 'var(--background)',
-        foreground: 'var(--foreground)'
+        foreground: 'var(--foreground)',
+        primary: {
+          500: '#4399db'
+        },
+        secondary: {
+          500: '#716156'
+        },
+        tertiary: {
+          500: '#828387'
+        }
+
+        //   blue
+        //   #6297bf
+        // table
+        // #567884
+        // table leg
+        // #828387
+        // table side
+        // #142534
+        // floor
+        // #716156
+
       }
     }
   },

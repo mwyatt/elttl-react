@@ -54,5 +54,5 @@ export function getSideCapitalized (side) {
 
 export function getSideIndex (side) {
   const normalisedSide = side.toLowerCase()
-  return side === SIDE_LEFT ? 0 : 1
+  return normalisedSide === SIDE_LEFT ? 0 : 1
 }

@@ -7,6 +7,18 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
 import MainHeading from '@/components/MainHeading'
 import { capitalizeFirstLetter } from '@/lib/misc'
+import { getMetaTitle } from '@/constants/MetaData'
+
+export async function generateMetadata (
+  { params }
+) {
+  const division = (await params).division
+
+  return {
+    title: getMetaTitle(capitalizeFirstLetter(division) + ' Division League Table'),
+    description: `This is the league table for the ${division} division.`
+  }
+}
 
 export const dynamic = 'force-dynamic'
 

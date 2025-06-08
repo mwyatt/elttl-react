@@ -6,6 +6,12 @@ import DatePretty from '@/components/DatePretty'
 import MainHeading from '@/components/MainHeading'
 import { BiCaretLeft, BiCaretRight } from 'react-icons/bi'
 import { linkStyles } from '@/lib/styles'
+import { getMetaTitle } from '@/constants/MetaData'
+
+export const metadata = {
+  title: getMetaTitle('Press Releases'),
+  description: 'Latest press releases from the league, including news and updates about teams, fixtures, and events.'
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -30,11 +36,11 @@ export default async function Page ({ params, searchParams }) {
         />
         <MainHeading name='Press Releases' />
         <div className='flex justify-between my-6'>
-          <Link className='flex items-center border border-orange-500 text-orange-500 py-1 pr-3 pl-2 rounded' href={`/press?page=${prevPage}`}>
+          <Link className='flex items-center border border-primary-500 text-primary-500 py-1 pr-3 pl-2 rounded' href={`/press?page=${prevPage}`}>
             <BiCaretLeft size={21} className='mr-1' />
             Previous
           </Link>
-          <Link className='flex items-center border border-orange-500 text-orange-500 py-1 pr-2 pl-3 rounded' href={`/press?page=${nextPage}`}>
+          <Link className='flex items-center border border-primary-500 text-primary-500 py-1 pr-2 pl-3 rounded' href={`/press?page=${nextPage}`}>
             Next
             <BiCaretRight size={21} className='ml-2' />
           </Link>

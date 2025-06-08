@@ -22,5 +22,8 @@ describe('encounter', () => {
 
     const sideIndex = getSideIndex(SIDE_LEFT)
     expect(sideIndex).toEqual(0)
+
+    expect(getSideIndex(capitalizedSides[0])).toEqual(0)
+    expect(getSideIndex(capitalizedSides[1])).toEqual(1)
   })
 })

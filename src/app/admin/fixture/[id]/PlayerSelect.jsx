@@ -10,7 +10,7 @@ export function PlayerSelect ({ teamId, structPosition, players, playerSelectedI
 
   const otherPlayers = players.filter(player => player.teamId !== teamId)
 
-  const options = playersInTeam.map(player => ({
+  const playerOptions = playersInTeam.map(player => ({
     value: player.id,
     label: player.name
   })).concat(
@@ -19,6 +19,13 @@ export function PlayerSelect ({ teamId, structPosition, players, playerSelectedI
       label: player.name
     }))
   )
+  const options = [
+    {
+      value: 0,
+      label: 'Absent Player'
+    },
+    ...playerOptions
+  ]
 
   const selectedOption = options.find(option => option.value === playerSelectedId)
 

@@ -6,11 +6,26 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
 import FixtureCard from '@/components/FixtureCard'
 import { homeNightMap } from '@/constants/Team'
+import { apiUrl } from '@/constants/url'
+import { getMetaTitle } from '@/constants/MetaData'
+
+export async function generateMetadata (
+  { params }
+) {
+  const { year, slug } = await params
+
+  const response = await fetch(`${apiUrl}/result/${year}/team/${slug}`)
+  const { team } = await response.json()
+
+  return {
+    title: getMetaTitle(`Team ${team.name}`),
+    description: `Summary and statistics for team ${team.name}`
+  }
+}
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const { year, slug } = await params
 
   const response = await fetch(`${apiUrl}/result/${year}/team/${slug}`)
@@ -75,7 +90,7 @@ export default async function Page ({ params }) {
                   </Link>
                 </div>
                 <div className='flex-1 text-right'>
-                  <span className='float-right text-stone-500'>{player.rank}</span>
+                  <span className='float-right text-tertiary-500'>{player.rank}</span>
                 </div>
               </div>
             ))}

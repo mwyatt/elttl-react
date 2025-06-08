@@ -5,6 +5,18 @@ import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
 import { capitalizeFirstLetter } from '@/lib/misc'
+import { getMetaTitle } from '@/constants/MetaData'
+
+export async function generateMetadata (
+  { params }
+) {
+  const division = (await params).division
+
+  return {
+    title: getMetaTitle(capitalizeFirstLetter(division) + ' Division Overview'),
+    description: `Full overview of the ${division} division, including league table and team fixtures.`
+  }
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -49,7 +61,7 @@ export default async function Page ({ params }) {
 
             {teams.map((team, index) => (
               <th className='border border-stone-400 p-2' key={index}>
-                <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
+                <Link className={linkStyles.join(' ') + 'border-b-tertiary-500 text-tertiary-500'} href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
               </th>
             ))}
 

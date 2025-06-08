@@ -7,6 +7,21 @@ import RankChange from '@/components/player/RankChange'
 import MainHeading from '@/components/MainHeading'
 import { linkStyles } from '@/lib/styles'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { getMetaTitle } from '@/constants/MetaData'
+
+export async function generateMetadata (
+  { params }
+) {
+  const { year, slug } = await params
+
+  const response = await fetch(`${apiUrl}/result/${year}/player/${slug}`)
+  const { player } = await response.json()
+
+  return {
+    title: getMetaTitle(`Player ${player.name}`),
+    description: `Summary and statistics for player ${player.name}`
+  }
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -18,7 +33,7 @@ export default async function Page ({ params }) {
 
   const getPlayerLink = (playerSlug, playerName) => {
     if (playerSlug === slug) {
-      return <span className='text-stone-500'>{playerName}</span>
+      return <span className='text-tertiary-500'>{playerName}</span>
     }
     return (
       <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>

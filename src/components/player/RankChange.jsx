@@ -15,42 +15,42 @@ export default function RankChange ({ rankChange }) {
   }
 
   const getBgColor = (change) => {
-    let className = 'border text-green-500 border-green opacity-50'
+    let className = 'border text-green-500 border-green'
     if (change < 0) {
-      className = 'border border-stone-500 text-stone-500 opacity-50'
+      className = 'border border-tertiary-500 text-tertiary-500'
     }
     if (change < -10) {
-      className = 'border border-stone-500 text-stone-500 opacity-50'
+      className = 'border border-tertiary-500 text-tertiary-500'
     }
     if (change < -20) {
-      className = 'border border-stone-500 text-stone-500 opacity-50'
+      className = 'border border-tertiary-500 text-tertiary-500'
     }
     if (change < -30) {
-      className = 'border border-stone-500 text-stone-500 opacity-50'
+      className = 'border border-tertiary-500 text-tertiary-500'
     }
     if (change < -40) {
-      className = 'border border-stone-500 text-stone-500 opacity-50'
+      className = 'border border-tertiary-500 text-tertiary-500'
     }
     if (change < -50) {
-      className = 'border border-stone-500 text-stone-500 opacity-50'
+      className = 'border border-tertiary-500 text-tertiary-500'
     }
     if (change > 0) {
-      className = 'border text-green-500 border-green-500 opacity-50'
+      className = 'border text-green-500 border-green-500'
     }
     if (change > 10) {
-      className = 'border text-green-500 border-green-500 opacity-60'
+      className = 'border text-green-500 border-green-500'
     }
     if (change > 20) {
-      className = 'border text-green-500 border-green-500 opacity-70'
+      className = 'border text-green-500 border-green-500'
     }
     if (change > 30) {
-      className = 'border text-green-500 border-green-500 opacity-80'
+      className = 'border text-green-500 border-green-500'
     }
     if (change > 40) {
-      className = 'border text-green-500 border-green-500 opacity-90'
+      className = 'border text-green-500 border-green-500'
     }
     if (change > 50) {
-      className = 'border text-green-500 border-green-500 opacity-100'
+      className = 'border text-green-500 border-green-500'
     }
     if (change > 60) {
       className = 'border text-green-500 border-green-500'

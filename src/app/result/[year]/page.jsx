@@ -16,7 +16,7 @@ export default async function Page ({ params }) {
       <p>Here are all the divisions in this season.</p>
       <div className='flex gap-4 mt-8'>
         {data.map((division) => (
-          <Link className='px-6 py-3 border border-orange-500 rounded font-bold' href={`/result/${year}/${division.name.toLowerCase()}`} key={division.name}>
+          <Link className='px-6 py-3 border border-primary-500 rounded font-bold' href={`/result/${year}/${division.name.toLowerCase()}`} key={division.name}>
             {division.name} Division
           </Link>
         ))}

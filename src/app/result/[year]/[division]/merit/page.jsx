@@ -7,6 +7,18 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
 import { capitalizeFirstLetter } from '@/lib/misc'
 import { getShortPlayerName } from '@/lib/player'
+import { getMetaTitle } from '@/constants/MetaData'
+
+export async function generateMetadata (
+  { params }
+) {
+  const division = (await params).division
+
+  return {
+    title: getMetaTitle(capitalizeFirstLetter(division) + ' Division Merit Table'),
+    description: `This is the merit table for the ${division} division.`
+  }
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -30,7 +42,7 @@ export default async function Page ({ params }) {
         }
       />
       <h2 className='text-3xl mb-4 sm:text-4xl sm:mb-8'>
-        <span className='capitalize'>{division}</span> Division League Table
+        <span className='capitalize'>{division}</span> Division Merit Table
       </h2>
       <p>This is the merit table for the <span className='capitalize'>{division}</span> division.</p>
       <SubMenu year={year} division={division} />
@@ -57,7 +69,7 @@ export default async function Page ({ params }) {
                 </Link>
               </td>
               <td className='p-1 sm:p-2 hidden sm:block md:p-4'>
-                <Link className={`${linkStyles.join(' ')} text-stone-500 border-b-stone-500`} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
+                <Link className={`${linkStyles.join(' ')} text-tertiary-500 border-b-tertiary-500`} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
               </td>
               <td className='p-1 sm:p-2 md:p-4 text-center'>{stat.player.rank}</td>
               <td className='p-1 sm:p-2 md:p-4 text-center'>{stat.won}</td>

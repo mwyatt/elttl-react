@@ -7,13 +7,30 @@ import { linkStyles } from '@/lib/styles'
 import MainHeading from '@/components/MainHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getShortPlayerName } from '@/lib/player'
+import { getMetaTitle } from '@/constants/MetaData'
+import { getSideCapitalized, SIDE_LEFT, SIDE_RIGHT } from '@/constants/encounter'
+
+export async function generateMetadata (
+  { params }
+) {
+  const { year, teamLeftSlug, teamRightSlug } = (await params)
+
+  const response = await fetch(`${apiUrl}/result/${year}/fixture/${teamLeftSlug}/${teamRightSlug}`)
+  const {
+    teamLeft,
+    teamRight
+  } = await response.json()
+
+  return {
+    title: getMetaTitle(`Fixture ${teamLeft.name} vs ${teamRight.name}`),
+    description: `Final fixture score between ${teamLeft.name} and ${teamRight.name} in the ${year} season.`
+  }
+}
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
-  const year = (await params).year
-  const teamLeftSlug = (await params).teamLeftSlug
-  const teamRightSlug = (await params).teamRightSlug
+  const { year, teamLeftSlug, teamRightSlug } = (await params)
 
   const response = await fetch(`${apiUrl}/result/${year}/fixture/${teamLeftSlug}/${teamRightSlug}`)
   const {
@@ -22,6 +39,21 @@ export default async function Page ({ params }) {
     venue,
     encounters
   } = await response.json()
+
+  const getGrandTotal = (side) => {
+    const sideCapitalized = getSideCapitalized(side)
+    const sideScoreKey = `score${sideCapitalized}`
+    let score = 0
+
+    encounters.forEach((encounter) => {
+      if (encounter.status === encounterStatus.EXCLUDE) {
+        return
+      }
+      score += parseInt(encounter[sideScoreKey])
+    })
+
+    return score
+  }
 
   const getPlayerLink = (playerSlug, playerName, status) => {
     if (status === encounterStatus.DOUBLES) {
@@ -71,6 +103,10 @@ export default async function Page ({ params }) {
               </div>
             </div>
           ))}
+        </div>
+        <div>
+          {getGrandTotal(SIDE_LEFT)}
+          {getGrandTotal(SIDE_RIGHT)}
         </div>
       </div>
     </FrontLayout>

@@ -1,8 +1,8 @@
 export const linkStyles = [
-  'text-orange-500',
+  'text-primary-500',
   'border-b',
-  'border-b-orange-500',
-  'hover:text-blue-700',
+  'border-b-primary-500',
+  'hover:text-primary-600',
   'focus:outline-none',
   'focus:ring-2',
   'focus:ring-pink-500',

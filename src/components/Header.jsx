@@ -37,7 +37,7 @@ export default function Header ({ appName, menuPrimary }) {
           title={`${appName} - Home`}
         >
           <ElttlEmblem className='md:hidden' width='50px' />
-          <ElttlEmblem className='hidden md:block' width='75px' />
+          <ElttlEmblem className='hidden md:block' width='120px' />
           <span className=''>
             <span className='hidden md:block text-4xl'>{appName}</span>
             <span className='md:hidden text-5xl font-bold'>ELTTL</span>
@@ -60,7 +60,7 @@ export default function Header ({ appName, menuPrimary }) {
                   {primaryItem.children.map((secondaryItem) => (
                     <div key={secondaryItem.name} className=' lg:p-6 lg:text-lg'>
                       <Link
-                        className='flex px-4 py-2 block text-lg p-4 text-orange-500 border-t border-t-neutral-300 lg:border-0'
+                        className='flex px-4 py-2 block text-lg p-4 text-primary-500 border-t border-t-neutral-300 lg:border-0'
                         href={secondaryItem.url}
                         target={secondaryItem.target || '_self'}
                       >

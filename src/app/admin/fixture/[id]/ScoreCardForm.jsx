@@ -80,8 +80,10 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
 
   const getPlayerName = (id) => {
     const player = players.find(player => player.id === id)
-    return player ? player.name : ''
+    return player ? player.name : <span className='opacity-50'>Absent Player</span>
   }
+
+  const doublesLabel = <span className='opacity-50'>Doubles</span>
 
   return (
     <form action={updateAction} className='p-6 max-w-4xl mx-auto'>
@@ -126,9 +128,9 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
             />
             <div className='flex-1 flex justify-end'>
               <label>
-                {getPlayerName(playerStruct[0][encounterRow[0]])}
+                {encounterRow[0] === EncounterStatus.DOUBLES ? doublesLabel : getPlayerName(playerStruct[0][encounterRow[0]])}
                 <input
-                  className='border border-stone-500 rounded w-14 text-center text-2xl ml-4 py-1'
+                  className='border border-tertiary-500 rounded w-14 text-center text-2xl ml-4 py-1'
                   type='text'
                   value={encounterStruct[index].scoreLeft}
                   onChange={() => {}}
@@ -140,13 +142,13 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
           <div className='flex-1'>
             <label>
               <input
-                className='border border-stone-500 rounded w-14 text-center text-2xl mr-4 py-1'
+                className='border border-tertiary-500 rounded w-14 text-center text-2xl mr-4 py-1'
                 type='text'
                 value={encounterStruct[index].scoreRight}
                 onChange={() => {}}
                 onKeyUp={(e) => handleChangeScore(e, index, SIDE_RIGHT, encounterStruct[index])}
               />
-              {getPlayerName(playerStruct[1][encounterRow[1]])}
+              {encounterRow[0] === EncounterStatus.DOUBLES ? doublesLabel : getPlayerName(playerStruct[1][encounterRow[1]])}
             </label>
           </div>
         </div>
@@ -156,7 +158,7 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
         <div className='flex-1'>{getGrandTotal(SIDE_RIGHT)}</div>
       </div>
       <div className='flex justify-center'>
-        <button disabled={pending} type='submit' className='w-32 bg-orange-500 border-b-orange-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-orange-600'>
+        <button disabled={pending} type='submit' className='w-32 bg-primary-500 border-b-orange-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-orange-600'>
           Fulfil
         </button>
       </div>

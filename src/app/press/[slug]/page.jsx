@@ -14,7 +14,7 @@ export async function generateMetadata (
 
   return {
     title: getMetaTitle(data.title),
-    description: '@todo'
+    description: data.title
   }
 }
 

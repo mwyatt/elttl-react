@@ -6,6 +6,7 @@ import { BiLogoFacebook, BiLogoTwitter } from 'react-icons/bi'
 import Header from '@/components/Header'
 import Address from '@/components/Address'
 import { PiXLogoFill } from 'react-icons/pi'
+import { linkStyles } from '@/lib/styles'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,7 +21,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
 
   return (
 
-    <div>
+    <div className='bg-[url(/bg.gif)] bg-no-repeat'>
       {/* <div className='flex border-b border-neutral-400 text-sm bg-neutral-200'> */}
       {/*  <div className={'max-w-[1440px] mx-auto hidden'}> */}
       {/*    <div className='flex-1 hidden lg:block'> */}
@@ -64,21 +65,21 @@ export default async function FrontLayout ({ children, paddedContent = true, max
 
       <Header appName={appName} menuPrimary={menuPrimary} />
 
-      <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''}`}>
+      <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''} bg-white/20`}>
         {children}
       </div>
 
-      <footer className='bg-stone-500 mt-8'>
-        <div className='bg-stone-600 md:flex max-w-[1440px] mx-auto'>
+      <footer className='bg-tertiary-500 mt-8'>
+        <div className='bg-secondary-500 md:flex max-w-[1440px] mx-auto'>
           <div className='basis-1/4 p-4 text-white'>
-            <div className='mb-1'><Link href='/contact-us' className='text-orange-500 border-b border-b-orange-500'>&copy; {appName}</Link></div>
+            <div className='mb-1'><Link href='/contact-us' className={linkStyles.join(' ')}>&copy; {appName}</Link></div>
             <Address />
           </div>
           <div className='basis-1/4 p-4'>
             <nav className='bg-stone-600 rounded'>
               {footLinks.filter((item) => item.area === 1).map((item) => (
                 <Link
-                  className='block px-3 py-2 border-b border-dashed border-stone-500 hover:bg-stone-500 text-white' key={item.name}
+                  className='block px-3 py-2 border-b border-dashed border-tertiary-500 hover:bg-tertiary-500 text-white' key={item.name}
                   href={item.url}
                 >{item.name}
                 </Link>
@@ -86,10 +87,10 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             </nav>
           </div>
           <div className='basis-1/4 p-4'>
-            <nav className='bg-stone-600 rounded'>
+            <nav className='bg-tertiary-500 rounded'>
               {footLinks.filter((item) => item.area === 2).map((item) => (
                 <Link
-                  className='block px-3 py-2 border-b border-dashed border-stone-500 hover:bg-stone-500 text-white' key={item.name}
+                  className='block px-3 py-2 border-b border-dashed border-tertiary-500 hover:bg-tertiary-500 text-white' key={item.name}
                   href={item.url}
                   target={item.target || '_self'}
                 >{item.name}
