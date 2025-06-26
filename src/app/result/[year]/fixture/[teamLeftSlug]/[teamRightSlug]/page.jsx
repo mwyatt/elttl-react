@@ -95,7 +95,6 @@ export default async function Page ({ params }) {
                 <RankChange rankChange={row.playerRankChangeLeft} />
               </div>
               <div className='flex-grow font-bold text-right text-xl pr-4 border-r'>{row.scoreLeft}</div>
-              {/* <div className='font-bold text-right text-xl'>-</div> */}
               <div className='flex-grow font-bold text-xl pl-2'>{row.scoreRight}</div>
               <div className='w-1/3 text-right'>
                 <RankChange rankChange={row.playerRankChangeRight} />
@@ -104,9 +103,9 @@ export default async function Page ({ params }) {
             </div>
           ))}
         </div>
-        <div>
-          {getGrandTotal(SIDE_LEFT)}
-          {getGrandTotal(SIDE_RIGHT)}
+        <div className={'text-4xl flex mt-10 font-bold gap-6'}>
+          <div className={'flex-1 text-right'}>{getGrandTotal(SIDE_LEFT)}</div>
+          <div className={'flex-1 '}>{getGrandTotal(SIDE_RIGHT)}</div>
         </div>
       </div>
     </FrontLayout>

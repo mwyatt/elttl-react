@@ -9,6 +9,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import SubHeading from '@/components/SubHeading'
 import { linkStyles } from '@/lib/styles'
+import { late } from 'zod'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -73,6 +74,7 @@ export default async function Page () {
       {/*  <SubHeading name={'Rising Stars'} /> */}
       {/*  <p>@todo this can be a list of players who have attained the most rank this season</p> */}
       {/* </div> */}
+      {latestFixtures.length > 0 && (
       <div>
         <h2 className='text-2xl p-4'>Latest Fixtures</h2>
         <div className='flex flex-wrap gap-3 mb-6 p-4'>
@@ -90,6 +92,7 @@ export default async function Page () {
                                                   />)}
         </div>
       </div>
+      )}
       <div className='hidden'>
         <h2 className='text-2xl p-4'>Gallery</h2>
         <div className='flex flex-wrap'>
@@ -111,7 +114,7 @@ export default async function Page () {
             <div className='mt-6 flex justify-end'>
               {advertisement.action && (
                 <Link
-                  className='bg-secondary-500 rounded px-3 py-2 text-white font-bold capitalize'
+                  className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize'
                   href={advertisement.url}
                   target='_blank' rel='noreferrer'
                 >{advertisement.action}

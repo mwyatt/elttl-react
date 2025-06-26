@@ -1,28 +1,57 @@
 'use client'
 
-import Select from 'react-select'
+import React from 'react'
+import dynamic from "next/dynamic";
+import { getSideIndex, SIDE_LEFT, SIDE_RIGHT } from '@/constants/encounter'
+const CreatableSelect = dynamic(() => import("react-select/creatable"), { ssr: false });
 
-export function PlayerSelect ({ teamId, structPosition, players, playerSelectedId, setPlayerStruct, playerStruct }) {
-  const playersInTeam = players.filter(player => player.teamId === teamId)
+// @todo prevent the same player being selected twice in either team
+export function PlayerSelect ({
+  teamId,
+  structPosition,
+  players,
+  playerSelectedId,
+  setPlayerStruct,
+  playerStruct
+}) {
+  const playersSelected = Object.keys(playerStruct[getSideIndex(SIDE_LEFT)]).map((key) => {
+    if (playerSelectedId === playerStruct[getSideIndex(SIDE_LEFT)][key]) {
+      return
+    }
+    return playerStruct[getSideIndex(SIDE_LEFT)][key]
+  }).concat(
+    Object.keys(playerStruct[getSideIndex(SIDE_RIGHT)]).map((key) => {
+      if (playerSelectedId === playerStruct[getSideIndex(SIDE_RIGHT)][key]) {
+        return
+      }
+      return playerStruct[getSideIndex(SIDE_RIGHT)][key]
+    })
+  )
+
+  const playersOtherThanSelected = players
+    .filter(player => !playersSelected.includes(player.id))
+
+  const playersInTeam = playersOtherThanSelected.filter(player => player.teamId === teamId)
 
   // Sort players in team by rank highest first
   playersInTeam.sort((a, b) => (a.rank > b.rank ? -1 : 1))
 
-  const otherPlayers = players.filter(player => player.teamId !== teamId)
+  const otherPlayers = playersOtherThanSelected
+    .filter(player => player.teamId !== teamId)
 
   const playerOptions = playersInTeam.map(player => ({
     value: player.id,
-    label: player.name
+    label: player.name + ` (${player.rank})`
   })).concat(
     otherPlayers.map(player => ({
       value: player.id,
-      label: player.name
+      label: player.name + ` (${player.rank})`
     }))
   )
   const options = [
     {
       value: 0,
-      label: 'Absent Player'
+      label: 'Absent Player',
     },
     ...playerOptions
   ]
@@ -30,7 +59,7 @@ export function PlayerSelect ({ teamId, structPosition, players, playerSelectedI
   const selectedOption = options.find(option => option.value === playerSelectedId)
 
   return (
-    <Select
+    <CreatableSelect
       options={options}
       defaultValue={selectedOption}
       onChange={option => setPlayerStruct(

@@ -13,13 +13,13 @@ export default {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         primary: {
-          500: '#4399db'
+          500: '#12aa83'
         },
         secondary: {
-          500: '#716156'
+          500: '#818073'
         },
         tertiary: {
-          500: '#828387'
+          500: '#6e6464'
         }
 
         //   blue

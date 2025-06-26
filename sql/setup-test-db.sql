@@ -130,3 +130,41 @@ create table elttl_test.tennisYear
     value longtext    not null comment 'can be very large as older archives are just html constructs'
 )
     charset = utf8mb3;
+
+create table elttl_test.tennisDivision
+(
+    id     int unsigned,
+    yearId int unsigned not null,
+    name   varchar(20)  null
+)
+    charset = utf8mb3;
+
+create index id
+    on elttl_test.tennisDivision (id);
+
+create index yearId
+    on elttl_test.tennisDivision (yearId);
+
+alter table elttl_test.tennisDivision
+    modify id int unsigned auto_increment;
+
+-- auto-generated definition
+create table tennisVenue
+(
+    id       int unsigned,
+    yearId   int unsigned not null,
+    name     varchar(75)  null,
+    slug     varchar(255) null,
+    location varchar(200) null
+)
+    charset = utf8mb3;
+
+create index id
+    on tennisVenue (id);
+
+create index yearId
+    on tennisVenue (yearId);
+
+alter table tennisVenue
+    modify id int unsigned auto_increment;
+

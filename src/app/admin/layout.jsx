@@ -18,6 +18,7 @@ export default async function Layout ({ children }) {
           <Link className='text-primary-500 border-b' href='/admin'>Dash</Link>
           <Link className='text-primary-500 border-b' href='/admin/team'>Teams</Link>
           <Link className='text-primary-500 border-b' href='/admin/fixture'>Fixtures</Link>
+          <Link className='text-primary-500 border-b' href='/admin/season'>Season</Link>
         </div>
         <div className='flex justify-end m-6'>
           <LogoutForm />

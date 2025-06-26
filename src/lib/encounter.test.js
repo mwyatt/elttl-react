@@ -10,3 +10,12 @@ test('it calculates rank changes', async () => {
 
   expect(furtherRankChanges).toEqual([21, -14])
 })
+
+test('it calculates correct rank changes depending on ranking difference', async () => {
+})
+
+test('it calculates a big rank change for a good win', async () => {
+})
+
+test('it calculates a big rank change for a bad loss', async () => {
+})

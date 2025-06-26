@@ -31,6 +31,9 @@ export async function login (prevState, formData) {
     compareResult = result
   })
 
+  // @todo remove me, just to login for testing
+  // compareResult = true
+
   if (compareResult === true) {
     await createSession(user.id)
     redirect('/admin')

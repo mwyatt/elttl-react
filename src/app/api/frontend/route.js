@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
+import { getCurrentYear } from '@/app/lib/year'
 
 export async function GET (request) {
   const connection = await getConnection()
-
-  const [currentYears] = await connection.query(`
-      SELECT id, name
-      FROM tennisYear
-      WHERE id = 12
-  `)
-  const currentYear = currentYears[0]
+  const currentYear = await getCurrentYear()
 
   const [divisions] = await connection.execute(`
       SELECT name
@@ -38,7 +33,7 @@ export async function GET (request) {
     townTeams: { name: 'Town Teams', url: '/page/town-teams' },
     lancsCountyTTAssoc: { name: 'Lancashire County TT Assoc', url: 'https://lancashirecounty.ttleagues.com/page/affiliationtolancashirecountytta', target: '_blank' },
 
-    // @todo get assets - shftp could be easiest method to store initially
+    // @todo get assets - sftp could be easiest method to store initially
     // would be ideal to allow updating of these for logged in users
     gdpr: { name: 'GDPR', url: '/GDPR-2018-2019.pdf', target: '_blank' },
     diciplineProcedure: { name: 'Code of Conduct', url: '/disciplinary-procedure.pdf', target: '_blank' },

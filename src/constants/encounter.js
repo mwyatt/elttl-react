@@ -14,6 +14,9 @@ export const scorecardStructure = [
   [1, 1]
 ]
 
+export const maxEncounters = scorecardStructure.length
+export const minEncounters = 3
+
 export const rankChangeMap = {
   24: [[12, -8], [12, -8]],
   49: [[11, -7], [14, -9]],

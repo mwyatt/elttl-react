@@ -7,7 +7,7 @@ export async function GET (request) {
   const [years] = await connection.query(`
       SELECT name
       FROM tennisYear
-      ORDER BY name DESC
+      ORDER BY id ASC
   `)
 
   return NextResponse.json(years, { status: 200 })

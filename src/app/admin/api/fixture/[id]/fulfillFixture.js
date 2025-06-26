@@ -2,13 +2,17 @@ import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 import EncounterStatus from '@/constants/EncounterStatus'
 import { getRankChanges } from '@/lib/encounter'
-import { getSideIndex, getSidesCapitalized, SIDE_LEFT, SIDE_RIGHT } from '@/constants/encounter'
-
-const maxEncounters = 10
-const minEncounters = 3
+import {
+  getSideIndex,
+  getSidesCapitalized,
+  maxEncounters,
+  minEncounters,
+  SIDE_LEFT,
+  SIDE_RIGHT
+} from '@/constants/encounter'
 
 // @todo could use scorecardStructure to infer this
-const getPlayerStructFromEncounterStruct = (encounterStruct) => {
+export const getPlayerStructFromEncounterStruct = (encounterStruct) => {
   if (encounterStruct.length < minEncounters) {
     throw new Error('Encounter structure must contain at least 3 encounters to infer the player positions.')
   }
@@ -27,7 +31,7 @@ const getPlayerStructFromEncounterStruct = (encounterStruct) => {
   ]
 }
 
-export async function rollBackFixture (currentYearId, fixtureId) {
+export async function rollBackFixture (currentYearId, fixtureId, playerRanks) {
   const connection = await getConnection()
 
   // Find the existing encounters for this fixture
@@ -53,38 +57,28 @@ export async function rollBackFixture (currentYearId, fixtureId) {
   existingEncounters.reverse()
 
   // roll back the rank changes
-  for (const encounter of existingEncounters) {
-    for (const sideCapitalized of getSidesCapitalized()) {
-      const playerId = encounter[`playerId${sideCapitalized}`]
+  existingEncounters.map(async (encounter) => {
+      for (const sideCapitalized of getSidesCapitalized()) {
+        const playerId = parseInt(encounter[`playerId${sideCapitalized}`])
+        const playerRank = playerRanks[playerId]
+        const playerRankChange = encounter[`playerRankChange${sideCapitalized}`]
+        playerRanks[playerId] = playerRank - playerRankChange
+      }
 
-      const updatePlayerData = {
+      const deleteEncounterData = {
         yearId: currentYearId,
-        playerId,
-        rankChange: encounter[`playerRankChange${sideCapitalized}`]
+        encounterId: encounter.id
       }
 
       await connection.execute(`
-            UPDATE tennisPlayer tp
-            SET tp.rank = tp.rank - :rankChange
+            DELETE FROM tennisEncounter
             WHERE yearId = :yearId
-              and id = :playerId
-        `, updatePlayerData)
-    }
-
-    const deleteEncounterData = {
-      yearId: currentYearId,
-      encounterId: encounter.id
-    }
-
-    // Remove the encounters
-    await connection.execute(`
-          DELETE FROM tennisEncounter
-          WHERE yearId = :yearId
-            and id = :encounterId
-      `, deleteEncounterData)
-  }
+              and id = :encounterId
+        `, deleteEncounterData)
+  })
 }
 
+// @todo validation routine for the encounters to check that there is a 3 within each encounter row (winner)
 export default async function (fixtureId, encounterStruct) {
   if (encounterStruct.length > maxEncounters) {
     throw new Error(`Encounter structure exceeds maximum of ${maxEncounters} encounters. Received ${encounterStruct.length}.`)
@@ -140,14 +134,13 @@ export default async function (fixtureId, encounterStruct) {
   // @todo throw an error if any players are not found that should be
 
   // Create a map of player ranks for easy access
-  const playerRanks = {}
+  let playerRanks = {}
   players.forEach((player) => {
     playerRanks[parseInt(player.id)] = player.rank
   })
 
   if (fixture.timeFulfilled) {
-    console.debug(`Rolling back fixture with ID ${fixtureId} for year ${currentYear.id} before applying new encounters.`)
-    await rollBackFixture(currentYear.id, fixtureId)
+    await rollBackFixture(currentYear.id, fixtureId, playerRanks)
   }
 
   // Apply the new rank changes
@@ -173,19 +166,7 @@ export default async function (fixtureId, encounterStruct) {
 
       for (const sideCapitalized of getSidesCapitalized()) {
         const sideIndex = getSideIndex(sideCapitalized)
-        const playerRank = playerRanks[encounter[`playerId${sideCapitalized}`]] + rankChanges[sideIndex]
-        const updateData = {
-          yearId: currentYear.id,
-          playerId: encounter[`playerId${sideCapitalized}`],
-          rank: playerRank
-        }
-
-        await connection.execute(`
-            UPDATE tennisPlayer tp
-            SET tp.rank = :rank
-            WHERE yearId = :yearId
-              and id = :playerId
-        `, updateData)
+        playerRanks[encounter[`playerId${sideCapitalized}`]] = playerRanks[encounter[`playerId${sideCapitalized}`]] + rankChanges[sideIndex]
       }
     }
 
@@ -223,6 +204,21 @@ export default async function (fixtureId, encounterStruct) {
       WHERE tf.yearId = :yearId
         and id = :fixtureId
   `, updateFixtureData)
+
+  // Update player ranks in memory
+  for (const playerId in playerRanks) {
+      const playerRank = playerRanks[playerId]
+      await connection.execute(`
+          UPDATE tennisPlayer tp
+          SET tp.rank = :rank
+          WHERE yearId = :yearId
+            and id = :playerId
+      `, {
+        yearId: currentYear.id,
+        playerId: parseInt(playerId),
+        rank: playerRank
+      })
+  }
 
   // await connection.commit()
 }

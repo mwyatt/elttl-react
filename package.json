@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "standard",
     "lint-fix": "standard --fix",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test:watch": "jest --watch --detectOpenHandles"
   },
   "dependencies": {

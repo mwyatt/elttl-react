@@ -12,6 +12,7 @@ import {
 import { getRankChanges } from '@/lib/encounter'
 import EncounterStatus from '@/constants/EncounterStatus'
 import fulfillFixture from '@/app/admin/api/fixture/[id]/fulfillFixture'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -80,11 +81,18 @@ export async function GET (request, { params }) {
 
 export async function PUT (request, { params }) {
   const { id } = await params
-  const { encounterStruct, playerStruct } = await request.json()
+  const { encounterStruct } = await request.json()
 
-  fulfillFixture(id, encounterStruct)
+  try {
+    await fulfillFixture(id, encounterStruct)
+  } catch (error) {
+    console.error('Error fulfilling fixture:', error)
+    return NextResponse.json({
+      message: error.message,
+    }, { status: StatusCodes.UNPROCESSABLE_ENTITY })
+  }
 
   return NextResponse.json({
-    message: `Fixture ${id} fulfilled successfully, certainly!`
-  }, { status: 200 })
+    message: `Fixture ${id} fulfilled successfully!`
+  }, { status: StatusCodes.OK })
 }

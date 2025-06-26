@@ -5,7 +5,7 @@ update ad set
     title = 'Press Releases',
           description = 'Check out the latest press releases.',
           url = '/press'
-          where id = 13
+          where id = 13;
 
 update ad set
               url = '/handbook-2024-2025.pdf'

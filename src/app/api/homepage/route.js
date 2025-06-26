@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
+import { getCurrentYear } from '@/app/lib/year'
 
 export async function GET (request) {
   const connection = await getConnection()
-
-  const [currentYears] = await connection.query(`
-      SELECT name
-      FROM tennisYear
-      WHERE id = 12
-  `)
-  const currentYear = currentYears[0].name
+  const currentYear = await getCurrentYear()
 
   const [advertisementsPrimary] = await connection.query(`
       SELECT id, title, description, url, action
@@ -40,13 +35,15 @@ export async function GET (request) {
              ttr.name AS teamRightName,
              ttr.slug AS teamRightSlug
       FROM tennisFixture
-               LEFT JOIN tennisTeam AS ttl ON tennisFixture.teamIdLeft = ttl.id AND ttl.yearId = 12
+               LEFT JOIN tennisTeam AS ttl ON tennisFixture.teamIdLeft = ttl.id AND ttl.yearId = :yearId
                LEFT JOIN tennisTeam AS ttr
-                         ON tennisFixture.teamIdRight = ttr.id AND ttr.yearId = 12
-      WHERE tennisFixture.yearId = 12
+                         ON tennisFixture.teamIdRight = ttr.id AND ttr.yearId = :yearId
+      WHERE tennisFixture.yearId = :yearId
         AND timeFulfilled IS NOT NULL
       ORDER BY timeFulfilled LIMIT 6
-  `)
+  `, {
+    yearId: currentYear.id
+  })
 
   latestPress.forEach((press) => {
     press.url = `/press/${press.slug}`
@@ -57,7 +54,7 @@ export async function GET (request) {
     advertisementsSecondary,
     latestPress,
     latestFixtures,
-    currentYear,
+    currentYear: currentYear.name,
     galleryImages: [
       // { id: 1, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0857.jpg' },
       // { id: 2, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0575.jpg' },

@@ -70,13 +70,13 @@ export default async function FrontLayout ({ children, paddedContent = true, max
       </div>
 
       <footer className='bg-tertiary-500 mt-8'>
-        <div className='bg-secondary-500 md:flex max-w-[1440px] mx-auto'>
+        <div className='md:flex max-w-[1440px] mx-auto'>
           <div className='basis-1/4 p-4 text-white'>
             <div className='mb-1'><Link href='/contact-us' className={linkStyles.join(' ')}>&copy; {appName}</Link></div>
             <Address />
           </div>
           <div className='basis-1/4 p-4'>
-            <nav className='bg-stone-600 rounded'>
+            <nav className='bg-secondary-500 rounded'>
               {footLinks.filter((item) => item.area === 1).map((item) => (
                 <Link
                   className='block px-3 py-2 border-b border-dashed border-tertiary-500 hover:bg-tertiary-500 text-white' key={item.name}
@@ -87,7 +87,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             </nav>
           </div>
           <div className='basis-1/4 p-4'>
-            <nav className='bg-tertiary-500 rounded'>
+            <nav className='bg-secondary-500 rounded'>
               {footLinks.filter((item) => item.area === 2).map((item) => (
                 <Link
                   className='block px-3 py-2 border-b border-dashed border-tertiary-500 hover:bg-tertiary-500 text-white' key={item.name}

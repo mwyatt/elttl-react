@@ -11,7 +11,6 @@ export async function GET (request, { params }) {
       WHERE name = ?
   `, [year])
   const currentYear = currentYears[0]
-  console.log(currentYear)
 
   const [teams] = await connection.execute(`
       SELECT

@@ -1,21 +1,71 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { PlayerSelect } from '@/app/admin/fixture/[id]/PlayerSelect'
 import {
   getOtherSideCapitalized,
-  getSideCapitalized,
+  getSideCapitalized, maxEncounters, minEncounters,
   scorecardStructure,
   SIDE_LEFT,
   SIDE_RIGHT
 } from '@/constants/encounter'
 import EncounterStatus from '@/constants/EncounterStatus'
-import { update } from '@/app/admin/fixture/[id]/actions'
+import Feedback from '@/components/Feedback'
+import FullLoader from '@/components/FullLoader'
+import RankChange from '@/components/player/RankChange'
 
-export function ScoreCardForm ({ fixture, players, encounters }) {
-  const [state, updateAction, pending] = useActionState(update, undefined)
+export function ScoreCardForm ({ fixture, players, encounters, cookie, adminApiUrl }) {
   const [playerStruct, setPlayerStruct] = useState(getDefaultPlayerStruct(encounters))
   const [encounterStruct, setEncounterStruct] = useState(getDefaultEncounterStruct(encounters))
+  const [feedbackMessage, setFeedbackMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (event) => {
+  setIsLoading(true)
+    event.preventDefault();
+
+  const response = await fetch(`${adminApiUrl}/fixture/${fixture.id}`, {
+        method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authentication: cookie
+    },
+    body: JSON.stringify({
+    encounterStruct: encounterStruct,
+  })
+  })
+
+    const data = await response.json();
+
+    setFeedbackMessage(data.message)
+    setIsLoading(false)
+  };
+
+  // @todo validation for all encounters to have a score that has a winner === 3
+
+  useEffect(() => {
+    // @todo use new player struct to update encounter struct with player ids
+    const newEncounterStruct = encounterStruct.map((encounter, index) => {
+      let playerIdLeft = playerStruct[0][scorecardStructure[index][0]]
+      let playerIdRight = playerStruct[1][scorecardStructure[index][1]]
+
+      if (playerIdLeft === undefined) {
+        playerIdLeft = 0
+      }
+      if (playerIdRight === undefined) {
+        playerIdRight = 0
+      }
+
+      return {
+        ...encounter,
+        playerIdLeft,
+        playerIdRight,
+        status: encounter.status || EncounterStatus.NONE
+      }
+    })
+
+    setEncounterStruct(newEncounterStruct)
+  }, [playerStruct])
 
   const getGrandTotal = (side) => {
     const sideCapitalized = getSideCapitalized(side)
@@ -86,32 +136,75 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
   const doublesLabel = <span className='opacity-50'>Doubles</span>
 
   return (
-    <form action={updateAction} className='p-6 max-w-4xl mx-auto'>
+    <form className='p-6 max-w-4xl mx-auto'>
+      <Feedback message={feedbackMessage} />
+      <FullLoader isLoading={isLoading} />
       <input name='fixtureId' type='hidden' value={fixture.id} />
-      <input name='playerStruct' type='hidden' value={JSON.stringify(playerStruct)} />
       <input name='encounterStruct' type='hidden' value={JSON.stringify(encounterStruct)} />
       <div className='flex gap-4 mb-4'>
         <div className='flex-1'>
-          <PlayerSelect teamId={fixture.teamLeftId} structPosition={[0, 1]} playerSelectedId={playerStruct[0][1]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
+          <PlayerSelect
+            teamId={fixture.teamLeftId}
+            structPosition={[0, 1]}
+            playerSelectedId={playerStruct[0][1]}
+            setPlayerStruct={setPlayerStruct}
+            players={players}
+            playerStruct={playerStruct}
+          />
         </div>
         <div className='flex-1'>
-          <PlayerSelect teamId={fixture.teamRightId} structPosition={[1, 1]} playerSelectedId={playerStruct[1][1]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
+          <PlayerSelect
+            teamId={fixture.teamRightId}
+            structPosition={[1, 1]}
+            playerSelectedId={playerStruct[1][1]}
+            setPlayerStruct={setPlayerStruct}
+            players={players}
+            playerStruct={playerStruct}
+          />
         </div>
       </div>
       <div className='flex gap-4 mb-4'>
         <div className='flex-1'>
-          <PlayerSelect teamId={fixture.teamLeftId} structPosition={[0, 2]} playerSelectedId={playerStruct[0][2]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
+          <PlayerSelect
+            teamId={fixture.teamLeftId}
+            structPosition={[0, 2]}
+            playerSelectedId={playerStruct[0][2]}
+            setPlayerStruct={setPlayerStruct}
+            players={players}
+            playerStruct={playerStruct}
+          />
         </div>
         <div className='flex-1'>
-          <PlayerSelect teamId={fixture.teamRightId} structPosition={[1, 2]} playerSelectedId={playerStruct[1][2]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
+          <PlayerSelect
+            teamId={fixture.teamRightId}
+            structPosition={[1, 2]}
+            playerSelectedId={playerStruct[1][2]}
+            setPlayerStruct={setPlayerStruct}
+            players={players}
+            playerStruct={playerStruct}
+          />
         </div>
       </div>
       <div className='flex gap-4 mb-4'>
         <div className='flex-1'>
-          <PlayerSelect teamId={fixture.teamLeftId} structPosition={[0, 3]} playerSelectedId={playerStruct[0][3]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
+          <PlayerSelect
+            teamId={fixture.teamLeftId}
+            structPosition={[0, 3]}
+            playerSelectedId={playerStruct[0][3]}
+            setPlayerStruct={setPlayerStruct}
+            players={players}
+            playerStruct={playerStruct}
+          />
         </div>
         <div className='flex-1'>
-          <PlayerSelect teamId={fixture.teamRightId} structPosition={[1, 3]} playerSelectedId={playerStruct[1][3]} playerStruct={playerStruct} setPlayerStruct={setPlayerStruct} players={players} />
+          <PlayerSelect
+            teamId={fixture.teamRightId}
+            structPosition={[1, 3]}
+            playerSelectedId={playerStruct[1][3]}
+            setPlayerStruct={setPlayerStruct}
+            players={players}
+            playerStruct={playerStruct}
+          />
         </div>
       </div>
       <hr className='my-6' />
@@ -129,6 +222,7 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
             <div className='flex-1 flex justify-end'>
               <label>
                 {encounterRow[0] === EncounterStatus.DOUBLES ? doublesLabel : getPlayerName(playerStruct[0][encounterRow[0]])}
+                <RankChange rankChange={encounterStruct[index].playerRankChangeLeft} />
                 <input
                   className='border border-tertiary-500 rounded w-14 text-center text-2xl ml-4 py-1'
                   type='text'
@@ -148,6 +242,7 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
                 onChange={() => {}}
                 onKeyUp={(e) => handleChangeScore(e, index, SIDE_RIGHT, encounterStruct[index])}
               />
+                <RankChange rankChange={encounterStruct[index].playerRankChangeRight} />
               {encounterRow[0] === EncounterStatus.DOUBLES ? doublesLabel : getPlayerName(playerStruct[1][encounterRow[1]])}
             </label>
           </div>
@@ -158,7 +253,11 @@ export function ScoreCardForm ({ fixture, players, encounters }) {
         <div className='flex-1'>{getGrandTotal(SIDE_RIGHT)}</div>
       </div>
       <div className='flex justify-center'>
-        <button disabled={pending} type='submit' className='w-32 bg-primary-500 border-b-orange-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-orange-600'>
+        <button
+          disabled={isLoading}
+          type='submit' className='w-32 bg-primary-500 border-b-orange-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-orange-600'
+           onClick={(e) => handleSubmit(e)}
+        >
           Fulfil
         </button>
       </div>
@@ -190,7 +289,10 @@ function getDefaultPlayerStruct (encounters) {
 
 function getDefaultEncounterStruct (encounters) {
   if (encounters.length) {
-    return encounters
+    if (encounters.length === maxEncounters) {
+      return encounters
+    }
+    console.warn(`Encounter structure must contain between ${minEncounters} and ${maxEncounters} encounters, but found ${encounters.length}. Returning default structure.`)
   }
 
   return [
