@@ -75,23 +75,23 @@ export default async function Page () {
       {/*  <p>@todo this can be a list of players who have attained the most rank this season</p> */}
       {/* </div> */}
       {latestFixtures.length > 0 && (
-      <div>
-        <h2 className='text-2xl p-4'>Latest Fixtures</h2>
-        <div className='flex flex-wrap gap-3 mb-6 p-4'>
-          {latestFixtures.map((fixture, index) => <FixtureCard
-            key={index}
-            year={currentYear} teamLeft={{
-              name: fixture.teamLeftName,
-              slug: fixture.teamLeftSlug
-            }}
-            teamRight={{
-              name: fixture.teamRightName,
-              slug: fixture.teamRightSlug
-            }}
-            timeFulfilled={fixture.timeFulfilled}
-                                                  />)}
+        <div>
+          <h2 className='text-2xl p-4'>Latest Fixtures</h2>
+          <div className='flex flex-wrap gap-3 mb-6 p-4'>
+            {latestFixtures.map((fixture, index) => <FixtureCard
+              key={index}
+              year={currentYear} teamLeft={{
+                name: fixture.teamLeftName,
+                slug: fixture.teamLeftSlug
+              }}
+              teamRight={{
+                name: fixture.teamRightName,
+                slug: fixture.teamRightSlug
+              }}
+              timeFulfilled={fixture.timeFulfilled}
+                                                    />)}
+          </div>
         </div>
-      </div>
       )}
       <div className='hidden'>
         <h2 className='text-2xl p-4'>Gallery</h2>

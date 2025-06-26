@@ -7,7 +7,7 @@ import { adminApiFetch } from '@/constants/url'
 export async function update (prevState, formData) {
   const fixtureId = formData.get('fixtureId')
   const payload = {
-    encounterStruct: JSON.parse(formData.get('encounterStruct')),
+    encounterStruct: JSON.parse(formData.get('encounterStruct'))
   }
 
   const response = await adminApiFetch(`/fixture/${fixtureId}`, {

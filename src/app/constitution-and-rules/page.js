@@ -1,12 +1,13 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 // @todo use markdown
 export default async function Page () {
   return (
     <FrontLayout maxWidth>
       <div className='max-w-[768px] mx-auto'>
-
         <h1 className='text-2xl mb-4'>Constitution and Rules</h1>
         <div>
           <h2 id='constitution'>CONSTITUTION</h2>
@@ -51,15 +52,15 @@ export default async function Page () {
           <p>Membership</p>
           <ol>
             <li>The members of the League (“League Members”) shall be:
-               All persons who register to play in the League during the season (which shall commence<pre><code>immediately <span class='hljs-keyword'>after</span> <span class='hljs-keyword'>the</span> Annual General Meeting (“AGM”) held <span class='hljs-keyword'>in</span> May each <span class='hljs-built_in'>year</span> <span class='hljs-keyword'>and</span> <span class='hljs-keyword'>end</span> <span class='hljs-keyword'>with</span>
-                <span class='hljs-keyword'>the</span> AGM <span class='hljs-keyword'>the</span> following <span class='hljs-built_in'>year</span>) <span class='hljs-keyword'>and</span> who have paid all fees due <span class='hljs-keyword'>for</span> <span class='hljs-keyword'>that</span> Season <span class='hljs-keyword'>as</span> provided <span class='hljs-keyword'>by</span>
-                <span class='hljs-keyword'>the</span> Rules <span class='hljs-keyword'>below</span> (“League Players”)
+               All persons who register to play in the League during the season (which shall commence<pre><code>immediately <span className='hljs-keyword'>after</span> <span className='hljs-keyword'>the</span> Annual General Meeting (“AGM”) held <span className='hljs-keyword'>in</span> May each <span className='hljs-built_in'>year</span> <span className='hljs-keyword'>and</span> <span className='hljs-keyword'>end</span> <span className='hljs-keyword'>with</span>
+                <span className='hljs-keyword'>the</span> AGM <span className='hljs-keyword'>the</span> following <span className='hljs-built_in'>year</span>) <span className='hljs-keyword'>and</span> who have paid all fees due <span className='hljs-keyword'>for</span> <span className='hljs-keyword'>that</span> Season <span className='hljs-keyword'>as</span> provided <span className='hljs-keyword'>by</span>
+                <span className='hljs-keyword'>the</span> Rules <span className='hljs-keyword'>below</span> (“League Players”)
               </code>
               </pre>
             </li>
           </ol>
           <h2 id='-any-former-player-members-of-the-league-or-other-persons-who-in-either-case-are-accepted'> Any former player members of the League or other persons who (in either case) are accepted</h2>
-          <pre><code><span class='hljs-keyword'>by</span> <span class='hljs-keyword'>the</span> Committee <span class='hljs-keyword'>as</span> Non-playing Members.
+          <pre><code><span className='hljs-keyword'>by</span> <span className='hljs-keyword'>the</span> Committee <span className='hljs-keyword'>as</span> Non-playing Members.
           </code>
           </pre><p>4a. All applications for playing membership of the League shall be made in accordance with the Rules
             below only to the Fixtures Secretary, who shall decide upon the application unless overridden by the
@@ -135,7 +136,7 @@ export default async function Page () {
               expiring or to fill any vacancies
             </li>
             <li>Appointment of auditors</li>
-            <li>Fixing the next Season’s feesand fines unless impracticable at this stage.</li>
+            <li>Fixing the next Season’s fees and fines unless impracticable at this stage.</li>
             <li>Any amendments to this Constitution and Rules.</li>
             <li>Any matters of which any League Member has given written or email notice to the Secretary at
               least 14 days before the AGM.

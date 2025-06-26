@@ -31,21 +31,26 @@ export default async function Actions () {
 
   return (
     <>
-    <div>
-      <button onClick={() => triggerNewSeason()}
-              className={'bg-tertiary-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'}>Start
-        New Season
-      </button>
-      <p className={'my-4'}>Start a new season by making a copy of all of the current seasons teams and players, then
-        creating a new year entry and altering the option table to point to the new year.</p>
-    </div>
-  <div>
-    <button onClick={() => generateFixtures()}
-            className={'bg-tertiary-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'}>Generate
-      Fixtures
-    </button>
-    <p className={'my-4'}>Generate fixtureStats on a fresh season, using all the available teams.</p>
-  </div>
+      <div>
+        <button
+          onClick={() => triggerNewSeason()}
+          className='bg-tertiary-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'
+        >Start
+          New Season
+        </button>
+        <p className='my-4'>Start a new season by making a copy of all of the current seasons teams and players, then
+          creating a new year entry and altering the option table to point to the new year.
+        </p>
+      </div>
+      <div>
+        <button
+          onClick={() => generateFixtures()}
+          className='bg-tertiary-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'
+        >Generate
+          Fixtures
+        </button>
+        <p className='my-4'>Generate fixtureStats on a fresh season, using all the available teams.</p>
+      </div>
     </>
-)
+  )
 }

@@ -1,9 +1,9 @@
 # Todo
+- Setup rules page
+  - Implement specific rules changes sent
 - Implement new season procedure
 - Implement generate fixtures procedure
 - Unit / Integration test of the season / fixture creation
-- Setup rules page
-  - Implement specific rules changes sent
 
 # Wish
 - Homepage add best season performers

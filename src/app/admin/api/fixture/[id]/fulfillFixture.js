@@ -58,19 +58,19 @@ export async function rollBackFixture (currentYearId, fixtureId, playerRanks) {
 
   // roll back the rank changes
   existingEncounters.map(async (encounter) => {
-      for (const sideCapitalized of getSidesCapitalized()) {
-        const playerId = parseInt(encounter[`playerId${sideCapitalized}`])
-        const playerRank = playerRanks[playerId]
-        const playerRankChange = encounter[`playerRankChange${sideCapitalized}`]
-        playerRanks[playerId] = playerRank - playerRankChange
-      }
+    for (const sideCapitalized of getSidesCapitalized()) {
+      const playerId = parseInt(encounter[`playerId${sideCapitalized}`])
+      const playerRank = playerRanks[playerId]
+      const playerRankChange = encounter[`playerRankChange${sideCapitalized}`]
+      playerRanks[playerId] = playerRank - playerRankChange
+    }
 
-      const deleteEncounterData = {
-        yearId: currentYearId,
-        encounterId: encounter.id
-      }
+    const deleteEncounterData = {
+      yearId: currentYearId,
+      encounterId: encounter.id
+    }
 
-      await connection.execute(`
+    await connection.execute(`
             DELETE FROM tennisEncounter
             WHERE yearId = :yearId
               and id = :encounterId
@@ -134,7 +134,7 @@ export default async function (fixtureId, encounterStruct) {
   // @todo throw an error if any players are not found that should be
 
   // Create a map of player ranks for easy access
-  let playerRanks = {}
+  const playerRanks = {}
   players.forEach((player) => {
     playerRanks[parseInt(player.id)] = player.rank
   })
@@ -207,17 +207,17 @@ export default async function (fixtureId, encounterStruct) {
 
   // Update player ranks in memory
   for (const playerId in playerRanks) {
-      const playerRank = playerRanks[playerId]
-      await connection.execute(`
+    const playerRank = playerRanks[playerId]
+    await connection.execute(`
           UPDATE tennisPlayer tp
           SET tp.rank = :rank
           WHERE yearId = :yearId
             and id = :playerId
       `, {
-        yearId: currentYear.id,
-        playerId: parseInt(playerId),
-        rank: playerRank
-      })
+      yearId: currentYear.id,
+      playerId: parseInt(playerId),
+      rank: playerRank
+    })
   }
 
   // await connection.commit()

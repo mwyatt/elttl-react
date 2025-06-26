@@ -35,10 +35,10 @@ export async function GET (request) {
   })
 
   const fixtureStats = {
-      fulfilled: fixturesFulfilled[0].fixtureCount,
-      unfulfilled: fixturesUnfulfilled[0].fixtureCount,
-      total: fixturesTotal[0].fixtureCount
-    }
+    fulfilled: fixturesFulfilled[0].fixtureCount,
+    unfulfilled: fixturesUnfulfilled[0].fixtureCount,
+    total: fixturesTotal[0].fixtureCount
+  }
 
   return NextResponse.json({
     currentYear,

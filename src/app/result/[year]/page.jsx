@@ -16,7 +16,7 @@ export default async function Page ({ params }) {
       <Breadcrumbs items={
           [
             { name: 'Results', href: '/result' },
-            { name: year, href: `/result/${year}` },
+            { name: year, href: `/result/${year}` }
           ]
         }
       />

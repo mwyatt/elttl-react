@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 import { getSideIndex, SIDE_LEFT, SIDE_RIGHT } from '@/constants/encounter'
-const CreatableSelect = dynamic(() => import("react-select/creatable"), { ssr: false });
+const CreatableSelect = dynamic(() => import('react-select/creatable'), { ssr: false })
 
 // @todo prevent the same player being selected twice in either team
 export function PlayerSelect ({
@@ -51,7 +51,7 @@ export function PlayerSelect ({
   const options = [
     {
       value: 0,
-      label: 'Absent Player',
+      label: 'Absent Player'
     },
     ...playerOptions
   ]

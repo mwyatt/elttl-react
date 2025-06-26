@@ -88,7 +88,7 @@ export async function PUT (request, { params }) {
   } catch (error) {
     console.error('Error fulfilling fixture:', error)
     return NextResponse.json({
-      message: error.message,
+      message: error.message
     }, { status: StatusCodes.UNPROCESSABLE_ENTITY })
   }
 

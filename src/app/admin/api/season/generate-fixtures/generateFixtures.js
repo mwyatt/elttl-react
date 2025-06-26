@@ -8,13 +8,13 @@ export default async function (yearId, ignoreExistingFixtures = false) {
   }
 
   // Check if the year exists in the database
-    const [years] = await connection.execute(`
+  const [years] = await connection.execute(`
       select ty.id, ty.name
       from tennisYear ty
           where ty.id = :yearId
     `, {
     yearId
-    })
+  })
 
   if (years.length === 0) {
     throw new Error(`Year with ID ${yearId} does not exist`)
@@ -88,7 +88,7 @@ export default async function (yearId, ignoreExistingFixtures = false) {
           `, {
             yearId,
             teamIdLeft: homeTeam.id,
-            teamIdRight: awayTeam.id,
+            teamIdRight: awayTeam.id
           })
         }
       }

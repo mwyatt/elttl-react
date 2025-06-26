@@ -21,25 +21,25 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie, adminApiU
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (event) => {
-  setIsLoading(true)
-    event.preventDefault();
+    setIsLoading(true)
+    event.preventDefault()
 
-  const response = await fetch(`${adminApiUrl}/fixture/${fixture.id}`, {
-        method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authentication: cookie
-    },
-    body: JSON.stringify({
-    encounterStruct: encounterStruct,
-  })
-  })
+    const response = await fetch(`${adminApiUrl}/fixture/${fixture.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authentication: cookie
+      },
+      body: JSON.stringify({
+        encounterStruct
+      })
+    })
 
-    const data = await response.json();
+    const data = await response.json()
 
     setFeedbackMessage(data.message)
     setIsLoading(false)
-  };
+  }
 
   // @todo validation for all encounters to have a score that has a winner === 3
 
@@ -242,7 +242,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie, adminApiU
                 onChange={() => {}}
                 onKeyUp={(e) => handleChangeScore(e, index, SIDE_RIGHT, encounterStruct[index])}
               />
-                <RankChange rankChange={encounterStruct[index].playerRankChangeRight} />
+              <RankChange rankChange={encounterStruct[index].playerRankChangeRight} />
               {encounterRow[0] === EncounterStatus.DOUBLES ? doublesLabel : getPlayerName(playerStruct[1][encounterRow[1]])}
             </label>
           </div>
@@ -256,7 +256,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie, adminApiU
         <button
           disabled={isLoading}
           type='submit' className='w-32 bg-primary-500 border-b-orange-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-orange-600'
-           onClick={(e) => handleSubmit(e)}
+          onClick={(e) => handleSubmit(e)}
         >
           Fulfil
         </button>

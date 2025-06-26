@@ -5,20 +5,20 @@ import generateFixtures from '@/app/admin/api/season/generate-fixtures/generateF
 import EncounterStatus from '@/constants/EncounterStatus'
 
 const yearId = 12
-  const teamCount = 3
+const teamCount = 3
 
 test('it can generate fixtures for all the teams in all the divisions for the year', async () => {
   const connection = await getConnection()
 
-  const [fixturesBefore] = await connection.execute(`SELECT * FROM tennisFixture`)
+  const [fixturesBefore] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesBefore.length).toBe(0)
 
   await generateFixtures(yearId)
 
-  const [teams] = await connection.execute(`SELECT * FROM tennisTeam WHERE yearId = :yearId`, { yearId })
+  const [teams] = await connection.execute('SELECT * FROM tennisTeam WHERE yearId = :yearId', { yearId })
   expect(teams.length).toBe(teamCount)
 
-  const [fixturesAfter] = await connection.execute(`SELECT * FROM tennisFixture`)
+  const [fixturesAfter] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesAfter.length).toBe(teamCount * (teamCount - 1)) // Each team plays every other team once
 })
 
@@ -34,7 +34,7 @@ test('it will throw an error if the year does not exist', async () => {
 test('it will throw an error if there are fixtures already', async () => {
   const connection = await getConnection()
 
-  const [fixturesBefore] = await connection.execute(`SELECT * FROM tennisFixture`)
+  const [fixturesBefore] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesBefore.length).toBe(teamCount * (teamCount - 1)) // Each team plays every other team once
 
   await generateFixtures(yearId).catch((error) => {
@@ -45,39 +45,39 @@ test('it will throw an error if there are fixtures already', async () => {
 test('it can remove existing fixtures and encounters when forced to', async () => {
   const connection = await getConnection()
 
-  const [fixturesBefore] = await connection.execute(`SELECT * FROM tennisFixture`)
+  const [fixturesBefore] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesBefore.length).toBe(teamCount * (teamCount - 1)) // Each team plays every other team once
 
-    await connection.execute(`
+  await connection.execute(`
           INSERT INTO tennisEncounter
           (yearId, fixtureId, playerIdLeft, playerIdRight, playerRankChangeLeft, playerRankChangeRight, scoreLeft, scoreRight, status)
           VALUES (:yearId, :fixtureId, :playerIdLeft, :playerIdRight, :playerRankChangeLeft, :playerRankChangeRight, :scoreLeft, :scoreRight, :status)
       `, {
-      yearId: yearId,
-      fixtureId: fixturesBefore[0].id,
-      playerIdLeft: 1,
-      playerIdRight: 2,
-      playerRankChangeLeft: 0,
-      playerRankChangeRight: 0,
-      scoreLeft: 3,
-      scoreRight: 0,
-      status: EncounterStatus.NONE
-    })
+    yearId,
+    fixtureId: fixturesBefore[0].id,
+    playerIdLeft: 1,
+    playerIdRight: 2,
+    playerRankChangeLeft: 0,
+    playerRankChangeRight: 0,
+    scoreLeft: 3,
+    scoreRight: 0,
+    status: EncounterStatus.NONE
+  })
 
-  const [encountersBefore] = await connection.execute(`SELECT * FROM tennisEncounter`)
+  const [encountersBefore] = await connection.execute('SELECT * FROM tennisEncounter')
   expect(encountersBefore.length).toBe(1)
 
-    await connection.execute(`
+  await connection.execute(`
 INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueId, divisionId) VALUES (4, 12, 'Late Comers', 'late-comers', 1, 42, 5, 1);
   `)
   const newTeamCount = teamCount + 1
 
   await generateFixtures(yearId, true)
 
-  const [fixturesAfter] = await connection.execute(`SELECT * FROM tennisFixture`)
+  const [fixturesAfter] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesAfter.length).toBe(newTeamCount * (newTeamCount - 1)) // Each team plays every other team once
 
-  const [encountersAfter] = await connection.execute(`SELECT * FROM tennisEncounter`)
+  const [encountersAfter] = await connection.execute('SELECT * FROM tennisEncounter')
   expect(encountersAfter.length).toBe(0)
 })
 
@@ -96,19 +96,19 @@ test('it will not remove fixture or encounter data from other years', async () =
     VALUES (11, LAST_INSERT_ID(), 1, 2, 0, 0, 3, 0, 'NONE')
   `)
 
-  const [fixturesBefore] = await connection.execute(`SELECT * FROM tennisFixture WHERE yearId = 11`)
+  const [fixturesBefore] = await connection.execute('SELECT * FROM tennisFixture WHERE yearId = 11')
   expect(fixturesBefore.length).toBe(1)
 
-  const [encountersBefore] = await connection.execute(`SELECT * FROM tennisEncounter WHERE yearId = 11`)
+  const [encountersBefore] = await connection.execute('SELECT * FROM tennisEncounter WHERE yearId = 11')
   expect(encountersBefore.length).toBe(1)
 
   // Generate fixtures for the current year
   await generateFixtures(yearId, true)
 
-  const [fixturesAfter] = await connection.execute(`SELECT * FROM tennisFixture WHERE yearId = 11`)
+  const [fixturesAfter] = await connection.execute('SELECT * FROM tennisFixture WHERE yearId = 11')
   expect(fixturesAfter.length).toBe(1)
 
-  const [encountersAfter] = await connection.execute(`SELECT * FROM tennisEncounter WHERE yearId = 11`)
+  const [encountersAfter] = await connection.execute('SELECT * FROM tennisEncounter WHERE yearId = 11')
   expect(encountersAfter.length).toBe(1)
 })
 

@@ -213,10 +213,10 @@ test('it will produce the right rank changes when rolling back', async () => {
   const connection = await getConnection()
   const fixtureId = 3718
   const encounterStruct = [
-  { playerIdLeft: 10, playerIdRight: 11, scoreLeft: 1, scoreRight: 3, status: '' },
-  { playerIdLeft: 10, playerIdRight: 11, scoreLeft: 3, scoreRight: 2, status: '' },
-  { playerIdLeft: 10, playerIdRight: 11, scoreLeft: 2, scoreRight: 3, status: '' },
-]
+    { playerIdLeft: 10, playerIdRight: 11, scoreLeft: 1, scoreRight: 3, status: '' },
+    { playerIdLeft: 10, playerIdRight: 11, scoreLeft: 3, scoreRight: 2, status: '' },
+    { playerIdLeft: 10, playerIdRight: 11, scoreLeft: 2, scoreRight: 3, status: '' }
+  ]
 
   await connection.execute('DELETE FROM tennisEncounter;')
 
@@ -226,7 +226,7 @@ test('it will produce the right rank changes when rolling back', async () => {
   `, { fixtureId })
   expect(beforeEncounters.length).toBe(0)
 
-    await connection.execute(`
+  await connection.execute(`
     INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (10, 12, 'Ryan', 2000);
   `)
   await connection.execute(`
@@ -236,7 +236,7 @@ test('it will produce the right rank changes when rolling back', async () => {
   const [beforePlayers] = await connection.execute(`
     SELECT * FROM tennisPlayer
     WHERE id = :id OR id = :id2
-  `, { id: 10 , id2: 11 })
+  `, { id: 10, id2: 11 })
   expect(beforePlayers.length).toBe(2)
   expect(beforePlayers[0].rank).toBe(2000)
   expect(beforePlayers[1].rank).toBe(2100)
@@ -246,7 +246,7 @@ test('it will produce the right rank changes when rolling back', async () => {
   const [afterPlayers] = await connection.execute(`
     SELECT * FROM tennisPlayer
     WHERE id = :id OR id = :id2
-  `, { id: 10 , id2: 11 })
+  `, { id: 10, id2: 11 })
   expect(afterPlayers.length).toBe(2)
   expect(afterPlayers[0].rank).toBe(2010)
   expect(afterPlayers[1].rank).toBe(2103)
@@ -265,10 +265,10 @@ test('it will produce the right rank changes when rolling back', async () => {
   `, { fixtureId })
   expect(afterRollbackEncounters.length).toBe(3)
 
-    const [afterRollbackPlayers] = await connection.execute(`
+  const [afterRollbackPlayers] = await connection.execute(`
     SELECT * FROM tennisPlayer
     WHERE id = :id OR id = :id2
-  `, { id: 10 , id2: 11 })
+  `, { id: 10, id2: 11 })
   expect(afterRollbackPlayers.length).toBe(2)
   expect(afterRollbackPlayers[0].rank).toBe(2010)
   expect(afterRollbackPlayers[1].rank).toBe(2103)
