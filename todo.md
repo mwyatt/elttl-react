@@ -1,9 +1,10 @@
 # Todo
-- Setup rules page
-  - Implement specific rules changes sent
-- Implement new season procedure
-- Implement generate fixtures procedure
-- Unit / Integration test of the season / fixture creation
+- Press page prevent page errors
+- Trial new season / generate fixtures on the server
+- Google Analytics
+- Migrate to new server
+  - Setup ssh
+  - Swap domain
 
 # Wish
 - Homepage add best season performers
