@@ -32,8 +32,8 @@ export async function GET (request, { params }) {
           tp.phoneLandline secretaryPhoneLandline,
           tp.phoneMobile secretaryPhoneMobile
       FROM tennisTeam tt
-           LEFT JOIN tennisVenue tv ON tt.venueId = tv.id AND tv.yearId = tt.yearId
-           LEFT JOIN tennisPlayer tp ON tt.secretaryId = tp.id AND tp.yearId = tt.yearId
+           LEFT JOIN tennisVenue tv ON tt.venueId = tv.id AND tv.yearId = :yearId
+           LEFT JOIN tennisPlayer tp ON tt.secretaryId = tp.id AND tp.yearId = :yearId
         WHERE tt.yearId = :yearId
   `, {
     yearId: currentYear.id

@@ -1,6 +1,6 @@
 # Todo
+- Cookie banner
 - Handle actual server errors (eg. fixture single cant find venue) - needs to be a custom error page and  also log the error on the server to inspect
-- Make small ads appear all over site?
 - Trial new season / generate fixtures on the server
 - Google Analytics
 - Migrate to new server

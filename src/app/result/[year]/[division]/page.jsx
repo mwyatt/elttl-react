@@ -53,7 +53,7 @@ export default async function Page ({ params }) {
       <SubMenu year={year} division={division} />
 
       <SubHeading name='Teams' />
-      <InformationTable teams={teams} />
+      <InformationTable yearName={year} teams={teams} />
 
       <SubHeading name='Overview' />
       <div className='lg:hidden mb-4'>
