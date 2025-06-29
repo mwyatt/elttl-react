@@ -1,15 +1,13 @@
 import FrontLayout from '@/app/frontLayout'
-import { apiUrl } from '@/constants/url'
 import DatePretty from '@/components/DatePretty'
 import MainHeading from '@/components/MainHeading'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const slug = (await params).slug
-
-  const response = await fetch(`${apiUrl}/content/${slug}?type=page`)
-  const data = await response.json()
+  const data = await fetchJson(`/content/${slug}?type=page`)
 
   const getAuthor = (author) => {
     if (!author) {

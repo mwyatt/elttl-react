@@ -30,7 +30,7 @@ export async function GET (request, { params }) {
   return NextResponse.json({
     team: teams[0],
     divisions
-  }, { status: 200 })
+  }, { status: StatusCodes.OK })
 }
 
 export async function PUT (request, { params }) {

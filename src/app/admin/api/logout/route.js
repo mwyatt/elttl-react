@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { logout } from '@/app/login/actions'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request) {
   logout()
@@ -17,5 +18,5 @@ export async function GET (request) {
 
   return NextResponse.json({
     teams
-  }, { status: 200 })
+  }, { status: StatusCodes.OK })
 }

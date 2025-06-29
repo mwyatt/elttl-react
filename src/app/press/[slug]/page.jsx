@@ -3,6 +3,9 @@ import { apiUrl } from '@/constants/url'
 import DatePretty from '@/components/DatePretty'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMetaTitle } from '@/constants/MetaData'
+import { StatusCodes } from 'http-status-codes'
+import { notFound } from 'next/navigation'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export async function generateMetadata (
   { params }
@@ -22,9 +25,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const slug = (await params).slug
-
-  const response = await fetch(`${apiUrl}/content/${slug}?type=press`)
-  const data = await response.json()
+  const data = await fetchJson(`/content/${slug}?type=press`)
 
   return (
     <FrontLayout>

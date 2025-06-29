@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { BiMap } from 'react-icons/bi'
 import DirectionsButton from '@/components/DirectionsButton'
 import { getMetaTitle } from '@/constants/MetaData'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export async function generateMetadata (
   { params }
@@ -26,9 +27,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { year, slug } = await params
-
-  const response = await fetch(`${apiUrl}/result/${year}/venue/${slug}`)
-  const { teams, venue } = await response.json()
+  const { teams, venue } = await fetchJson(`/result/${year}/venue/${slug}`)
 
   return (
     <FrontLayout>

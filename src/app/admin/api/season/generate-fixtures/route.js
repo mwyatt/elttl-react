@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 import generateFixtures from '@/app/admin/api/season/generate-fixtures/generateFixtures'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request) {
   const currentYear = await getCurrentYear()
@@ -9,5 +10,5 @@ export async function GET (request) {
   // Generate the seasons fixtures
   await generateFixtures(currentYear.id)
 
-  return NextResponse.json({ message: `Fixtures generated for the ${currentYear.name} season. Don't refresh the page!` }, { status: 200 })
+  return NextResponse.json({ message: `Fixtures generated for the ${currentYear.name} season. Don't refresh the page!` }, { status: StatusCodes.OK })
 }

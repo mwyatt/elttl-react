@@ -7,20 +7,21 @@ import Header from '@/components/Header'
 import Address from '@/components/Address'
 import { PiXLogoFill } from 'react-icons/pi'
 import { linkStyles } from '@/lib/styles'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const dynamic = 'force-dynamic'
 
 export default async function FrontLayout ({ children, paddedContent = true, maxWidth = true }) {
   const auth = { user: null }
   const appName = getMetaTitle()
-  const response = await fetch(`${apiUrl}/frontend`)
-  const data = await response.json()
-  const headLinks = data.headLinks
-  const menuPrimary = data.menuPrimary
-  const footLinks = data.footLinks
+  const {
+    headLinks,
+    menuPrimary,
+    footLinks,
+    advertisementsSecondary
+  } = await fetchJson('/frontend')
 
   return (
-
     <div className='bg-[url(/bg.gif)] bg-no-repeat'>
       {/* <div className='flex border-b border-neutral-400 text-sm bg-neutral-200'> */}
       {/*  <div className={'max-w-[1440px] mx-auto hidden'}> */}
@@ -69,10 +70,31 @@ export default async function FrontLayout ({ children, paddedContent = true, max
         {children}
       </div>
 
+      <div>
+        <div className='max-w-[1440px] mx-auto p-4 flex flex-col md:flex-row gap-4'>
+          {advertisementsSecondary.map((advertisement, index) => (
+            <div key={index} className='p-4 bg-tertiary-500 text-white rounded bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3'>
+              <h2 className='mb-4 text-2xl font-bold'>{advertisement.title}</h2>
+              <p className='my-3 text-lg'>{advertisement.description}</p>
+              <div className='mt-6 flex justify-end'>
+                {advertisement.action && (
+                  <Link
+                    className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize'
+                    href={advertisement.url}
+                    target='_blank' rel='noreferrer'
+                  >{advertisement.action}
+                  </Link>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <footer className='bg-tertiary-500 mt-8'>
         <div className='md:flex max-w-[1440px] mx-auto'>
           <div className='basis-1/4 p-4 text-white'>
-            <div className='mb-1'><Link href='/contact-us' className={linkStyles.join(' ')}>&copy; {appName}</Link></div>
+            <div className='mb-1'><Link href='/contact-us' className='underline font-bold'>&copy; {appName}</Link></div>
             <Address />
           </div>
           <div className='basis-1/4 p-4'>

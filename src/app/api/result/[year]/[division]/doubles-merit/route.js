@@ -3,6 +3,7 @@ import { getConnection } from '@/lib/database'
 import { getYearDivisionId } from '@/app/lib/year'
 import { getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 import EncounterStatus from '@/constants/EncounterStatus'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -76,5 +77,5 @@ export async function GET (request, { params }) {
 
   return NextResponse.json({
     stats
-  }, { status: 200 })
+  }, { status: StatusCodes.OK })
 }

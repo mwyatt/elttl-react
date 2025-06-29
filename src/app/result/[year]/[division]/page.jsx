@@ -6,6 +6,9 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
 import { capitalizeFirstLetter } from '@/lib/misc'
 import { getMetaTitle } from '@/constants/MetaData'
+import { fetchJson } from '@/app/lib/fetchWrapper'
+import SubHeading from '@/components/SubHeading'
+import InformationTable from '@/components/team/InformationTable'
 
 export async function generateMetadata (
   { params }
@@ -21,12 +24,9 @@ export async function generateMetadata (
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const year = (await params).year
   const division = (await params).division
-
-  const response = await fetch(`${apiUrl}/result/${year}/${division}`)
-  const { leagueTable, teams } = await response.json()
+  const { leagueTable, teams } = await fetchJson(`/result/${year}/${division}`)
 
   const getLeagueTableRow = (teamLeftSlug, teamRightSlug) => {
     for (const row of leagueTable) {
@@ -51,6 +51,11 @@ export default async function Page ({ params }) {
       </h2>
       <p>This is an overview for the {division} division.</p>
       <SubMenu year={year} division={division} />
+
+      <SubHeading name='Teams' />
+      <InformationTable teams={teams} />
+
+      <SubHeading name='Overview' />
       <div className='lg:hidden mb-4'>
         <p>Please visit this page using a larger screen to view the divisonal overview.</p>
       </div>

@@ -36,10 +36,14 @@ export default async function Page () {
 
             <DirectionsButton url={hyndburnLink} />
           </div>
-          <SubHeading name='League Secretary' />
-          <h3 className=''>David Heys - 01254 608565</h3>
         </div>
         <div className='flex-1'>
+          <div className='pb-12 mb-12 border-b border-stone-300 border-dashed'>
+            <SubHeading name='League Secretary' />
+            <h3 className=''>David Heys - 01254 608565</h3>
+
+          </div>
+
           <SubHeading name='Website Maintainer' />
           <p>Always open to ideas and critisism of the website so please provide any feedback to <Link className={linkStyles.join(' ')} href='mailto:martin.wyatt@gmail.com'>martin.wyatt@gmail.com</Link>.</p>
         </div>

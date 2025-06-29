@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import EncounterStatus from '@/constants/EncounterStatus'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -18,10 +19,18 @@ export async function GET (request, { params }) {
   const yearDivisionId = yearDivisionIds[0]
 
   const [teams] = await connection.execute(`
-      SELECT name, slug
-      FROM tennisTeam
-        WHERE yearId = :yearId
-        AND divisionId = :divisionId
+      SELECT tt.name, tt.slug,
+          tv.name venueName,
+          tv.slug venueSlug,
+          tp.slug secretarySlug,
+          concat(tp.nameFirst, ' ', tp.nameLast) AS secretaryName,
+          tp.phoneLandline secretaryPhoneLandline,
+          tp.phoneMobile secretaryPhoneMobile
+      FROM tennisTeam tt
+           LEFT JOIN tennisVenue tv ON tt.venueId = tv.id AND tv.yearId = tt.yearId
+           LEFT JOIN tennisPlayer tp ON tt.secretaryId = tp.id AND tp.yearId = tt.yearId
+        WHERE tt.yearId = :yearId
+        AND tt.divisionId = :divisionId
   `, {
     divisionId: yearDivisionId.divisionId,
     yearId: yearDivisionId.yearId
@@ -52,5 +61,5 @@ export async function GET (request, { params }) {
   return NextResponse.json({
     leagueTable,
     teams
-  }, { status: 200 })
+  }, { status: StatusCodes.OK })
 }

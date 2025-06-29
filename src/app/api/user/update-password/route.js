@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import bcrypt from 'bcrypt'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request) {
   const connection = await getConnection()
@@ -32,6 +33,6 @@ export async function GET (request) {
 
   return NextResponse.json(
     `user ${email} had password salted, hashed and updated in the db, affecting ${response.affectedRows} row(s)`,
-    { status: 200 }
+    { status: StatusCodes.OK }
   )
 }

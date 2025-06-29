@@ -7,6 +7,7 @@ import MainHeading from '@/components/MainHeading'
 import { BiCaretLeft, BiCaretRight } from 'react-icons/bi'
 import { linkStyles } from '@/lib/styles'
 import { getMetaTitle } from '@/constants/MetaData'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const metadata = {
   title: getMetaTitle('Press Releases'),
@@ -16,14 +17,19 @@ export const metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params, searchParams }) {
+  const pageMin = 1
   let { page } = await searchParams
-  if (!page) {
-    page = 1
+  if (!page || isNaN(page) || parseInt(page) < pageMin) {
+    page = pageMin
   }
   const nextPage = parseInt(page) + 1
-  const prevPage = parseInt(page) - 1
+  let prevPage = parseInt(page) - 1
 
-  const contents = await fetch(`${apiUrl}/content?type=press&page=${page}`).then((res) => res.json())
+  if (prevPage < pageMin) {
+    prevPage = pageMin
+  }
+
+  const contents = await fetchJson(`/content?type=press&page=${page}`)
 
   return (
     <FrontLayout>

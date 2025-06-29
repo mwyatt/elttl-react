@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request) {
   const connection = await getConnection()
@@ -10,5 +11,5 @@ export async function GET (request) {
       ORDER BY id ASC
   `)
 
-  return NextResponse.json(years, { status: 200 })
+  return NextResponse.json(years, { status: StatusCodes.OK })
 }

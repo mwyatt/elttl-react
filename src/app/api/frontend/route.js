@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request) {
   const connection = await getConnection()
@@ -25,6 +26,13 @@ export async function GET (request) {
       ]
     })
   })
+
+  const [advertisementsSecondary] = await connection.query(`
+      SELECT id, title, description, url, action
+      FROM ad
+      WHERE status = 1
+        AND groupKey = 'small-primary'
+  `)
 
   const commonLinks = {
     prePractice: { name: 'Prepaid Practice Scheme', url: '/page/pre-practice-scheme' },
@@ -81,6 +89,7 @@ export async function GET (request) {
       {
         name: 'Results', url: '/result', children: divisionsChildren
       }
-    ]
-  }, { status: 200 })
+    ],
+    advertisementsSecondary
+  }, { status: StatusCodes.OK })
 }

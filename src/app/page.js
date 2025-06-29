@@ -10,6 +10,8 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import SubHeading from '@/components/SubHeading'
 import { linkStyles } from '@/lib/styles'
 import { late } from 'zod'
+import { fetchJson } from '@/app/lib/fetchWrapper'
+import SeasonTotals from '@/components/home/SeasonTotals'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -19,15 +21,14 @@ export const metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function Page () {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/homepage`)
   const {
     latestPress,
     advertisementsPrimary,
-    advertisementsSecondary,
     latestFixtures,
     galleryImages,
-    currentYear
-  } = await response.json()
+    currentYear,
+    seasonTotals
+  } = await fetchJson('/homepage')
 
   dayjs.extend(relativeTime)
 
@@ -55,7 +56,7 @@ export default async function Page () {
           <div className='flex p-4 items-center'>
             <h2 className='text-2xl grow'>Press Releases</h2>
             <div>
-              <Link className='text-gray-500 border-b border-b-gray-400 ,mb' href='/press/'>View all</Link>
+              <Link className='text-gray-500 border-b border-b-gray-400' href='/press/'>All Press</Link>
             </div>
           </div>
           {latestPress.map((press) => (
@@ -71,22 +72,25 @@ export default async function Page () {
         </div>
       </div>
       {/* <div> */}
-      {/*  <SubHeading name={'Rising Stars'} /> */}
-      {/*  <p>@todo this can be a list of players who have attained the most rank this season</p> */}
+      {/* <SubHeading name={'Rising Stars'} /> */}
+      {/* <p>@todo this can be a list of players who have attained the most rank this season</p> */}
       {/* </div> */}
+      <SeasonTotals totals={seasonTotals} yearName={currentYear} />
       {latestFixtures.length > 0 && (
         <div>
-          <h2 className='text-2xl p-4'>Latest Fixtures</h2>
+          <h2 className='text-2xl p-4'>Latest Fulfilled Fixtures</h2>
           <div className='flex flex-wrap gap-3 mb-6 p-4'>
             {latestFixtures.map((fixture, index) => <FixtureCard
               key={index}
               year={currentYear} teamLeft={{
                 name: fixture.teamLeftName,
-                slug: fixture.teamLeftSlug
+                slug: fixture.teamLeftSlug,
+                score: fixture.scoreLeft
               }}
               teamRight={{
                 name: fixture.teamRightName,
-                slug: fixture.teamRightSlug
+                slug: fixture.teamRightSlug,
+                score: fixture.scoreRight
               }}
               timeFulfilled={fixture.timeFulfilled}
                                                     />)}
@@ -105,24 +109,6 @@ export default async function Page () {
             </div>
           ))}
         </div>
-      </div>
-      <div className='p-4 flex flex-col md:flex-row gap-4'>
-        {advertisementsSecondary.map((advertisement, index) => (
-          <div key={index} className='p-4 bg-tertiary-500 text-white rounded bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3'>
-            <h2 className='mb-4 text-2xl font-bold'>{advertisement.title}</h2>
-            <p className='my-3 text-lg'>{advertisement.description}</p>
-            <div className='mt-6 flex justify-end'>
-              {advertisement.action && (
-                <Link
-                  className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize'
-                  href={advertisement.url}
-                  target='_blank' rel='noreferrer'
-                >{advertisement.action}
-                </Link>
-              )}
-            </div>
-          </div>
-        ))}
       </div>
     </FrontLayout>
   )

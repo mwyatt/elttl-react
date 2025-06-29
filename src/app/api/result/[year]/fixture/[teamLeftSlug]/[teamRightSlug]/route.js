@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -18,6 +19,11 @@ export async function GET (request, { params }) {
       where slug = ?
         and yearId = ?
   `, [teamLeftSlug, currentYear.id])
+
+  if (teamLefts.length === 0) {
+    return NextResponse.json(`Unable to find teamLeft with slug '${teamLeftSlug}'`, { status: StatusCodes.NOT_FOUND })
+  }
+
   const teamLeft = teamLefts[0]
 
   const [teamRights] = await connection.execute(`
@@ -26,6 +32,11 @@ export async function GET (request, { params }) {
       where slug = ?
         and yearId = ?
   `, [teamRightSlug, currentYear.id])
+
+  if (teamRights.length === 0) {
+    return NextResponse.json(`Unable to find teamRight with slug '${teamRightSlug}'`, { status: StatusCodes.NOT_FOUND })
+  }
+
   const teamRight = teamRights[0]
 
   const [venuess] = await connection.execute(`
@@ -72,5 +83,5 @@ export async function GET (request, { params }) {
     venue,
     fixture,
     encounters
-  }, { status: 200 })
+  }, { status: StatusCodes.OK })
 }

@@ -1,13 +1,11 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page () {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-
-  const response = await fetch(`${apiUrl}/result`)
-  const data = await response.json()
+  const data = await fetchJson('/result')
 
   return (
     <FrontLayout maxWidth>

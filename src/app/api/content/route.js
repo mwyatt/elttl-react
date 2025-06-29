@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import ContentStatus from '@/constants/ContentStatus'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request) {
   const connection = await getConnection()
@@ -23,5 +24,5 @@ export async function GET (request) {
           ${sqlAppend}
   `, { type, status: ContentStatus.PUBLISHED })
 
-  return NextResponse.json(contents, { status: 200 })
+  return NextResponse.json(contents, { status: StatusCodes.OK })
 }

@@ -8,6 +8,7 @@ import FixtureCard from '@/components/FixtureCard'
 import { homeNightMap } from '@/constants/Team'
 import { apiUrl } from '@/constants/url'
 import { getMetaTitle } from '@/constants/MetaData'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export async function generateMetadata (
   { params }
@@ -27,9 +28,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { year, slug } = await params
-
-  const response = await fetch(`${apiUrl}/result/${year}/team/${slug}`)
-  const { team, players, fixtures } = await response.json()
+  const { team, players, fixtures } = await fetchJson(`/result/${year}/team/${slug}`)
 
   return (
     <FrontLayout>

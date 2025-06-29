@@ -8,6 +8,7 @@ import MainHeading from '@/components/MainHeading'
 import { linkStyles } from '@/lib/styles'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMetaTitle } from '@/constants/MetaData'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export async function generateMetadata (
   { params }
@@ -27,9 +28,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { year, slug } = await params
-
-  const response = await fetch(`${apiUrl}/result/${year}/player/${slug}`)
-  const { player, encounters, fixtures } = await response.json()
+  const { player, encounters, fixtures } = await fetchJson(`/result/${year}/player/${slug}`)
 
   const getPlayerLink = (playerSlug, playerName) => {
     if (playerSlug === slug) {

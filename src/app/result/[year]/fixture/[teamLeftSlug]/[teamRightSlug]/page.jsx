@@ -9,6 +9,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { getShortPlayerName } from '@/lib/player'
 import { getMetaTitle } from '@/constants/MetaData'
 import { getSideCapitalized, SIDE_LEFT, SIDE_RIGHT } from '@/constants/encounter'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export async function generateMetadata (
   { params }
@@ -31,14 +32,12 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { year, teamLeftSlug, teamRightSlug } = (await params)
-
-  const response = await fetch(`${apiUrl}/result/${year}/fixture/${teamLeftSlug}/${teamRightSlug}`)
   const {
     teamLeft,
     teamRight,
     venue,
     encounters
-  } = await response.json()
+  } = await fetchJson(`/result/${year}/fixture/${teamLeftSlug}/${teamRightSlug}`)
 
   const getGrandTotal = (side) => {
     const sideCapitalized = getSideCapitalized(side)

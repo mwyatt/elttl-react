@@ -8,6 +8,7 @@ import { linkStyles } from '@/lib/styles'
 import { capitalizeFirstLetter } from '@/lib/misc'
 import { getShortPlayerName } from '@/lib/player'
 import { getMetaTitle } from '@/constants/MetaData'
+import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export async function generateMetadata (
   { params }
@@ -25,9 +26,7 @@ export const dynamic = 'force-dynamic'
 export default async function Page ({ params }) {
   const year = (await params).year
   const division = (await params).division
-
-  const response = await fetch(`${apiUrl}/result/${year}/${division}/merit`)
-  const { stats } = await response.json()
+  const { stats } = await fetchJson(`/result/${year}/${division}/merit`)
 
   return (
     <FrontLayout>

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -78,5 +79,5 @@ export async function GET (request, { params }) {
     player,
     encounters,
     fixtures
-  }, { status: 200 })
+  }, { status: StatusCodes.OK })
 }

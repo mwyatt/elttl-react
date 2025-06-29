@@ -10,4 +10,3 @@ update ad set
 update ad set
               url = '/handbook-2024-2025.pdf'
           where id = 3 and title = 'Get the Handbook';
-

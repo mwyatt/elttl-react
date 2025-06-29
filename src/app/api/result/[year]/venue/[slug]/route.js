@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
+import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
@@ -18,6 +19,11 @@ export async function GET (request, { params }) {
       WHERE yearId = ?
         AND slug = ?
   `, [currentYear.id, slug])
+
+  if (venues.length === 0) {
+    return NextResponse.json(`Unable to find venue with slug '${slug}'`, { status: StatusCodes.NOT_FOUND })
+  }
+
   const venue = venues[0]
 
   const [teams] = await connection.execute(`
@@ -31,5 +37,5 @@ export async function GET (request, { params }) {
   return NextResponse.json({
     venue,
     teams
-  }, { status: 200 })
+  }, { status: StatusCodes.OK })
 }
