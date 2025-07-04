@@ -9,11 +9,10 @@ export default function Breadcrumbs ({ items = [] }) {
   }
   return (
     <div className='flex pb-4 hidden sm:block'>
-      <Link className='text-primary-500' href='/'>Home</Link>
       {items.map((item, index) => (
         <span key={index}>
-          <span className='text-stone-400 mx-4'>/</span>
           {getLink(item)}
+          <span className='text-stone-400 mx-4'>/</span>
         </span>
       ))}
     </div>

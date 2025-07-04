@@ -39,7 +39,11 @@ export async function GET (request) {
     resultArchive: { name: 'Results Archive', url: '/result' },
     contactUs: { name: 'Contact Us', url: '/contact-us' },
     townTeams: { name: 'Town Teams', url: '/page/town-teams' },
-    lancsCountyTTAssoc: { name: 'Lancashire County TT Assoc', url: 'https://lancashirecounty.ttleagues.com/page/affiliationtolancashirecountytta', target: '_blank' },
+    lancsCountyTTAssoc: {
+      name: 'Lancashire County TT Assoc',
+      url: 'https://lancashirecounty.ttleagues.com/page/affiliationtolancashirecountytta',
+      target: '_blank'
+    },
 
     // @todo get assets - sftp could be easiest method to store initially
     // would be ideal to allow updating of these for logged in users
@@ -66,6 +70,7 @@ export async function GET (request) {
       { area: 1, name: 'Fred Holden Cup', url: '/page/fred-holden-cup' },
       { area: 1, name: 'Local Clubs', url: '/page/local-clubs' },
       { area: 1, name: 'Rules', url: '/constitution-and-rules' },
+      { area: 1, name: 'Sessions', url: '/sessions' },
       { area: 2, ...commonLinks.prePractice },
       { area: 2, ...commonLinks.resultArchive },
       { area: 2, ...commonLinks.contactUs },

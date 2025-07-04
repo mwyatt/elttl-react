@@ -6,6 +6,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
 import { linkStyles } from '@/lib/styles'
 import SubHeading from '@/components/SubHeading'
+import { DeveloperEmail } from '@/constants/MetaData'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,7 +46,7 @@ export default async function Page () {
           </div>
 
           <SubHeading name='Website Maintainer' />
-          <p>Always open to ideas and critisism of the website so please provide any feedback to <Link className={linkStyles.join(' ')} href='mailto:martin.wyatt@gmail.com'>martin.wyatt@gmail.com</Link>.</p>
+          <p>Always open to ideas and criticism of the website so please provide any feedback to <Link className={linkStyles.join(' ')} href={`mailto:${DeveloperEmail}`}>{DeveloperEmail}</Link>.</p>
         </div>
       </div>
 

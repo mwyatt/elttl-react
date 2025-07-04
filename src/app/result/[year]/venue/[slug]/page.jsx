@@ -4,7 +4,6 @@ import { apiUrl } from '@/constants/url'
 import MainHeading from '@/components/MainHeading'
 import SubHeading from '@/components/SubHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { BiMap } from 'react-icons/bi'
 import DirectionsButton from '@/components/DirectionsButton'
 import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
@@ -46,6 +45,7 @@ export default async function Page ({ params }) {
 
         <div className='flex-1'>
 
+
           <SubHeading name='Teams Playing Here' />
           <div className='flex flex-wrap gap-3'>
 
@@ -64,7 +64,12 @@ export default async function Page ({ params }) {
         </div>
         <div className='flex-1'>
           <SubHeading name='Directions' />
+
           <DirectionsButton url={venue.location} />
+                    <div className={`mt-16 p-4 bg-tertiary-500 text-white rounded bg-[url(/venue-${venue.slug}.jpg)] bg-cover bg-center bg-no-repeat flex-basis-1/3 md:basis-1/3 min-h-[175px]`}>
+          </div>
+
+
         </div>
 
       </div>

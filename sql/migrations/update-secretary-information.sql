@@ -24,8 +24,8 @@ UPDATE tennisPlayer SET phoneLandline = '', phoneMobile = '07948095224' WHERE ye
 UPDATE tennisPlayer SET phoneLandline = '', phoneMobile = '07456279590' WHERE yearId = :yearId AND nameFirst = 'Judith' AND nameLast = 'Glover';
 UPDATE tennisPlayer SET phoneLandline = '', phoneMobile = '07503167547' WHERE yearId = :yearId AND nameFirst = 'Iain' AND nameLast = 'Clements';
 
-# INSERT INTO tennisPlayer (id, yearId, nameFirst, nameLast, slug, `rank`, phoneLandline, phoneMobile, ettaLicenseNumber, teamId)
-# VALUES (105, :yearId, 'Bryan', 'Edwards', 'bryan-edwards', 1039, '0161 7975082', '07538021102', '38160', null)
+INSERT INTO tennisPlayer (id, yearId, nameFirst, nameLast, slug, `rank`, phoneLandline, phoneMobile, ettaLicenseNumber, teamId)
+VALUES (105, :yearId, 'Bryan', 'Edwards', 'bryan-edwards', 1039, '0161 7975082', '07538021102', '38160', null)
 
 UPDATE tennisTeam SET secretaryId = 535 WHERE yearId = :yearId AND slug = 'spartans';
 UPDATE tennisTeam SET secretaryId = 105 WHERE yearId = :yearId AND slug = 'ramsbottom-a';
