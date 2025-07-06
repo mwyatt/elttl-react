@@ -6,6 +6,7 @@
 - Migrate to new server
   - Setup ssh
   - Swap domain
+- Committee page
 
 # Wish
 - Homepage add best season performers
@@ -16,6 +17,7 @@
 - Chart for Awarding Ranking Points - How do the ranking points work?
 - Calculating Handicaps using player’s rank 
 - Divisional overview showing all teams and the contact information
+- Email address for players?
 
 ## Search plan
 fast simple search for players, teams, venues, fixtures

@@ -1,6 +1,9 @@
 import Link from 'next/link'
 
 export default function Breadcrumbs ({ items = [] }) {
+  if (items.length === 1) {
+    return null
+  }
   const getLink = (item) => {
     if (item.href) {
       return <Link className='text-primary-500' href={item.href}>{item.name}</Link>
@@ -12,7 +15,7 @@ export default function Breadcrumbs ({ items = [] }) {
       {items.map((item, index) => (
         <span key={index}>
           {getLink(item)}
-          <span className='text-stone-400 mx-4'>/</span>
+          {index < items.length - 1 && <span className='text-stone-400 mx-4'>/</span>}
         </span>
       ))}
     </div>

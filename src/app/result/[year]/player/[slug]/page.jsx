@@ -60,6 +60,14 @@ export default async function Page ({ params }) {
           <SubHeading name='General Information' />
           <p>Plays for the <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</Link> team with a rank of <span className='font-bold'>{player.rank}</span> and has had <span className='font-bold'>{encounters.length}</span> encounters with other players so far this season.</p>
 
+          <SubHeading name='Contact Information' />
+          {player.phoneLandline && (
+            <p className='mb-2'>Phone Landline: <a className='text-primary-500' href={`tel:${player.phoneLandline}`}>{player.phoneLandline}</a></p>
+          )}
+          {player.phoneMobile && (
+            <p className='mb-2'>Phone Mobile: <a className='text-primary-500' href={`tel:${player.phoneMobile}`}>{player.phoneMobile}</a></p>
+          )}
+
           {/* @todo make this only fixtures that the player has been involved in */}
           <SubHeading name='Team Fixtures' />
           <div className='flex flex-wrap gap-3'>

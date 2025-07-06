@@ -35,7 +35,8 @@ export async function GET (request) {
   `)
 
   const commonLinks = {
-    prePractice: { name: 'Prepaid Practice Scheme', url: '/page/pre-practice-scheme' },
+    prePractice: { name: 'Prepaid Practice Scheme', url: '/prepaid-practice-scheme' },
+    competitions: { name: 'Competitions', url: '/competitions' },
     resultArchive: { name: 'Results Archive', url: '/result' },
     contactUs: { name: 'Contact Us', url: '/contact-us' },
     townTeams: { name: 'Town Teams', url: '/page/town-teams' },
@@ -53,32 +54,28 @@ export async function GET (request) {
   }
 
   return NextResponse.json({
-    headLinks: [
-      commonLinks.prePractice,
-      commonLinks.resultArchive,
-      commonLinks.contactUs,
-      commonLinks.townTeams,
-      commonLinks.lancsCountyTTAssoc,
-      commonLinks.gdpr,
-      commonLinks.diciplineProcedure,
-      commonLinks.safeguardingPolicy
-    ],
+    // headLinks: [
+    //   commonLinks.prePractice,
+    //   commonLinks.resultArchive,
+    //   commonLinks.contactUs,
+    //   commonLinks.townTeams,
+    //   commonLinks.lancsCountyTTAssoc,
+    //   commonLinks.gdpr,
+    //   commonLinks.diciplineProcedure,
+    //   commonLinks.safeguardingPolicy
+    // ],
     footLinks: [
-      { area: 1, name: 'Coaching', url: '/page/coaching' },
-      { area: 1, name: 'Schools', url: '/page/schools' },
-      { area: 1, name: 'Summer League', url: '/page/summer-league' },
-      { area: 1, name: 'Fred Holden Cup', url: '/page/fred-holden-cup' },
-      { area: 1, name: 'Local Clubs', url: '/page/local-clubs' },
-      { area: 1, name: 'Rules', url: '/constitution-and-rules' },
-      { area: 1, name: 'Sessions', url: '/sessions' },
-      { area: 2, ...commonLinks.prePractice },
-      { area: 2, ...commonLinks.resultArchive },
-      { area: 2, ...commonLinks.contactUs },
-      { area: 2, ...commonLinks.townTeams },
+      { area: 1, name: 'Coaching & Sessions', url: '/sessions' },
+      { area: 1, ...commonLinks.prePractice },
+      { area: 1, ...commonLinks.competitions },
+      { area: 1, name: 'Schools', url: '/schools' },
+      { area: 1, name: 'Constitution & Rules', url: '/constitution-and-rules' },
+      // { area: 1, ...commonLinks.townTeams },
       { area: 2, ...commonLinks.lancsCountyTTAssoc },
       { area: 2, ...commonLinks.gdpr },
       { area: 2, ...commonLinks.diciplineProcedure },
-      { area: 2, ...commonLinks.safeguardingPolicy }
+      { area: 2, ...commonLinks.safeguardingPolicy },
+      { area: 2, ...commonLinks.contactUs }
     ],
     menuPrimary: [
       {
@@ -87,7 +84,7 @@ export async function GET (request) {
         children: [
           { name: 'Download Handbook', url: '/handbook-2024-2025.pdf', target: '_blank' },
           { name: 'Press Releases', url: '/press' },
-          { name: 'Competitions', url: '/page/competitions' },
+          commonLinks.competitions,
           { name: 'Contact us', url: '/contact-us' }
         ]
       },

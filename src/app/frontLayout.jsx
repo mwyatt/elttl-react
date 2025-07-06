@@ -1,72 +1,27 @@
 import React from 'react'
 import Link from 'next/link'
-import { apiUrl } from '@/constants/url'
 import { getMetaTitle } from '@/constants/MetaData'
-import { BiLogoFacebook, BiLogoTwitter } from 'react-icons/bi'
+import { BiLogoFacebook } from 'react-icons/bi'
 import Header from '@/components/Header'
 import Address from '@/components/Address'
 import { PiXLogoFill } from 'react-icons/pi'
-import { linkStyles } from '@/lib/styles'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const dynamic = 'force-dynamic'
 
 export default async function FrontLayout ({ children, paddedContent = true, maxWidth = true }) {
-  const auth = { user: null }
   const appName = getMetaTitle()
   const {
-    headLinks,
     menuPrimary,
     footLinks,
     advertisementsSecondary
   } = await fetchJson('/frontend')
 
   return (
-    <div className='bg-[url(/bg.gif)] bg-no-repeat'>
-      {/* <div className='flex border-b border-neutral-400 text-sm bg-neutral-200'> */}
-      {/*  <div className={'max-w-[1440px] mx-auto hidden'}> */}
-      {/*    <div className='flex-1 hidden lg:block'> */}
-      {/*      {headLinks.map((item) => ( */}
-      {/*        <Link */}
-      {/*          className='p-2 px-3 text-sm border-r text-neutral-600 border-gray-400 inline-block' key={item.name} */}
-      {/*          href={item.url} */}
-      {/*        >{item.name} */}
-      {/*        </Link> */}
-      {/*      ))} */}
-      {/*    </div> */}
-      {/*  </div> */}
-      {/*  <div className='flex'> */}
-      {/*    {auth.user */}
-      {/*      ? ( */}
-      {/*        <Link */}
-      {/*          className='p-2' */}
-      {/*          href='/account/' */}
-      {/*        > */}
-      {/*          My Account */}
-      {/*        </Link> */}
-      {/*        ) */}
-      {/*      : ( */}
-      {/*        <div className='hidden'> */}
-      {/*          <Link */}
-      {/*            className='p-2' */}
-      {/*            href='/login/' */}
-      {/*          > */}
-      {/*            Log in */}
-      {/*          </Link> */}
-      {/*          <Link */}
-      {/*            className='p-2' */}
-      {/*            href='/register/' */}
-      {/*          > */}
-      {/*            Register */}
-      {/*          </Link> */}
-      {/*        </div> */}
-      {/*        )} */}
-      {/*  </div> */}
-      {/* </div> */}
-
+    <div className=''>
       <Header appName={appName} menuPrimary={menuPrimary} />
 
-      <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''} bg-white/20`}>
+      <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''} bg-white/80`}>
         {children}
       </div>
 
