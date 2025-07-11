@@ -88,6 +88,16 @@ export default async function FrontLayout ({ children, paddedContent = true, max
           </div>
         </div>
       </footer>
+
+      <div className='p-6 bg-stone-100 border border-stone-300 fixed bottom-0 right-0 max-w-md sm:rounded-tl drop-shadow hidden'>
+        <h3 className='text-lg font-semibold mb-3'>Cookies</h3>
+        <p className='my-3 mb-4'>Your privacy matters to us, we only use cookies to track your use of this website so that we can improve your experience.</p>
+        <div className='flex gap-4 justify-end'>
+          <button className='bg-primary-500 px-4 py-2 rounded font-bold text-white'>Accept</button>
+          <button className='bg-stone-400 px-4 py-2 rounded font-bold text-white'>Reject</button>
+        </div>
+      </div>
+
     </div>
   )
 }

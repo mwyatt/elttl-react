@@ -105,13 +105,15 @@ export default async function Page () {
             <li className='my-4'>5. The Committee shall consist of the Officers and other Committee Members elected at
               the AGM or
               at an Extraordinary General Meeting (“EGM”) as provided below. Additional or replacement co-opted
-              members may be included at the Committee&#39;s discretion. 5a. Officers must be League Members and
-              shall consist of a Chairman, Vice Chairman, League Secretary, Treasurer and Fixtures Secretary.
-              Other Committee Members shall be those elected or co-opted under 5 to nominated positions (e.g.
-              coaching, schools, development, ladies, juniors, club or team representatives, press and/or HTTC
-              representative) and must be League Members.
+              members may be included at the Committee&#39;s discretion.
             </li>
           </ol>
+          <p className='my-4'>5a. Officers must be League Members and
+            shall consist of a Chairman, Vice Chairman, League Secretary, Treasurer and Fixtures Secretary.
+            Other Committee Members shall be those elected or co-opted under 5 to nominated positions (e.g.
+            coaching, schools, development, ladies, juniors, club or team representatives, press and/or HTTC
+            representative) and must be League Members.
+          </p>
           <p className='my-4'>5b. All such Officers and Committee Members shall hold office for two Seasons from the AGM
             at
             which they were elected or, in the event of their being elected at an EGM or co-opted by the
@@ -294,8 +296,8 @@ export default async function Page () {
               Secretary for consideration by the Committee. If approval is given, the player can play for his/her new
               team four days later, providing that the transfer takes place before January 1st and no previous
               transfer by that player has taken place during that season. No transfers at all may take place after Jan
-              1st, apart from when a player plays a 6th game as reserve for a higher team and thus becomes
-              automatically transferred to the higher team as in rule 20 below.
+              1st, apart from when a player plays a 6th game as reserve for another team and thus becomes automatically
+              transferred to the other team as in rule 20 below.
             </li>
           </ol>
           <p className='my-4'>19a. Any player having a handicap of 6 or less must play at least 25% of the remaining
@@ -324,7 +326,7 @@ export default async function Page () {
           </p>
           <p className='my-4'>20b. A team consisting wholly of Junior players may play all their fixtures at their home
             venue. In the
-            event that both teams are all Juniors the normal home and away system will apply
+            event that both teams are all Juniors the normal home and away system will apply.
           </p>
           <p className='my-4'>21. If a team resigns from the League, all points will be removed and all monies
             forfeited.

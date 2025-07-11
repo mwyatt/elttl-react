@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono, Noto_Kufi_Arabic, Noto_Sans_Javanese, Open_Sans } from 'next/font/google'
 import './globals.css'
 import { getMetaDescription, getMetaTitle } from '@/constants/MetaData'
-import Head from 'next/head'
+// import { GoogleTagManager } from '@next/third-parties/google'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,6 +41,7 @@ export const metadata = {
 export default function RootLayout ({ children }) {
   return (
     <html lang='en'>
+      {/* <GoogleTagManager gtmId="GTM-XYZ"/> */}
       <body
         className='antialiased'
       >
