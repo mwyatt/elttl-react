@@ -6,15 +6,15 @@ import SubHeading from '@/components/SubHeading'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: getMetaTitle('Competitions'),
-  description: 'Information about the competitions held by the league, including the Fred Holden Cup, Annual Closed Competition, and other events.'
+  title: getMetaTitle('Annual League Competition'),
+  description: 'Information about the competitions held by the league annually, including the Fred Holden Cup, Annual Closed Competition, and other events.'
 }
 
 export default async function Page () {
   return (
     <FrontLayout>
       <div className='max-w-[768px] mx-auto'>
-        <MainHeading name='Competitions' />
+        <MainHeading name='Annual League Competition' />
         <p className='my-6'>Each division is usually based on  ten teams; each team will play each other twice (home and away).</p>
         <p className='my-6'>The format of the League is usually decided at the formation meeting in July/August.
           At the end of the season the top two teams in each division will be promoted.

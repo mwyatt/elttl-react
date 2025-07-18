@@ -11,15 +11,14 @@ export async function GET (request) {
   const page = searchParams.get('page')
   const offset = (page - 1) * limit
 
-  console.log(page, offset, type)
-
   const sqlAppend = `LIMIT ${limit} OFFSET ${offset}`
 
   const [contents] = await connection.execute(`
       SELECT title, timePublished, slug, CONCAT(user.nameFirst, ' ', user.nameLast) AS author
       FROM content
                LEFT JOIN user ON content.userId = user.id
-      WHERE type = :type and status = :status
+      WHERE type = :type
+        and status = :status
       order by timePublished desc
           ${sqlAppend}
   `, { type, status: ContentStatus.PUBLISHED })

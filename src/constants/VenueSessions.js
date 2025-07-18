@@ -60,7 +60,8 @@ export const sessions = {
     ]
   },
   4: {
-    [sessionVenueIds.hyndburn]: [batAndChatMorning, hyndburnPracticeEvening]
+    [sessionVenueIds.hyndburn]: [batAndChatMorning, hyndburnPracticeEvening],
+    [sessionVenueIds.stpeters]: [hyndburnPracticeEvening],
   },
   5: {
     [sessionVenueIds.hyndburn]: [

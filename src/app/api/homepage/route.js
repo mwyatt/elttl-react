@@ -19,34 +19,33 @@ export async function GET (request) {
       FROM content
       WHERE type = 'press'
         AND status = 1
-      ORDER BY timePublished DESC LIMIT 5
+      ORDER BY timePublished DESC
+      LIMIT 5
   `)
 
   const [latestFixtures] = await connection.execute(`
-    select
-        ttl.name teamLeftName,
-        ttl.slug teamLeftSlug,
-        sum(scoreLeft) scoreLeft,
-        ttr.name teamRightName,
-        ttr.slug teamRightSlug,
-        sum(scoreRight) scoreRight,
-        timeFulfilled
-        from tennisEncounter tte
-      inner join tennisFixture ttf on ttf.id = tte.fixtureId
-                                          and ttf.yearId = tte.yearId
-                                          and timeFulfilled is not null
-        left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = tte.yearId
-        left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = tte.yearId
-    where tte.yearId = :yearId
+      select ttl.name        teamLeftName,
+             ttl.slug        teamLeftSlug,
+             sum(scoreLeft)  scoreLeft,
+             ttr.name        teamRightName,
+             ttr.slug        teamRightSlug,
+             sum(scoreRight) scoreRight,
+             timeFulfilled
+      from tennisEncounter tte
+               inner join tennisFixture ttf on ttf.id = tte.fixtureId
+          and ttf.yearId = tte.yearId
+          and timeFulfilled is not null
+               left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = tte.yearId
+               left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = tte.yearId
+      where tte.yearId = :yearId
         AND timeFulfilled IS NOT NULL
-    and status != 'exclude'
-    group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
-      ORDER BY timeFulfilled LIMIT 6
+        and status != 'exclude'
+      group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
+      ORDER BY timeFulfilled
+      LIMIT 6
   `, {
     yearId: currentYear.id
   })
-
-  console.log({ latestFixtures })
 
   latestPress.forEach((press) => {
     press.url = `/press/${press.slug}`
@@ -66,7 +65,7 @@ export async function GET (request) {
   const [teams] = await connection.execute(`
       SELECT id
       FROM tennisTeam
-        WHERE yearId = :yearId
+      WHERE yearId = :yearId
   `, {
     yearId: currentYear.id
   })
@@ -76,7 +75,7 @@ export async function GET (request) {
   const [players] = await connection.execute(`
       SELECT id
       FROM tennisPlayer
-        WHERE yearId = :yearId
+      WHERE yearId = :yearId
   `, {
     yearId: currentYear.id
   })
@@ -85,8 +84,8 @@ export async function GET (request) {
   const [fixtures] = await connection.execute(`
       SELECT id
       FROM tennisFixture
-        WHERE yearId = :yearId
-          AND timeFulfilled IS NOT NULL
+      WHERE yearId = :yearId
+        AND timeFulfilled IS NOT NULL
   `, {
     yearId: currentYear.id
   })
@@ -96,7 +95,7 @@ export async function GET (request) {
   const [totalFixtures] = await connection.execute(`
       SELECT id
       FROM tennisFixture
-        WHERE yearId = :yearId
+      WHERE yearId = :yearId
   `, {
     yearId: currentYear.id
   })
