@@ -13,20 +13,20 @@ export const metadata = {
 export default async function Page () {
   return (
     <FrontLayout>
-      <div className='max-w-[768px] mx-auto'>
+      <div className='max-w-[768px] mx-auto text-sm'>
         <MainHeading name='Code of Conduct' />
 
         <SubHeading name='East Lancashire Table Tennis League (“ELTTL”) Disciplinary Procedure' />
         <SubHeading name='CODE OF CONDUCT' />
 
          <p className={'my-4'}>This applies to all persons participating in table tennis at a venue or event which is under the aegis or responsibility of ELTTL (whether or not they are current ELTTL Members).</p>
-         <p className={'my-4 font-semibold'}>AT ALL TIMES:</p>
+         <p className={'my-4 font-semibold'}>AT ALL TIMES</p>
          <ul className={'list-disc pl-12'}>
             <li>
                <p className={'my-4'}>Members of ELTTL, officials, players and participators are expected to conduct themselves in an appropriate manner with due respect for other players, officials, spectators, parents and guardians and to refrain from any behaviour likely to bring the sport into disrepute.</p>
             </li>
          </ul>
-         <p className={'my-4 font-semibold'}>WHILE UNDER THE JURISDICTION OF THE ELTTL:</p>
+         <p className={'my-4 font-semibold'}>WHILE UNDER THE JURISDICTION OF THE ELTTL</p>
          <p className={'my-4'}>The following types of offence would be considered a breach of the Code of Conduct, and may lead to sanctions. The list below is not intended to be comprehensive and any other conduct which may breach the above general principle may be dealt with under this Procedure.</p>
          <ul className={'list-disc pl-12'}>
             <li>
@@ -67,12 +67,12 @@ export default async function Page () {
             </li>
          </ul>
 
-         <SubHeading name={'DISCIPLINARY COMMITTEE'} />
+         <h2 className={'font-semibold mb-4 mt-6'}>DISCIPLINARY COMMITTEE</h2>
 
          <p className={'my-4'}>At the AGM of ELTTL, or otherwise at a meeting of the General Committee, a Disciplinary Panel will be appointed on an annual or ad-hoc basis consisting of no less than three General Committee Members (one of whom shall be appointed as Disciplinary Chairman) and one other non-executive ELTTL representative member.</p>
          <p className={'my-4'}>The Disciplinary Committee for each specific case will consist of all or a minimum of three Disciplinary Panel members appointed by the Disciplinary Chairman. No person involved in or with direct knowledge of the incident or matter which is the subject of the case shall be appointed.</p>
 
-         <SubHeading name={'DISCIPLINARY PROCESS'} />
+         <h2 className={'font-semibold mb-4 mt-6'}>DISCIPLINARY PROCESS</h2>
 
          <ul className={'list-disc pl-12'}>
             <li>
@@ -127,7 +127,7 @@ export default async function Page () {
             </li>
          </ul>
 
-         <SubHeading name={'APPEAL'} />
+         <h2 className={'font-semibold mb-4 mt-6'}>APPEAL</h2>
          <ul className={'list-disc pl-12'}>
             <li>
                <p className={'my-4'}>An accused person may appeal against a disciplinary sanction other than a) or b) above by giving written notice stating the grounds of appeal to the Disciplinary Chairman and/or the General Committee Chairman within 28 days of accepting an oral decision or being sent a written decision.</p>
