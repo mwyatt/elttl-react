@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono, Noto_Kufi_Arabic, Noto_Sans_Javanese, Open_Sans } from 'next/font/google'
 import './globals.css'
 import { getMetaDescription, getMetaTitle } from '@/constants/MetaData'
-// import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleTagManager } from '@next/third-parties/google'
+import Environments from '@/constants/Environments'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -38,15 +39,22 @@ export const metadata = {
   description: getMetaDescription()
 }
 
+const isLiveEnvironment = process.env.NEXT_PUBLIC_ENVIRONMENT === Environments.LIVE
+const gtmContainerId = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID
+
 export default function RootLayout ({ children }) {
   return (
-    <html lang='en'>
-      {/* <GoogleTagManager gtmId="GTM-XYZ"/> */}
-      <body
-        className='antialiased'
-      >
-        {children}
-      </body>
+    <html lang="en">
+
+    {isLiveEnvironment && gtmContainerId && (
+      <GoogleTagManager gtmId={gtmContainerId}/>
+    )}
+
+    <body
+      className="antialiased"
+    >
+    {children}
+    </body>
     </html>
   )
 }
