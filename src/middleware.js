@@ -10,14 +10,18 @@ const publicRoutes = [loginPath]
 export default async function middleware (req) {
   const path = req.nextUrl.pathname
   const isProtectedRoute = path.indexOf(protectedPath) === 0
+
+  // Very early return if the route is not protected
+  if (!isProtectedRoute) {
+    return NextResponse.next()
+  }
+
   const isAuthenticationRoute = path.indexOf(authenticationPath) === 0
   const isPublicRoute = publicRoutes.includes(path)
   const cookiePromise = await cookies()
 
   let jwt = cookiePromise.get('session')?.value
   let usedHeader = false
-
-  console.info('Middleware running for authentication checking')
 
   // If not set in the cookie then it might be set in the header as an authentication token
   // If we are on the authentication route then we can use the header

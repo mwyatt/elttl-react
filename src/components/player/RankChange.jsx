@@ -1,5 +1,5 @@
 export default function RankChange ({ rankChange }) {
-  if (rankChange === null || rankChange === 0) {
+  if (rankChange === null || rankChange === 0 || rankChange === undefined) {
     return
   }
 

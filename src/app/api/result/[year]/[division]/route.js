@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
-import EncounterStatus from '@/constants/EncounterStatus'
 import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
@@ -19,17 +18,19 @@ export async function GET (request, { params }) {
   const yearDivisionId = yearDivisionIds[0]
 
   const [teams] = await connection.execute(`
-      SELECT tt.name, tt.slug,
-          tv.name venueName,
-          tv.slug venueSlug,
-          tp.slug secretarySlug,
-          concat(tp.nameFirst, ' ', tp.nameLast) AS secretaryName,
-          tp.phoneLandline secretaryPhoneLandline,
-          tp.phoneMobile secretaryPhoneMobile
+      SELECT tt.id,
+             tt.name,
+             tt.slug,
+             tv.name                                   venueName,
+             tv.slug                                   venueSlug,
+             tp.slug                                   secretarySlug,
+             concat(tp.nameFirst, ' ', tp.nameLast) AS secretaryName,
+             tp.phoneLandline                          secretaryPhoneLandline,
+             tp.phoneMobile                            secretaryPhoneMobile
       FROM tennisTeam tt
-           LEFT JOIN tennisVenue tv ON tt.venueId = tv.id AND tv.yearId = tt.yearId
-           LEFT JOIN tennisPlayer tp ON tt.secretaryId = tp.id AND tp.yearId = tt.yearId
-        WHERE tt.yearId = :yearId
+               LEFT JOIN tennisVenue tv ON tt.venueId = tv.id AND tv.yearId = tt.yearId
+               LEFT JOIN tennisPlayer tp ON tt.secretaryId = tp.id AND tp.yearId = tt.yearId
+      WHERE tt.yearId = :yearId
         AND tt.divisionId = :divisionId
   `, {
     divisionId: yearDivisionId.divisionId,
@@ -37,29 +38,72 @@ export async function GET (request, { params }) {
   })
 
   const [leagueTable] = await connection.execute(`
-    select
-        ttl.name teamLeftName,
-        ttl.slug teamLeftSlug,
-        sum(scoreLeft) scoreLeft,
-        ttr.name teamRightName,
-        ttr.slug teamRightSlug,
-        sum(scoreRight) scoreRight
-        from tennisEncounter tte
-      left join tennisFixture ttf on ttf.id = tte.fixtureId and ttf.yearId = tte.yearId
-        left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = tte.yearId
-        left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = tte.yearId
-    where tte.yearId = :yearId
-    and status != 'exclude'
-    and ttl.divisionId = :divisionId
-    group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug
+      select ttl.name        teamLeftName,
+             ttl.slug        teamLeftSlug,
+             sum(scoreLeft)  scoreLeft,
+             ttr.name        teamRightName,
+             ttr.slug        teamRightSlug,
+             sum(scoreRight) scoreRight
+      from tennisEncounter tte
+               left join tennisFixture ttf on ttf.id = tte.fixtureId and ttf.yearId = tte.yearId
+               left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = tte.yearId
+               left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = tte.yearId
+      where tte.yearId = :yearId
+        and status != 'exclude'
+        and ttl.divisionId = :divisionId
+      group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug
 
   `, {
     divisionId: yearDivisionId.divisionId,
     yearId: yearDivisionId.yearId
   })
 
+  const teamIdsQuery = teams.map(team => team.id).join(',')
+
+  const [fulfilledFixtures] = await connection.execute(`
+      select ttl.name        teamLeftName,
+             ttl.slug        teamLeftSlug,
+             sum(scoreLeft)  scoreLeft,
+             ttr.name        teamRightName,
+             ttr.slug        teamRightSlug,
+             sum(scoreRight) scoreRight,
+             timeFulfilled
+      from tennisEncounter tte
+               inner join tennisFixture ttf on ttf.id = tte.fixtureId
+          and ttf.yearId = tte.yearId
+          and ttf.teamIdLeft in (${teamIdsQuery})
+               left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = tte.yearId
+               left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = tte.yearId
+      where tte.yearId = :yearId
+        and status != 'exclude'
+      group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
+  `, {
+    yearId: yearDivisionId.yearId,
+  })
+
+  const [unfulfillfedFixtures] = await connection.execute(`
+      select ttl.name teamLeftName,
+             ttl.slug teamLeftSlug,
+             '0'      scoreLeft,
+             ttr.name teamRightName,
+             ttr.slug teamRightSlug,
+             '0'      scoreRight,
+             timeFulfilled
+      from tennisFixture ttf
+               left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = ttf.yearId
+               left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = ttf.yearId
+      where ttf.yearId = :yearId
+        and ttf.teamIdLeft in (${teamIdsQuery})
+        and ttf.timeFulfilled is null
+      group by ttf.id, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
+  `, {
+    yearId: yearDivisionId.yearId,
+  })
+
   return NextResponse.json({
     leagueTable,
-    teams
+    teams,
+    fulfilledFixtures,
+    unfulfillfedFixtures
   }, { status: StatusCodes.OK })
 }

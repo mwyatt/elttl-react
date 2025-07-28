@@ -9,6 +9,7 @@ import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import SubHeading from '@/components/SubHeading'
 import InformationTable from '@/components/team/InformationTable'
+import FixtureCard from '@/components/FixtureCard'
 
 export async function generateMetadata (
   { params }
@@ -26,7 +27,12 @@ export const dynamic = 'force-dynamic'
 export default async function Page ({ params }) {
   const year = (await params).year
   const division = (await params).division
-  const { leagueTable, teams } = await fetchJson(`/result/${year}/${division}`)
+  const {
+    leagueTable,
+    teams,
+    fulfilledFixtures,
+    unfulfillfedFixtures,
+  } = await fetchJson(`/result/${year}/${division}`)
 
   const getLeagueTableRow = (teamLeftSlug, teamRightSlug) => {
     for (const row of leagueTable) {
@@ -96,6 +102,32 @@ export default async function Page ({ params }) {
 
         </tbody>
       </table>
+
+      <SubHeading name='Fixtures' />
+      <div className='flex flex-wrap gap-3'>
+
+        {fulfilledFixtures.map((fixture, index) => (
+          <FixtureCard
+            key={index}
+            year={year}
+            teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
+            teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
+            timeFulfilled={fixture.timeFulfilled}
+          />
+        ))}
+
+        {unfulfillfedFixtures.map((fixture, index) => (
+          <FixtureCard
+            key={index}
+            year={year}
+            teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
+            teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
+            timeFulfilled={fixture.timeFulfilled}
+          />
+        ))}
+
+      </div>
+
     </FrontLayout>
   )
 }

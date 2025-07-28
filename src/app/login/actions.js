@@ -11,7 +11,7 @@ export async function login (prevState, formData) {
   const [users] = await connection.execute(`
       SELECT id, email, password
       FROM user
-    WHERE email = :email
+      WHERE email = :email
   `, {
     email: formData.get('email')
   })
@@ -30,9 +30,6 @@ export async function login (prevState, formData) {
   await bcrypt.compare(formData.get('password'), user.password).then(function (result) {
     compareResult = result
   })
-
-  // @todo remove me, just to login for testing
-  // compareResult = true
 
   if (compareResult === true) {
     await createSession(user.id)

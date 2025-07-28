@@ -6,6 +6,9 @@ import Header from '@/components/Header'
 import Address from '@/components/Address'
 import { PiXLogoFill } from 'react-icons/pi'
 import { fetchJson } from '@/app/lib/fetchWrapper'
+import CookieBanner from '@/components/CookieBanner'
+import { cookies } from 'next/headers'
+import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,6 +19,8 @@ export default async function FrontLayout ({ children, paddedContent = true, max
     footLinks,
     advertisementsSecondary
   } = await fetchJson('/frontend')
+  const cookieStore = await cookies()
+  const isCookieBannerDismissed = cookieStore.get(CookieBannerConsentChoiceKey)?.value.length > 0
 
   return (
     <div className=''>
@@ -89,15 +94,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
         </div>
       </footer>
 
-      <div className='p-6 bg-stone-100 border border-stone-300 fixed bottom-0 right-0 max-w-md sm:rounded-tl drop-shadow hidden'>
-        <h3 className='text-lg font-semibold mb-3'>Cookies</h3>
-        <p className='my-3 mb-4'>Your privacy matters to us, we only use cookies to track your use of this website so that we can improve your experience.</p>
-        <div className='flex gap-4 justify-end'>
-          <button className='bg-primary-500 px-4 py-2 rounded font-bold text-white'>Accept</button>
-          <button className='bg-stone-400 px-4 py-2 rounded font-bold text-white'>Reject</button>
-        </div>
-      </div>
-
+      <CookieBanner isCookieBannerDismissed={isCookieBannerDismissed} />
     </div>
   )
 }
