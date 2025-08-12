@@ -1,20 +1,4 @@
 services:
-
-#  elttl_react:
-#    container_name: elttl_react
-#    image: elttl_react
-#    restart: on-failure
-#    build:
-#      dockerfile: nextjs.dockerfile
-#    ports:
-#      - '3000:3000'
-#    environment:
-#      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-#    depends_on:
-#      - elttl_react_mysql
-#    volumes:
-#      - ./:/app
-
   elttl_react_mysql:
     container_name: elttl_react_mysql
     image: mysql:8.0
@@ -26,6 +10,5 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-
 volumes:
   elttl_react_mysql_data:

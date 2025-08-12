@@ -41,7 +41,7 @@ export async function GET (request) {
         AND timeFulfilled IS NOT NULL
         and status != 'exclude'
       group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
-      ORDER BY timeFulfilled
+      ORDER BY timeFulfilled DESC
       LIMIT 6
   `, {
     yearId: currentYear.id

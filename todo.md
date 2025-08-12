@@ -1,14 +1,12 @@
 # Todo
-- Cookie banner
 - Handle actual server errors (eg. fixture single cant find venue) - needs to be a custom error page and  also log the error on the server to inspect
 - Trial new season / generate fixtures on the server
-- Google Analytics
 - Migrate to new server
   - Setup ssh
   - Swap domain
-- Committee page
 
 # Wish
+- Committee page
 - Homepage add best season performers
   - Highest rank changes top 3
   - Most 3-0 wins
@@ -28,7 +26,6 @@ fast simple search for players, teams, venues, fixtures
   - Search by week description
 
 ## Season Weeks Plan
-
 season generation
 create weeks from september to june the next year with a blank description
 
