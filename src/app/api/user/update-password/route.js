@@ -41,7 +41,7 @@ export async function GET (request) {
   })
 
   return NextResponse.json(
-    `user ${email} had password salted, hashed and updated in the db, affecting ${response.affectedRows} row(s)`,
+    `user ${email} had password salted, hashed and updated in the db.`,
     { status: StatusCodes.OK }
   )
 }
