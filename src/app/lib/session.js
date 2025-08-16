@@ -12,9 +12,10 @@ export async function createSession (userId) {
   const cookieStore = await cookies()
 
   cookieStore.set('session', session, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt
+    // httpOnly: true,
+    // secure: true,
+    expires: expiresAt,
+    // sameSite: 'strict'
   })
 }
 
