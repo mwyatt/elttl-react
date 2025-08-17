@@ -15,7 +15,7 @@ export default function CookieBanner ({ isCookieBannerDismissed }) {
     setIsDisabled(true)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cookie-consent-banner`, {
+      const response = await fetch(`/api/cookie-consent-banner`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -23,7 +23,11 @@ export default function CookieBanner ({ isCookieBannerDismissed }) {
         body: JSON.stringify({ decision: decision })
       })
 
-      window.location.reload()
+      if (response.ok) {
+        window.location.reload()
+      } else {
+        console.error('Error while setting cookie consent decision.')
+      }
     } catch (error) {
       console.error('Error while setting cookie consent decision.')
       setIsDisabled(false)
