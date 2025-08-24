@@ -29,6 +29,11 @@ export async function GET (request, { params }) {
       WHERE tp.yearId = ?
         AND tp.slug = ?
   `, [currentYear.id, slug])
+
+    if (players.length === 0) {
+    return NextResponse.json(`Unable to find player within year name '${year}' and slug '${slug}'`, { status: StatusCodes.NOT_FOUND })
+  }
+
   const player = players[0]
 
   const [fixtures] = await connection.execute(`

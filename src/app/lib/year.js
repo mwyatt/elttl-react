@@ -26,5 +26,9 @@ export async function getYearDivisionId (yearName, divisionSlug) {
         AND td.name = ?
   `, [yearName, divisionSlug])
 
+  if (yearDivisionIds.length === 0) {
+    return
+  }
+
   return yearDivisionIds[0]
 }

@@ -1,21 +1,17 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { StatusCodes } from 'http-status-codes'
+import { getYearDivisionId } from '@/app/lib/year'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
   const { year, division } = await params
 
-  const [yearDivisionIds] = await connection.execute(`
-      SELECT td.id AS divisionId,
-             ty.id AS yearId
-      FROM tennisDivision td
-               LEFT JOIN tennisYear ty ON ty.id = td.yearId
-      WHERE ty.name = ?
-        AND td.name = ?
-  `, [year, division])
+  const yearDivisionId = await getYearDivisionId(year, division)
 
-  const yearDivisionId = yearDivisionIds[0]
+  if (!yearDivisionId) {
+    return NextResponse.json(`Unable to find division with year name '${year}' and slug '${division}'`, { status: StatusCodes.NOT_FOUND })
+  }
 
   const [teams] = await connection.execute(`
       SELECT tt.id,
