@@ -1,5 +1,5 @@
 const Environments = {
-  LIVE: 'live',
+  LIVE: 'live'
 }
 
 export default Environments

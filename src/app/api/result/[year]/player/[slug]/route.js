@@ -30,7 +30,7 @@ export async function GET (request, { params }) {
         AND tp.slug = ?
   `, [currentYear.id, slug])
 
-    if (players.length === 0) {
+  if (players.length === 0) {
     return NextResponse.json(`Unable to find player within year name '${year}' and slug '${slug}'`, { status: StatusCodes.NOT_FOUND })
   }
 

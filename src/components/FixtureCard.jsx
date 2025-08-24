@@ -16,9 +16,9 @@ export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled 
     >
       <span>
         {timeFulfilled && (
-        <span className='text-tertiary-500 text-xs mb-1 block text-right'>
-          <DatePretty time={timeFulfilled} />
-        </span>
+          <span className='text-tertiary-500 text-xs mb-1 block text-right'>
+            <DatePretty time={timeFulfilled} />
+          </span>
         )}
         <div className='flex'>
           <span className=' flex-grow'>{teamLeft.name}</span>

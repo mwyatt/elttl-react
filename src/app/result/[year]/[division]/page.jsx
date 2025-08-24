@@ -31,7 +31,7 @@ export default async function Page ({ params }) {
     leagueTable,
     teams,
     fulfilledFixtures,
-    unfulfillfedFixtures,
+    unfulfillfedFixtures
   } = await fetchJson(`/result/${year}/${division}`)
 
   const getLeagueTableRow = (teamLeftSlug, teamRightSlug) => {
@@ -116,16 +116,16 @@ export default async function Page ({ params }) {
           />
         ))}
 
-        {/*@todo fix so that when visited does not fail*/}
-        {/*{unfulfillfedFixtures.map((fixture, index) => (*/}
-        {/*  <FixtureCard*/}
-        {/*    key={index}*/}
-        {/*    year={year}*/}
-        {/*    teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}*/}
-        {/*    teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}*/}
-        {/*    timeFulfilled={fixture.timeFulfilled}*/}
-        {/*  />*/}
-        {/*))}*/}
+        {/* @todo fix so that when visited does not fail */}
+        {/* {unfulfillfedFixtures.map((fixture, index) => ( */}
+        {/*  <FixtureCard */}
+        {/*    key={index} */}
+        {/*    year={year} */}
+        {/*    teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }} */}
+        {/*    teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }} */}
+        {/*    timeFulfilled={fixture.timeFulfilled} */}
+        {/*  /> */}
+        {/* ))} */}
 
       </div>
 

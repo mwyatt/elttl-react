@@ -74,7 +74,7 @@ export async function GET (request, { params }) {
         and status != 'exclude'
       group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
   `, {
-    yearId: yearDivisionId.yearId,
+    yearId: yearDivisionId.yearId
   })
 
   const [unfulfillfedFixtures] = await connection.execute(`
@@ -93,7 +93,7 @@ export async function GET (request, { params }) {
         and ttf.timeFulfilled is null
       group by ttf.id, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
   `, {
-    yearId: yearDivisionId.yearId,
+    yearId: yearDivisionId.yearId
   })
 
   return NextResponse.json({

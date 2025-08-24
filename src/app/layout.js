@@ -19,17 +19,17 @@ export default async function RootLayout ({ children }) {
   const googleAnalyticsIsEnabled = isLiveEnvironment && gaMeasurementId && isCookieConsented
 
   return (
-    <html lang="en">
+    <html lang='en'>
 
-    {googleAnalyticsIsEnabled && (
-      <GoogleAnalytics gaId={gaMeasurementId}/>
-    )}
+      {googleAnalyticsIsEnabled && (
+        <GoogleAnalytics gaId={gaMeasurementId} />
+      )}
 
-    <body
-      className="antialiased"
-    >
-    {children}
-    </body>
+      <body
+        className='antialiased'
+      >
+        {children}
+      </body>
     </html>
   )
 }
