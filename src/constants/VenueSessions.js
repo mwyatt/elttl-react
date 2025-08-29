@@ -66,13 +66,13 @@ export const sessions = {
   5: {
     [sessionVenueIds.hyndburn]: [
       {
-        name: 'Junior Coaching (Primary age) 5:00 PM - 6:30 PM',
-        cost: '£3',
+        name: 'Junior Coaching (Primary age) 6:00 PM - 7:00 PM',
+        cost: '£5',
         contactId: 635
       },
       {
-        name: 'Junior Coaching (Secondary age) 6:30 PM - 8:00 PM',
-        cost: '£3',
+        name: 'Junior Coaching (Secondary age) 7:00 PM - 8:00 PM',
+        cost: '£5',
         contactId: 635
       }
     ]
