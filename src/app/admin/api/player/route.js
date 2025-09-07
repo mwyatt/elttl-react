@@ -7,19 +7,28 @@ export async function GET (request) {
   const connection = await getConnection()
   const currentYear = await getCurrentYear()
 
-  const [teams] = await connection.execute(`
-      SELECT tt.id, tt.name, slug, homeWeekday, secretaryId, venueId, divisionId, tt.yearId, td.name as divisionName
-      FROM tennisTeam tt
-      left join tennisDivision td on tt.divisionId = td.id and td.yearId = tt.yearId
-        WHERE tt.yearId = :yearId
-      order by td.id
+  const [players] = await connection.execute(`
+    SELECT
+      id,
+      yearId,
+      nameFirst,
+      nameLast,
+      slug,
+      tp.rank,
+      phoneLandline,
+      phoneMobile,
+      ettaLicenseNumber,
+      teamId
+      FROM tennisPlayer tp
+        WHERE tp.yearId = :yearId
+      order by tp.nameLast
   `, {
     yearId: currentYear.id
   })
 
-  connection.release()
+    connection.release()
 
   return NextResponse.json({
-    teams
+    players
   }, { status: StatusCodes.OK })
 }

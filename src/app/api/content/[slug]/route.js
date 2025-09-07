@@ -16,7 +16,10 @@ export async function GET (request, { params }) {
         AND slug = :slug
   `, { slug, type })
 
+    connection.release()
+
   if (contents.length === 0) {
+
     return NextResponse.json(`Unable to find '${type}' with slug '${slug}'`, { status: StatusCodes.NOT_FOUND })
   }
 

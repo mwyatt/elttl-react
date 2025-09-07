@@ -16,7 +16,10 @@ export async function login (prevState, formData) {
     email: formData.get('email')
   })
 
+      connection.release()
+
   if (users.length === 0) {
+
     return {
       errors: {
         email: ['Invalid email or password']

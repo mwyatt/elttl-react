@@ -53,6 +53,8 @@ export async function GET (request) {
     safeguardingPolicy: { name: 'Safeguarding Policy', url: '/safeguarding-guidance-2020.pdf', target: '_blank' }
   }
 
+  connection.release()
+
   return NextResponse.json({
     // headLinks: [
     //   commonLinks.prePractice,

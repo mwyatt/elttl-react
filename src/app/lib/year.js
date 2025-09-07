@@ -11,6 +11,8 @@ where o.name = 'year_id'
 
   `)
 
+  connection.release()
+
   return currentYears[0]
 }
 
@@ -25,6 +27,9 @@ export async function getYearDivisionId (yearName, divisionSlug) {
       WHERE ty.name = ?
         AND td.name = ?
   `, [yearName, divisionSlug])
+
+
+  connection.release()
 
   if (yearDivisionIds.length === 0) {
     return

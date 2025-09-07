@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
-import EncounterStatus from '@/constants/EncounterStatus'
 import { getYearDivisionId } from '@/app/lib/year'
-import { getOtherSide, getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
+import { getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
@@ -12,6 +11,8 @@ export async function GET (request, { params }) {
   const yearDivisionId = await getYearDivisionId(year, division)
 
   if (!yearDivisionId) {
+      connection.release()
+
     return NextResponse.json(`Unable to find division with year name '${year}' and slug '${division}'`, { status: StatusCodes.NOT_FOUND })
   }
 
@@ -88,6 +89,8 @@ export async function GET (request, { params }) {
   stats = Object.values(stats).sort((a, b) => {
     return b.average - a.average
   })
+
+    connection.release()
 
   return NextResponse.json({
     stats

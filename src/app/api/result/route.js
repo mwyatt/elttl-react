@@ -11,5 +11,7 @@ export async function GET (request) {
       ORDER BY id ASC
   `)
 
+  connection.release()
+
   return NextResponse.json(years, { status: StatusCodes.OK })
 }

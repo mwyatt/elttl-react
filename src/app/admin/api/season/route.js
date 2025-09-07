@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
-import createNewSeason from '@/app/admin/api/season/createNewSeason'
 import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request) {
@@ -40,6 +39,8 @@ export async function GET (request) {
     unfulfilled: fixturesUnfulfilled[0].fixtureCount,
     total: fixturesTotal[0].fixtureCount
   }
+
+    connection.release()
 
   return NextResponse.json({
     currentYear,

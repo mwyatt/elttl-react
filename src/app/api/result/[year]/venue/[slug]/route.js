@@ -21,6 +21,8 @@ export async function GET (request, { params }) {
   `, [currentYear.id, slug])
 
   if (venues.length === 0) {
+    connection.release()
+
     return NextResponse.json(`Unable to find venue with slug '${slug}'`, { status: StatusCodes.NOT_FOUND })
   }
 
@@ -33,6 +35,8 @@ export async function GET (request, { params }) {
       WHERE tt.yearId = ?
         AND tt.venueId = ?
   `, [currentYear.id, venue.id])
+
+  connection.release()
 
   return NextResponse.json({
     venue,

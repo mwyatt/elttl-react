@@ -69,6 +69,8 @@ export default async function () {
     newYearId
   })
 
+    connection.release()
+
   return {
     newYearId,
     newYearName

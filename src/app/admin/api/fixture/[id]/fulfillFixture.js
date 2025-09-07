@@ -76,6 +76,8 @@ export async function rollBackFixture (currentYearId, fixtureId, playerRanks) {
               and id = :encounterId
         `, deleteEncounterData)
   })
+
+  connection.release()
 }
 
 // @todo validation routine for the encounters to check that there is a 3 within each encounter row (winner)
@@ -106,6 +108,8 @@ export default async function (fixtureId, encounterStruct) {
   const fixture = fixtures[0]
 
   if (!fixture) {
+      connection.release()
+
     throw new Error(`Fixture with ID ${fixtureId} not found for year ${currentYear.id}.`)
   }
 
@@ -220,5 +224,6 @@ export default async function (fixtureId, encounterStruct) {
     })
   }
 
+  connection.release()
   // await connection.commit()
 }

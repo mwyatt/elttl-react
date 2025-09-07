@@ -13,6 +13,8 @@ export async function GET (request, { params }) {
   `, [year])
 
   if (currentYears.length === 0) {
+      connection.release()
+
     return NextResponse.json(`Unable to find year with name '${year}'`, { status: StatusCodes.NOT_FOUND })
   }
   const currentYear = currentYears[0]
@@ -48,6 +50,8 @@ export async function GET (request, { params }) {
     }
     teamsByDivisionId[divisionId].push(team)
   })
+
+    connection.release()
 
   return NextResponse.json({ divisions, teamsByDivisionId }, { status: StatusCodes.OK })
 }

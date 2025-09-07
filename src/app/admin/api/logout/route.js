@@ -16,6 +16,8 @@ export async function GET (request) {
     yearId: currentYear.id
   })
 
+    connection.release()
+
   return NextResponse.json({
     teams
   }, { status: StatusCodes.OK })

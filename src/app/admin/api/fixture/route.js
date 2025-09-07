@@ -23,6 +23,8 @@ export async function GET (request) {
     yearId: currentYear.id
   })
 
+    connection.release()
+
   return NextResponse.json({
     fixtures
   }, { status: StatusCodes.OK })

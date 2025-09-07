@@ -27,6 +27,8 @@ export async function GET (request, { params }) {
     yearId: currentYear.id
   })
 
+    connection.release()
+
   return NextResponse.json({
     team: teams[0],
     divisions
@@ -53,6 +55,8 @@ export async function PUT (request, { params }) {
     slug,
     divisionId
   })
+
+    connection.release()
 
   return NextResponse.json({
     affectedRows: response.affectedRows

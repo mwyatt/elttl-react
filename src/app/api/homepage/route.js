@@ -101,6 +101,8 @@ export async function GET (request) {
   })
   const totalFixturesCount = totalFixtures.length
 
+  connection.release()
+
   return NextResponse.json({
     advertisementsPrimary,
     latestPress,

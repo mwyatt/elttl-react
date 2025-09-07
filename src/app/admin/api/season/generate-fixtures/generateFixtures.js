@@ -1,11 +1,11 @@
 import { getConnection } from '@/lib/database'
 
 export default async function (yearId, ignoreExistingFixtures = false) {
-  const connection = await getConnection()
-
   if (yearId === undefined || yearId === null) {
     throw new Error('yearId is required')
   }
+
+  const connection = await getConnection()
 
   // Check if the year exists in the database
   const [years] = await connection.execute(`
@@ -17,6 +17,8 @@ export default async function (yearId, ignoreExistingFixtures = false) {
   })
 
   if (years.length === 0) {
+      connection.release()
+
     throw new Error(`Year with ID ${yearId} does not exist`)
   }
 
@@ -31,6 +33,8 @@ export default async function (yearId, ignoreExistingFixtures = false) {
     })
 
     if (fixtures[0].count > 0) {
+        connection.release()
+
       throw new Error(`Year with ID ${yearId} already has fixtures. Use 'ignoreExistingFixtures' to bypass this check.`)
     }
   }
@@ -94,6 +98,8 @@ export default async function (yearId, ignoreExistingFixtures = false) {
       }
     }
   }
+
+    connection.release()
 
   return {
   }

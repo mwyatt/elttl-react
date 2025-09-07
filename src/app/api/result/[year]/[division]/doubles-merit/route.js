@@ -12,6 +12,8 @@ export async function GET (request, { params }) {
   const yearDivisionId = await getYearDivisionId(year, division)
 
   if (!yearDivisionId) {
+      connection.release()
+
     return NextResponse.json(`Unable to find division with year name '${year}' and slug '${division}'`, { status: StatusCodes.NOT_FOUND })
   }
 
@@ -78,6 +80,8 @@ export async function GET (request, { params }) {
     }
     return b.points - a.points
   })
+
+    connection.release()
 
   return NextResponse.json({
     stats

@@ -55,6 +55,8 @@ test('it can fulfill a fixture and store the correct information', async () => {
 
   expect(encounters.length).toBe(10)
 
+    connection.release()
+
   checkEncountersFulfilledAccordingToStruct(encounters, encounterStruct, fixtureId)
 })
 
@@ -96,6 +98,8 @@ test('it can fulfill a fixture with absent players', async () => {
   expect(encounters[4].playerRankChangeRight).toEqual(0)
   expect(encounters[9].playerRankChangeLeft).toEqual(0)
   expect(encounters[9].playerRankChangeRight).toEqual(0)
+
+    connection.release()
 })
 
 test('it can fulfill a fixture with status set', async () => {
@@ -126,6 +130,8 @@ test('it can fulfill a fixture with status set', async () => {
   expect(encounters[0].status).toEqual(EncounterStatus.EXCLUDE)
   expect(encounters[1].status).toEqual(EncounterStatus.EXCLUDE)
   expect(encounters[2].status).toEqual(EncounterStatus.NONE)
+
+    connection.release()
 })
 
 test('it can rollback and fulfil the same fixture', async () => {
@@ -153,6 +159,9 @@ test('it can rollback and fulfil the same fixture', async () => {
   expect(encounters.length).toBe(3)
 
   checkEncountersFulfilledAccordingToStruct(encounters, encounterStruct, fixtureId)
+
+    connection.release()
+
 })
 
 test('it can rollback a fixture when it is already fulfilled', async () => {
@@ -175,6 +184,9 @@ test('it can rollback a fixture when it is already fulfilled', async () => {
   `, { fixtureId })
 
   expect(encounters.length).toBe(0)
+
+    connection.release()
+
 })
 
 // @todo flesh out with concurrent rank changes
@@ -207,6 +219,9 @@ test('it will produce the right rank changes when fulfilling', async () => {
 
   expect(players[0].rank).toEqual(2495)
   expect(players[1].rank).toEqual(2608)
+
+    connection.release()
+
 })
 
 test('it will produce the right rank changes when rolling back', async () => {
@@ -274,6 +289,9 @@ test('it will produce the right rank changes when rolling back', async () => {
   expect(afterRollbackPlayers[1].rank).toBe(2103)
 
 //   players are expected to have the same rank after rollback and fulfilment of the same encounters
+
+    connection.release()
+
 })
 
 test('it will throw an error if there are not enough / too many encounters submitted', async () => {
@@ -346,6 +364,9 @@ test('it keeps previous / existing encounter data intact during fulfillment and 
   `, { fixtureId })
 
   expect(encountersAfterRollback).toEqual(existingEncounters)
+
+    connection.release()
+
 })
 
 beforeAll(async () => {
@@ -390,6 +411,9 @@ beforeAll(async () => {
   await connection.execute(`
     INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (6, 12, 'Francis', 2029);
   `)
+
+    connection.release()
+
 })
 
 afterAll(async () => {
@@ -402,5 +426,6 @@ afterAll(async () => {
   await connection.execute('DELETE FROM tennisYear;')
   await connection.execute('DELETE FROM tennisTeam;')
 
-  await connection.close()
+    connection.release()
+
 })

@@ -38,10 +38,12 @@ export default function InformationTable ({ yearName, teams }) {
               <Link className={linkStyles.join(' ')} href={`/result/${yearName}/venue/${team.venueSlug}`}>{team.venueName}</Link>
             </td>
             <td className='p-1 sm:p-2 md:p-4'>
-              <Link className={linkStyles.join(' ')} href={`/result/${yearName}/player/${team.secretarySlug}`}>
-                <span className='sm:hidden'>{getShortPlayerName(team.secretaryName)}</span>
-                <span className='hidden sm:inline'>{team.secretaryName}</span>
-              </Link>
+              {team.secretarySlug && (
+                <Link className={linkStyles.join(' ')} href={`/result/${yearName}/player/${team.secretarySlug}`}>
+                  <span className='sm:hidden'>{getShortPlayerName(team.secretaryName)}</span>
+                  <span className='hidden sm:inline'>{team.secretaryName}</span>
+                </Link>
+              )}
             </td>
             <td className='p-1 sm:p-2 md:p-4'>
               {getContact(team.secretaryPhoneLandline, team.secretaryPhoneMobile)}

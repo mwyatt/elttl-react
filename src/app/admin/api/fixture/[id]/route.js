@@ -1,16 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
-import {
-  getSideCapitalized,
-  getSideIndex,
-  getSides,
-  getSidesCapitalized,
-  SIDE_LEFT,
-  SIDE_RIGHT
-} from '@/constants/encounter'
-import { getRankChanges } from '@/lib/encounter'
-import EncounterStatus from '@/constants/EncounterStatus'
 import fulfillFixture from '@/app/admin/api/fixture/[id]/fulfillFixture'
 import { StatusCodes } from 'http-status-codes'
 
@@ -71,6 +61,8 @@ export async function GET (request, { params }) {
     yearId: currentYear.id,
     fixtureId: id
   })
+
+  connection.release()
 
   return NextResponse.json({
     fixture,

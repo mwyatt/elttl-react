@@ -31,6 +31,8 @@ export async function GET (request, { params }) {
   `, [currentYear.id, slug])
 
   if (players.length === 0) {
+      connection.release()
+
     return NextResponse.json(`Unable to find player within year name '${year}' and slug '${slug}'`, { status: StatusCodes.NOT_FOUND })
   }
 
@@ -78,6 +80,8 @@ export async function GET (request, { params }) {
     yearId: currentYear.id,
     playerId: player.id
   })
+
+    connection.release()
 
   return NextResponse.json({
     player,

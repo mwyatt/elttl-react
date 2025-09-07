@@ -20,6 +20,8 @@ test('it can generate fixtures for all the teams in all the divisions for the ye
 
   const [fixturesAfter] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesAfter.length).toBe(teamCount * (teamCount - 1)) // Each team plays every other team once
+
+    connection.release()
 })
 
 test('it will throw an error if the year does not exist', async () => {
@@ -40,6 +42,8 @@ test('it will throw an error if there are fixtures already', async () => {
   await generateFixtures(yearId).catch((error) => {
     expect(error.message).toBe(`Year with ID ${yearId} already has fixtures. Use 'ignoreExistingFixtures' to bypass this check.`)
   })
+
+    connection.release()
 })
 
 test('it can remove existing fixtures and encounters when forced to', async () => {
@@ -79,6 +83,8 @@ INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueI
 
   const [encountersAfter] = await connection.execute('SELECT * FROM tennisEncounter')
   expect(encountersAfter.length).toBe(0)
+
+    connection.release()
 })
 
 test('it will not remove fixture or encounter data from other years', async () => {
@@ -110,6 +116,8 @@ test('it will not remove fixture or encounter data from other years', async () =
 
   const [encountersAfter] = await connection.execute('SELECT * FROM tennisEncounter WHERE yearId = 11')
   expect(encountersAfter.length).toBe(1)
+
+    connection.release()
 })
 
 beforeAll(async () => {
@@ -134,6 +142,8 @@ INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueI
   await connection.execute(`
 INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueId, divisionId) VALUES (3, 12, 'Super Spins', 'super-spins', 1, 42, 5, 1);
   `)
+
+    connection.release()
 })
 
 afterAll(async () => {
@@ -146,5 +156,5 @@ afterAll(async () => {
   await connection.execute('DELETE FROM tennisFixture;')
   await connection.execute('DELETE FROM tennisEncounter;')
 
-  await connection.close()
+    connection.release()
 })
