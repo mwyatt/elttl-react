@@ -98,7 +98,7 @@ export async function GET (request, { params }) {
     yearId: yearDivisionId.yearId
   })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json({
     leagueTable,

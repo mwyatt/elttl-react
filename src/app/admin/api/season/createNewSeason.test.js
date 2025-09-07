@@ -34,7 +34,7 @@ test('it can create a new season with a copy of the previous years data', async 
   expect(options.length).toBe(1)
   expect(options[0].value).toBe('13')
 
-    connection.release()
+  connection.release()
 })
 
 beforeAll(async () => {
@@ -78,7 +78,7 @@ INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueI
 INSERT INTO tennisVenue (id, yearId, name, slug, location) VALUES (1, 12, 'Burnley Boys Club', 'burnley-boys-club', 'https://maps.app.goo.gl/z3BZEWqnFK9PPwoK7');
   `)
 
-    connection.release()
+  connection.release()
 })
 
 afterAll(async () => {

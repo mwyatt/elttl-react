@@ -10,7 +10,7 @@ export default function PlayerForm ({ cookie, adminApiUrl, player, teams }) {
   const [isLoading, setIsLoading] = useState(false)
   const [playerData, setPlayerData] = useState(player)
   const isCreate = playerData.id === 'create'
-  const formRef = useRef(null);
+  const formRef = useRef(null)
 
   const handleSubmit = async (event) => {
     setIsLoading(true)
@@ -46,42 +46,42 @@ export default function PlayerForm ({ cookie, adminApiUrl, player, teams }) {
     <>
       <Feedback message={feedbackMessage} />
       <FullLoader isLoading={isLoading} />
-      <Link className='bg-stone-500 text-white px-2 py-1' href={`/admin/player`}>
+      <Link className='bg-stone-500 text-white px-2 py-1' href='/admin/player'>
         Back
       </Link>
       <h2 className='text-2xl p-4'>{player.name}</h2>
       <form className='flex flex-col gap-2 max-w-[500px]' ref={formRef} onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-2">
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>First Name</div>
+        <div className='flex flex-col gap-2'>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>First Name</div>
             <input className='border border-tertiary-500 p-2' type='text' onChange={handleChange} value={playerData.nameFirst} name='nameFirst' required />
           </div>
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>Last Name</div>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>Last Name</div>
             <input className='border border-tertiary-500 p-2' type='text' onChange={handleChange} value={playerData.nameLast} name='nameLast' required />
           </div>
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>Slug</div>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>Slug</div>
             <input className='border border-tertiary-500 p-2' type='text' onChange={handleChange} value={playerData.slug} name='slug' required />
           </div>
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>Rank</div>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>Rank</div>
             <input className='border border-tertiary-500 p-2' type='text' onChange={handleChange} value={playerData.rank} name='rank' required />
           </div>
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>Landline</div>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>Landline</div>
             <input className='border border-tertiary-500 p-2' type='text' onChange={handleChange} value={playerData.phoneLandline} name='phoneLandline' />
           </div>
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>Mobile</div>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>Mobile</div>
             <input className='border border-tertiary-500 p-2' type='text' onChange={handleChange} value={playerData.phoneMobile} name='phoneMobile' />
           </div>
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>ETTA License Number</div>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>ETTA License Number</div>
             <input className='border border-tertiary-500 p-2' type='text' onChange={handleChange} value={playerData.ettaLicenseNumber} name='ettaLicenseNumber' />
           </div>
-          <div className={'flex gap-4 items-center border-t border-t-stone-200 p-2'}>
-            <div className={'w-[200px]'}>Team</div>
+          <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
+            <div className='w-[200px]'>Team</div>
             <select className='border border-tertiary-500 p-2' name='teamId' onChange={handleChange} value={playerData.teamId} required>
               <option key={0}>
                 Choose a team

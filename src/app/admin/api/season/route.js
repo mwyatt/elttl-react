@@ -40,7 +40,7 @@ export async function GET (request) {
     total: fixturesTotal[0].fixtureCount
   }
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json({
     currentYear,

@@ -108,7 +108,7 @@ export default async function (fixtureId, encounterStruct) {
   const fixture = fixtures[0]
 
   if (!fixture) {
-      connection.release()
+    connection.release()
 
     throw new Error(`Fixture with ID ${fixtureId} not found for year ${currentYear.id}.`)
   }

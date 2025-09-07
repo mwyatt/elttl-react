@@ -28,7 +28,6 @@ export async function getYearDivisionId (yearName, divisionSlug) {
         AND td.name = ?
   `, [yearName, divisionSlug])
 
-
   connection.release()
 
   if (yearDivisionIds.length === 0) {

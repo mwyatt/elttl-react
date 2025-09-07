@@ -34,7 +34,7 @@ export async function GET (request, { params }) {
   `, [currentYear.id, slug])
 
   if (teams.length === 0) {
-      connection.release()
+    connection.release()
 
     return NextResponse.json(`Unable to find team with slug '${slug}'`, { status: StatusCodes.NOT_FOUND })
   }
@@ -75,7 +75,7 @@ export async function GET (request, { params }) {
     teamId: team.id
   })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json({
     team,

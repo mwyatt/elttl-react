@@ -23,7 +23,7 @@ export async function GET (request) {
           ${sqlAppend}
   `, { type, status: ContentStatus.PUBLISHED })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json(contents, { status: StatusCodes.OK })
 }

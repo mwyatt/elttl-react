@@ -69,7 +69,7 @@ export default async function () {
     newYearId
   })
 
-    connection.release()
+  connection.release()
 
   return {
     newYearId,

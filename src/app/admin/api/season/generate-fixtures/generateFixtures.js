@@ -17,7 +17,7 @@ export default async function (yearId, ignoreExistingFixtures = false) {
   })
 
   if (years.length === 0) {
-      connection.release()
+    connection.release()
 
     throw new Error(`Year with ID ${yearId} does not exist`)
   }
@@ -33,7 +33,7 @@ export default async function (yearId, ignoreExistingFixtures = false) {
     })
 
     if (fixtures[0].count > 0) {
-        connection.release()
+      connection.release()
 
       throw new Error(`Year with ID ${yearId} already has fixtures. Use 'ignoreExistingFixtures' to bypass this check.`)
     }
@@ -99,7 +99,7 @@ export default async function (yearId, ignoreExistingFixtures = false) {
     }
   }
 
-    connection.release()
+  connection.release()
 
   return {
   }

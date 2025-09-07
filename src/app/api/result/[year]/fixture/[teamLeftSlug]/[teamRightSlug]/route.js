@@ -21,7 +21,7 @@ export async function GET (request, { params }) {
   `, [teamLeftSlug, currentYear.id])
 
   if (teamLefts.length === 0) {
-      connection.release()
+    connection.release()
 
     return NextResponse.json(`Unable to find teamLeft with slug '${teamLeftSlug}'`, { status: StatusCodes.NOT_FOUND })
   }
@@ -36,7 +36,7 @@ export async function GET (request, { params }) {
   `, [teamRightSlug, currentYear.id])
 
   if (teamRights.length === 0) {
-      connection.release()
+    connection.release()
 
     return NextResponse.json(`Unable to find teamRight with slug '${teamRightSlug}'`, { status: StatusCodes.NOT_FOUND })
   }
@@ -81,7 +81,7 @@ export async function GET (request, { params }) {
     fixtureId: fixture.id
   })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json({
     teamLeft,

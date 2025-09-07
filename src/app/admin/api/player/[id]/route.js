@@ -22,11 +22,11 @@ export async function GET (request, { params }) {
         phoneLandline: '',
         phoneMobile: '',
         ettaLicenseNumber: '',
-        teamId: 0,
+        teamId: 0
       }
     ]
   } else {
-      [players] = await connection.execute(`
+    [players] = await connection.execute(`
       SELECT
         id,
         yearId,
@@ -54,10 +54,10 @@ export async function GET (request, { params }) {
         WHERE yearId = :yearId
       order by name
   `, {
-    yearId: currentYear.id,
+    yearId: currentYear.id
   })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json({
     player: players[0],
@@ -102,10 +102,9 @@ export async function PUT (request, { params }) {
       id,
       ...player
     })
-
   }
 
-        const [players] = await connection.execute(`
+  const [players] = await connection.execute(`
       SELECT
         id,
         yearId,
@@ -121,11 +120,11 @@ export async function PUT (request, { params }) {
           WHERE tp.yearId = :yearId
           and tp.id = :id
     `, {
-      yearId: currentYear.id,
-      id: affectedPlayerId
-    })
+    yearId: currentYear.id,
+    id: affectedPlayerId
+  })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json({
     message: isCreate ? 'Player created successfully!' : 'Player updated successfully!',

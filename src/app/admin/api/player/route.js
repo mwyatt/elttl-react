@@ -26,7 +26,7 @@ export async function GET (request) {
     yearId: currentYear.id
   })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json({
     players

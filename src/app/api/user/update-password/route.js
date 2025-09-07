@@ -40,7 +40,7 @@ export async function GET (request) {
     })
   })
 
-    connection.release()
+  connection.release()
 
   return NextResponse.json(
     `user ${email} had password salted, hashed and updated in the db.`,

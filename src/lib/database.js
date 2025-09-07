@@ -10,7 +10,7 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   maxIdle: 10,
   idleTimeout: 20000, // 20 seconds for an idle connection to become free again.
-  waitForConnections: true,
+  waitForConnections: true
 })
 
 console.log('database: pool created, dont forget to close me!!')
