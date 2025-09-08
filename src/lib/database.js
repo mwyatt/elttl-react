@@ -13,15 +13,11 @@ const pool = mysql.createPool({
   waitForConnections: true
 })
 
-console.log('database: pool created, dont forget to close me!!')
-
 const getConnection = async () => {
   const connection = await pool.getConnection()
 
   // Configure the connection to allow :named placeholders.
   connection.config.namedPlaceholders = true
-
-  console.log('database: getConnection, dont forget to release me!')
 
   return connection
 }

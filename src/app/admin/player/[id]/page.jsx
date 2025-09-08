@@ -1,4 +1,4 @@
-import { adminApiFetch, adminApiUrl } from '@/constants/url'
+import { adminApiFetch } from '@/constants/url'
 import PlayerForm from '@/app/admin/player/[id]/PlayerForm'
 import { cookies } from 'next/headers'
 
@@ -13,5 +13,5 @@ export default async function Page ({ params }) {
   const cookiePromise = await cookies()
   const cookie = cookiePromise.get('session')?.value
 
-  return <PlayerForm cookie={cookie} adminApiUrl={adminApiUrl} player={player} teams={teams} />
+  return <PlayerForm cookie={cookie} player={player} teams={teams} />
 }

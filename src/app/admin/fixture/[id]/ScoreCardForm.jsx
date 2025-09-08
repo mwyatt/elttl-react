@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PlayerSelect } from '@/app/admin/fixture/[id]/PlayerSelect'
 import {
   getOtherSideCapitalized,
@@ -14,7 +14,7 @@ import Feedback from '@/components/Feedback'
 import FullLoader from '@/components/FullLoader'
 import RankChange from '@/components/player/RankChange'
 
-export function ScoreCardForm ({ fixture, players, encounters, cookie, adminApiUrl }) {
+export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
   const [playerStruct, setPlayerStruct] = useState(getDefaultPlayerStruct(encounters))
   const [encounterStruct, setEncounterStruct] = useState(getDefaultEncounterStruct(encounters))
   const [feedbackMessage, setFeedbackMessage] = useState('')
@@ -24,7 +24,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie, adminApiU
     setIsLoading(true)
     event.preventDefault()
 
-    const response = await fetch(`${adminApiUrl}/fixture/${fixture.id}`, {
+    const response = await fetch(`/admin/api/fixture/${fixture.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

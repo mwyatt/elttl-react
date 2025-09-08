@@ -5,7 +5,7 @@ import Feedback from '@/components/Feedback'
 import FullLoader from '@/components/FullLoader'
 import Link from 'next/link'
 
-export default function PlayerForm ({ cookie, adminApiUrl, player, teams }) {
+export default function PlayerForm ({ cookie, player, teams }) {
   const [feedbackMessage, setFeedbackMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [playerData, setPlayerData] = useState(player)
@@ -16,7 +16,7 @@ export default function PlayerForm ({ cookie, adminApiUrl, player, teams }) {
     setIsLoading(true)
     event.preventDefault()
 
-    const response = await fetch(`${adminApiUrl}/player/${playerData.id}`, {
+    const response = await fetch(`/admin/api/player/${playerData.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

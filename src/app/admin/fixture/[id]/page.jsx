@@ -16,7 +16,7 @@ export default async function Page ({ params }) {
   return (
     <>
       <h2 className='text-2xl p-4'>Fulfil Scorecard {fixture.id} - {fixture.teamLeftName} vs {fixture.teamRightName}</h2>
-      <ScoreCardForm fixture={fixture} players={players} encounters={encounters} cookie={cookie} adminApiUrl={process.env.NEXT_ADMIN_API_URL} />
+      <ScoreCardForm fixture={fixture} players={players} encounters={encounters} cookie={cookie} />
     </>
   )
 }
