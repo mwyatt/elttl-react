@@ -57,7 +57,6 @@ export async function GET (request, { params }) {
       where teamIdLeft = ?
         and teamIdRight = ?
         and yearId = ?
-        and timeFulfilled IS NOT NULL
   `, [teamLeft.id, teamRight.id, currentYear.id])
   const fixture = fixtures[0]
 

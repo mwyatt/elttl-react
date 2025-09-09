@@ -11,6 +11,7 @@ export async function createSession (userId) {
   const session = await encrypt({ userId, expiresAt })
   const cookieStore = await cookies()
 
+  // @todo would be better expire after x hours?
   cookieStore.set('session', session, {
     // httpOnly: true,
     // secure: true,

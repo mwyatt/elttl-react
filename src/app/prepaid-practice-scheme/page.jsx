@@ -22,7 +22,8 @@ export default async function Page () {
         <p className='my-6'>The annual fee (Season Ticket) is <span className='px-2 rounded bg-primary-500 text-white mx-1'>£250</span> per year. Annual competitions ( e.g. Big Day, Hard Bat etc) and League matches are excluded from this scheme.</p>
         <p className='my-6'>If you are interested in this scheme please contact any committee member and they will pass your information on.</p>
         <p className='my-6'>Harry Rawcliffe will also put a sheet up in the Centre for players to register their interest.</p>
-        <p className='my-6'>This scheme has been extended to include St. Peters. Players at Burnley can now pay <span className='px-2 rounded bg-primary-500 text-white mx-1'>£100</span> per year at St. Peters only.</p>
+        <p className='my-6'>This scheme has been extended to include St. Peters. Players at Burnley can now pay <span className='px-2 rounded bg-primary-500 text-white mx-1'>£200</span> per year at St. Peters only.</p>
+        <p className='my-6'>For combined Hyndburn Table Tennis Centre and St. Peters access the cost is <span className='px-2 rounded bg-primary-500 text-white mx-1'>£350</span> per year.</p>
       </div>
     </FrontLayout>
   )

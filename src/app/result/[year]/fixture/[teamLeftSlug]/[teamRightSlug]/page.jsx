@@ -38,6 +38,7 @@ export default async function Page ({ params }) {
     venue,
     encounters
   } = await fetchJson(`/result/${year}/fixture/${teamLeftSlug}/${teamRightSlug}`)
+  const fixtureFulfilled = encounters.length > 0
 
   const getGrandTotal = (side) => {
     const sideCapitalized = getSideCapitalized(side)
@@ -87,6 +88,9 @@ export default async function Page ({ params }) {
         <MainHeading name={`${teamLeft.name} vs ${teamRight.name}`} />
         <p className='mb-8'>Home team venue <Link className={linkStyles.join(' ')} href={`/result/${year}/venue/${venue.slug}`}>{venue.name}</Link></p>
         <div>
+          {!fixtureFulfilled && (
+            <p>Fixture has not yet been fulfilled, please check back later.</p>
+          )}
           {encounters.map((row, index) => (
             <div key={index} className='flex gap-2 mt-4 border-b border-dashed border-gray-300 pb-3'>
               <div className='w-1/3'>
@@ -102,10 +106,12 @@ export default async function Page ({ params }) {
             </div>
           ))}
         </div>
+        {fixtureFulfilled && (
         <div className='text-4xl flex mt-10 font-bold gap-6'>
           <div className='flex-1 text-right'>{getGrandTotal(SIDE_LEFT)}</div>
           <div className='flex-1 '>{getGrandTotal(SIDE_RIGHT)}</div>
         </div>
+        )}
       </div>
     </FrontLayout>
   )
