@@ -41,16 +41,36 @@ export default async function Page () {
         </p>
 
         <SubHeading name='Other Competitions' />
-        <p className='my-6'>The format of these competitions will be determined by the Tournament Secretary, dependent on the number of entries received.</p>
-        <p className='my-6'>The Vets Competitions are usually played on one or more evenings in December and are open to all current league players in the following categories:</p>
+
+        <p className='my-6'>
+          The format of these competitions will be determined by the Tournament Secretary, dependent on the number of entries received.
+          Usually they will start as round robin before moving to a knockout stage.
+        </p>
+        <p className='my-6'>
+          The exact dates of these competitions are given in the Handbook section of the Website at the start of each season.
+        </p>
+
+        <h3 className='text-lg font-semibold mb-3 mt-5'>The Vets Competitions</h3>
+        <p className='my-6'>
+          The Vets Competitions are usually played on one or more evenings in December and are open to all current league
+          players &amp; Bat &amp; Chat regulars at HTTC and St Peters Burnley. Of late we have used the following categories:
+        </p>
         <ul className='list-disc pl-6'>
-          <li>Vets - 50 years and over</li>
-          <li>Super Vets - 60 years and over</li>
-          <li>Super Super Vets - 70 years and over</li>
+          <li>Younger Vets - 40 years and over</li>
+          <li>Older Vets - 60 years and over</li>
         </ul>
 
-        <SubHeading name='Hard Bat (Ping Pong) Competition and Summer League' />
-        <p className='my-6'>Dependent upon the interest shown by current players these will be arranged if possible to take place after the end of the Annual League fixture programme.</p>
+        <h3 className='text-lg font-semibold mb-3 mt-5'>The Divisional Handicap Competitions</h3>
+        <p className='my-6'>
+          We have recently reintroduced the Divisional Handicap Competitions to be played sometime in February. There is a Premier &amp; First Division
+          Competition one evening and a Second and Third Division Competition another. Player handicaps will be taken from the latest individual ranking
+          points and matches will be best of three games first to 21 points.
+        </p>
+
+        <h3 className='text-lg font-semibold mb-3 mt-5'>Hard Bat (Ping Pong) Competition and Summer League</h3>
+        <p className='my-6'>
+          Dependent upon the interest shown by current players these will be arranged if possible to take place after the end of the Annual League fixture programme.
+        </p>
       </div>
     </FrontLayout>
   )

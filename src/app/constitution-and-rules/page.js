@@ -7,6 +7,7 @@ export default async function Page () {
     <FrontLayout maxWidth>
       <div className='max-w-[768px] mx-auto'>
         <h1 className='text-2xl mb-4'>Constitution and Rules</h1>
+        {/* @todo key and links to different areas of the rules */}
         {/* <div> */}
         {/*  <Link href={'#constitution'}>Constitution</Link> */}
         {/*  <Link href={'#constitution'}>Constitution</Link> */}
@@ -328,6 +329,24 @@ export default async function Page () {
             venue. In the
             event that both teams are all Juniors the normal home and away system will apply.
           </p>
+          <p className='my-4'>20c. Adjustment to 20b above</p>
+          <ul className='list-disc pl-12 my-4'>
+            <li className='mt-2'>For the purposes of Rule 20b ELTTL will define Juniors as players under the age of 16
+              on 1st September of the year that the season begins.
+            </li>
+            <li className='mt-2'>If a team is due to play a home match against an all Junior team and is fielding a
+              team of at least two juniors of their own, that match will take place at their home
+              venue.
+            </li>
+            <li className='mt-2'>
+              Teams where this might apply must contact the appropriate team secretary listed in
+              the Fixtures List for the Junior team concerned to inform them that at least two
+              juniors will be playing and as such the match will be played at their home venue. This
+              communication should take place a week prior to the fixture being played and
+              should be arranged via a telephone call between both Secretaries and subsequently
+              be confirmed by text/email.
+            </li>
+          </ul>
           <p className='my-4'>21. If a team resigns from the League, all points will be removed and all monies
             forfeited.
           </p>

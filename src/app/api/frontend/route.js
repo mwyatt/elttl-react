@@ -84,7 +84,7 @@ export async function GET (request) {
         name: 'The League',
         url: '/',
         children: [
-          { name: 'Download Handbook', url: '/handbook-2024-2025.pdf', target: '_blank' },
+          { name: 'Download Handbook', url: '/handbook-2025-2026.pdf', target: '_blank' },
           { name: 'Press Releases', url: '/press' },
           commonLinks.competitions,
           { name: 'Contact us', url: '/contact-us' }

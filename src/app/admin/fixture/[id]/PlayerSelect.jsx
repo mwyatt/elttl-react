@@ -41,7 +41,7 @@ export function PlayerSelect ({
 
   const playerOptions = playersInTeam.map(player => ({
     value: player.id,
-    label: player.name + ` (${player.rank})`
+    label: player.name + ` (${player.rank}) (Team)`
   })).concat(
     otherPlayers.map(player => ({
       value: player.id,

@@ -107,10 +107,10 @@ export default async function Page ({ params }) {
           ))}
         </div>
         {fixtureFulfilled && (
-        <div className='text-4xl flex mt-10 font-bold gap-6'>
-          <div className='flex-1 text-right'>{getGrandTotal(SIDE_LEFT)}</div>
-          <div className='flex-1 '>{getGrandTotal(SIDE_RIGHT)}</div>
-        </div>
+          <div className='text-4xl flex mt-10 font-bold gap-6'>
+            <div className='flex-1 text-right'>{getGrandTotal(SIDE_LEFT)}</div>
+            <div className='flex-1 '>{getGrandTotal(SIDE_RIGHT)}</div>
+          </div>
         )}
       </div>
     </FrontLayout>
