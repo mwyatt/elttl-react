@@ -83,7 +83,7 @@ export default function PlayerForm ({ cookie, player, teams }) {
           <div className='flex gap-4 items-center border-t border-t-stone-200 p-2'>
             <div className='w-[200px]'>Team</div>
             <select className='border border-tertiary-500 p-2' name='teamId' onChange={handleChange} value={playerData.teamId} required>
-              <option key={0}>
+              <option key={0} value={0}>
                 Choose a team
               </option>
               {teams.map((team) => (

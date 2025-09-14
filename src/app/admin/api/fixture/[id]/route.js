@@ -40,6 +40,7 @@ export async function GET (request, { params }) {
           teamId
       FROM tennisPlayer tp
       WHERE yearId = :yearId
+      order by nameLast
   `, {
     yearId: currentYear.id
   })

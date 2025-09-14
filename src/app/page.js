@@ -33,7 +33,7 @@ export default async function Page () {
   return (
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
-        <div className='md:p-6 flex-1'>
+        <div className='md:p-6 flex-1 flex flex-col gap-6'>
           {/* <CarouselElttl advertisements={advertisementsPrimary} /> */}
 
           {advertisementsPrimary.map((advertisement) => (
