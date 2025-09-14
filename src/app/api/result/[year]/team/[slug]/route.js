@@ -13,6 +13,12 @@ export async function GET (request, { params }) {
   `, [year])
   const currentYear = currentYears[0]
 
+  if (currentYears.length === 0) {
+    connection.release()
+
+    return NextResponse.json(`Unable to find year with name '${slug}'`, { status: StatusCodes.NOT_FOUND })
+  }
+
   const [teams] = await connection.execute(`
       SELECT
           tt.id,
