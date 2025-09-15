@@ -54,7 +54,7 @@ export const sessions = {
     [sessionVenueIds.hyndburn]: [hyndburnPracticeEvening],
     [sessionVenueIds.whalleyvillagehall]: [
       {
-        name: 'Practice 7.30 PM - 10.00 PM',
+        name: 'Practice 7.30 PM - 10.00 PM (Only open outside of the season from April to early September)',
         contactId: 405
       }
     ]
@@ -82,6 +82,13 @@ export const sessions = {
       {
         name: 'Practice 10:00 AM - 12:00 PM',
         cost: '£5'
+      }
+    ],
+    [sessionVenueIds.whalleyvillagehall]: [
+      {
+        name: 'Practice 9.30 AM - 12.00 PM (Most Saturdays)',
+        cost: '£5',
+        contactId: 405
       }
     ]
   }
