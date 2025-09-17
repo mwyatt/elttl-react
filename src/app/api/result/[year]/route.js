@@ -1,23 +1,17 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { StatusCodes } from 'http-status-codes'
+import { getYearByName } from '@/app/lib/year'
 
 export async function GET (request, { params }) {
   const connection = await getConnection()
   const { year } = await params
 
-  const [currentYears] = await connection.execute(`
-      SELECT id
-      FROM tennisYear
-      WHERE name = ?
-  `, [year])
+  const currentYear = await getYearByName(year)
 
-  if (currentYears.length === 0) {
-    connection.release()
-
+  if (!currentYear) {
     return NextResponse.json(`Unable to find year with name '${year}'`, { status: StatusCodes.NOT_FOUND })
   }
-  const currentYear = currentYears[0]
 
   const [divisions] = await connection.execute(`
       SELECT id, name

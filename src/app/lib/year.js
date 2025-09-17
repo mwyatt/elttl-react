@@ -36,3 +36,22 @@ export async function getYearDivisionId (yearName, divisionSlug) {
 
   return yearDivisionIds[0]
 }
+
+export async function getYearByName (name) {
+  const connection = await getConnection()
+
+  const [years] = await connection.execute(`
+      SELECT id
+      FROM tennisYear
+      WHERE name = ?
+  `, [name])
+
+  connection.release()
+
+  if (years.length === 0) {
+    return
+  }
+
+  return years[0]
+}
+
