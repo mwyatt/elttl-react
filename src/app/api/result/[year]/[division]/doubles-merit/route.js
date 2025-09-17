@@ -6,16 +6,14 @@ import EncounterStatus from '@/constants/EncounterStatus'
 import { StatusCodes } from 'http-status-codes'
 
 export async function GET (request, { params }) {
-  const connection = await getConnection()
   const { year, division } = await params
-
   const yearDivisionId = await getYearDivisionId(year, division)
 
   if (!yearDivisionId) {
-    connection.release()
-
     return NextResponse.json(`Unable to find division with year name '${year}' and slug '${division}'`, { status: StatusCodes.NOT_FOUND })
   }
+
+  const connection = await getConnection()
 
   const [leagueTable] = await connection.execute(`
     select

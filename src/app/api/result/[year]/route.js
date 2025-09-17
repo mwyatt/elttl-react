@@ -4,7 +4,6 @@ import { StatusCodes } from 'http-status-codes'
 import { getYearByName } from '@/app/lib/year'
 
 export async function GET (request, { params }) {
-  const connection = await getConnection()
   const { year } = await params
 
   const currentYear = await getYearByName(year)
@@ -12,6 +11,8 @@ export async function GET (request, { params }) {
   if (!currentYear) {
     return NextResponse.json(`Unable to find year with name '${year}'`, { status: StatusCodes.NOT_FOUND })
   }
+
+  const connection = await getConnection()
 
   const [divisions] = await connection.execute(`
       SELECT id, name
