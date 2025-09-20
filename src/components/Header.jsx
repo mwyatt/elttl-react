@@ -60,7 +60,7 @@ export default function Header ({ appName, menuPrimary }) {
                   {primaryItem.children.map((secondaryItem) => (
                     <div key={secondaryItem.name} className=' lg:p-6 lg:text-lg'>
                       <Link
-                        className='flex px-4 py-2 block text-lg p-4 text-primary-500 border-t border-t-neutral-300 lg:border-0'
+                        className='flex py-4 px-4 block text-lg text-primary-500 bg-white font-semibold rounded'
                         href={secondaryItem.url}
                         target={secondaryItem.target || '_self'}
                       >
@@ -72,7 +72,7 @@ export default function Header ({ appName, menuPrimary }) {
                         <div className='sm:flex lg:block'>
                           {secondaryItem.children.map((tertiaryItem) => (
                             <div key={tertiaryItem.name}>
-                              <Link className='px-4 py-2 block text-lg p-4 border-t border-t-neutral-300' href={tertiaryItem.url}>{tertiaryItem.name}</Link>
+                              <Link className='px-4 py-4 block text-lg border-t border-t-neutral-300' href={tertiaryItem.url}>{tertiaryItem.name}</Link>
                             </div>
                           ))}
                         </div>

@@ -4,9 +4,15 @@ import { useRouter } from 'next/navigation'
 import { linkStyles } from '@/lib/styles'
 import Link from 'next/link'
 import ElttlEmblem from '@/components/icons/ElttlEmblem'
+import { useEffect } from 'react'
 
-export default function Page () {
+export default function Page ({ error }) {
   const router = useRouter()
+
+  useEffect(() => {
+    // Logs error to server logs (via console.error → pm2 error log)
+    console.error("❌ Next.js error boundary:", error);
+  }, [error]);
 
   return (
     <div className='flex flex-col items-center py-12'>

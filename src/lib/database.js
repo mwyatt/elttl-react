@@ -9,17 +9,10 @@ const pool = mysql.createPool({
   database: isTest ? process.env.MYSQL_TEST_DATABASE : process.env.MYSQL_DATABASE
 })
 
-console.log('Pool is created.')
+console.log('Pool was created - keep track of when this happens')
 
 const getConnection = async () => {
   const connection = await pool.getConnection()
-
-  console.log({
-    connectionLimit: pool.pool.config.connectionLimit,
-    freeConnections: pool.pool._freeConnections.length,
-    allConnections: pool.pool._allConnections.length,
-    connectionQueue: pool.pool._connectionQueue.length
-  })
 
   // Configure the connection to allow :named placeholders.
   connection.config.namedPlaceholders = true
