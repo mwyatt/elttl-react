@@ -11,8 +11,8 @@ export default function Page ({ error }) {
 
   useEffect(() => {
     // Logs error to server logs (via console.error → pm2 error log)
-    console.error('❌ Next.js error boundary:', error)
-  }, [error])
+    console.error("❌ Next.js error boundary:", error);
+  }, [error]);
 
   return (
     <div className='flex flex-col items-center py-12'>

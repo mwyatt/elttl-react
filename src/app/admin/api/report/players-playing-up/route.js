@@ -9,7 +9,7 @@ export async function GET (request) {
   const connection = await getConnection()
   const currentYear = await getCurrentYear()
 
-  const [teamPlayers] = await connection.execute(`
+    const [teamPlayers] = await connection.execute(`
     SELECT
       tt.id,
       tp.id as playerId
@@ -25,7 +25,7 @@ export async function GET (request) {
     return lodash.map(value, 'playerId')
   })
 
-  const [encounterFixtures] = await connection.execute(`
+      const [encounterFixtures] = await connection.execute(`
     SELECT
       te.fixtureId,
                tf.teamIdLeft,
@@ -40,9 +40,9 @@ export async function GET (request) {
   })
 
   if (!encounterFixtures) {
-    return NextResponse.json({
-      players: []
-    }, { status: StatusCodes.OK })
+      return NextResponse.json({
+          players: []
+  }, { status: StatusCodes.OK })
   }
 
   const encountersByFixture = lodash.groupBy(encounterFixtures, 'fixtureId')
@@ -103,7 +103,7 @@ export async function GET (request) {
         WHERE yearId = :yearId
         and id in (${playerIdsQuery})
   `, {
-    yearId: currentYear.id
+    yearId: currentYear.id,
   })
 
   const teamIds = lodash
@@ -111,7 +111,7 @@ export async function GET (request) {
     .map(row => lodash.get(row, 'teamId'))
   const teamIdsQuery = teamIds.join(', ')
 
-  const [teams] = await connection.execute(`
+    const [teams] = await connection.execute(`
     SELECT
       id,
       name,
@@ -120,7 +120,7 @@ export async function GET (request) {
         WHERE yearId = :yearId
         and id in (${teamIdsQuery})
   `, {
-    yearId: currentYear.id
+    yearId: currentYear.id,
   })
 
   connection.release()
@@ -141,6 +141,6 @@ export async function GET (request) {
 
   return NextResponse.json({
     playingUps: playersPlayingUp,
-    yearName: currentYear.name
+    yearName: currentYear.name,
   }, { status: StatusCodes.OK })
 }
