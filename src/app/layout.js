@@ -4,6 +4,7 @@ import Environments from '@/constants/Environments'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { cookies } from 'next/headers'
 import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
+import NextTopLoader from 'nextjs-toploader'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -28,6 +29,7 @@ export default async function RootLayout ({ children }) {
       <body
         className='antialiased'
       >
+        <NextTopLoader color='#818073' />
         {children}
       </body>
     </html>
