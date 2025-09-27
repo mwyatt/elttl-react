@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
-  experimental: {
-    webpackMemoryOptimizations: true
-  }
+  output: 'standalone'
 }
 
 export default nextConfig
