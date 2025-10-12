@@ -5,6 +5,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import { cookies } from 'next/headers'
 import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
 import { Open_Sans } from 'next/font/google'
+import NextTopLoader from 'nextjs-toploader'
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -38,6 +39,7 @@ export default async function RootLayout ({ children }) {
           openSans.className
         ].join(' ')}
       >
+        <NextTopLoader color='#818073' />
         {children}
       </body>
     </html>
