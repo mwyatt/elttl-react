@@ -4,6 +4,13 @@ import Environments from '@/constants/Environments'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { cookies } from 'next/headers'
 import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
+import { Open_Sans } from 'next/font/google'
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap'
+})
 
 export const metadata = {
   title: getMetaTitle(),
@@ -26,7 +33,10 @@ export default async function RootLayout ({ children }) {
       )}
 
       <body
-        className='antialiased'
+        className={[
+          'antialiased',
+          openSans.className
+        ].join(' ')}
       >
         {children}
       </body>
