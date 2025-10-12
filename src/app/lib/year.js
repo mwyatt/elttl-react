@@ -54,4 +54,3 @@ export async function getYearByName (name) {
 
   return years[0]
 }
-
