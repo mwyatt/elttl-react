@@ -3,6 +3,7 @@ import { getConnection } from '@/lib/database'
 import { getYearDivisionId } from '@/app/lib/year'
 import { getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 import { StatusCodes } from 'http-status-codes'
+import { uniq } from 'lodash'
 
 export async function GET (request, { params }) {
   const { year, division } = await params
@@ -19,15 +20,17 @@ export async function GET (request, { params }) {
         ttl.name teamLeftName,
         ttl.slug teamLeftSlug,
         concat(tpl.nameFirst, ' ', tpl.nameLast) AS playerLeftName,
+        tpl.id playerLeftId,
         tpl.slug playerLeftSlug,
         tpl.rank playerLeftRank,
         tte.scoreLeft,
         ttr.name teamRightName,
         ttr.slug teamRightSlug,
         concat(tpr.nameFirst, ' ', tpr.nameLast) AS playerRightName,
+        tpr.id playerRightId,
         tpr.slug playerRightSlug,
         tpr.rank playerRightRank,
-        tte.scoreRight
+        tte.scoreRight                                                                  
         from tennisEncounter tte
       left join tennisFixture ttf on ttf.id = tte.fixtureId and ttf.yearId = tte.yearId
         left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = tte.yearId
@@ -48,13 +51,17 @@ export async function GET (request, { params }) {
 
   const sides = getSidesCapitalized()
   let stats = {}
+  const playerIds = []
 
   for (const encounter of encounters) {
     for (const side of sides) {
       const playerSlug = encounter[`player${side}Slug`]
+      const playerId = encounter[`player${side}Id`]
+      playerIds.push(playerId)
       if (!(playerSlug in stats)) {
         stats[playerSlug] = {
           player: {
+            id: playerId,
             name: encounter[`player${side}Name`],
             slug: playerSlug,
             rank: encounter[`player${side}Rank`]
@@ -87,6 +94,27 @@ export async function GET (request, { params }) {
   stats = Object.values(stats).sort((a, b) => {
     return b.average - a.average
   })
+
+  const uniquePlayerIds = uniq(playerIds)
+  const playerIdsQuery = uniquePlayerIds.join(',')
+
+  const [teamDivisions] = await connection.execute(`
+    select
+        tp.id,
+        tt.divisionId
+    from tennisPlayer tp
+    left join tennisTeam tt on tt.id = tp.teamId and tt.yearId = tp.yearId
+    where tp.yearId = :yearId
+    and tp.id IN (${playerIdsQuery})
+  `, {
+    yearId: yearDivisionId.yearId,
+    playerIds: playerIdsQuery
+  })
+
+  // Get all player ids which are not in the current division and remove them from stats
+  const playerIdsNotInDivision = teamDivisions.filter(td => td.divisionId !== yearDivisionId.divisionId).map(td => td.id)
+
+  stats = stats.filter(s => !playerIdsNotInDivision.includes(s.player.id))
 
   connection.release()
 
