@@ -9,15 +9,30 @@ const pool = mysql.createPool({
   database: isTest ? process.env.MYSQL_TEST_DATABASE : process.env.MYSQL_DATABASE
 })
 
-console.log('Pool was created - keep track of when this happens')
+const setupConnectionConfig = (connection) => {
+
+  // Configure the connection to allow :named placeholders.
+  connection.config.namedPlaceholders = true
+}
 
 const getConnection = async () => {
   const connection = await pool.getConnection()
 
-  // Configure the connection to allow :named placeholders.
-  connection.config.namedPlaceholders = true
+  setupConnectionConfig(connection)
 
   return connection
 }
 
-export { getConnection }
+const getConnectionNoTable = async () => {
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOSTNAME,
+    user: process.env.MYSQL_ROOT_USER,
+    password: process.env.MYSQL_ROOT_PASSWORD
+  })
+
+  setupConnectionConfig(connection)
+
+  return connection
+}
+
+export { getConnection, getConnectionNoTable, pool }

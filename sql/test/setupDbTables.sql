@@ -1,6 +1,33 @@
-create table elttl_test.tennisEncounter
+#  no longer required, remove me!
+
+
+
+
+
+-- auto-generated definition
+
+# --------------------------------
+
+create table tennisYear
 (
-    id                    int unsigned,
+    id    int unsigned,
+    name  varchar(10) not null,
+    value longtext    not null comment 'can be very large as older archives are just html constructs'
+)
+    charset = utf8mb3;
+
+create table options
+(
+    id    int unsigned auto_increment
+        primary key,
+    name  varchar(255) default '' not null,
+    value varchar(255) default '' not null
+)
+    charset = utf8mb3;
+
+create table tennisEncounter
+(
+    id                    int unsigned auto_increment,
     yearId                int unsigned     not null,
     playerIdLeft          int unsigned     null,
     playerIdRight         int unsigned     null,
@@ -14,24 +41,24 @@ create table elttl_test.tennisEncounter
     charset = utf8mb3;
 
 create index fixtureId
-    on elttl_test.tennisEncounter (fixtureId);
+    on tennisEncounter (fixtureId);
 
 create index id
-    on elttl_test.tennisEncounter (id);
+    on tennisEncounter (id);
 
 create index playerIdLeft
-    on elttl_test.tennisEncounter (playerIdLeft);
+    on tennisEncounter (playerIdLeft);
 
 create index playerIdRight
-    on elttl_test.tennisEncounter (playerIdRight);
+    on tennisEncounter (playerIdRight);
 
 create index yearId
-    on elttl_test.tennisEncounter (yearId);
+    on tennisEncounter (yearId);
 
-alter table elttl_test.tennisEncounter
+alter table tennisEncounter
     modify id int unsigned auto_increment;
 
-create table elttl_test.tennisFixture
+create table tennisFixture
 (
     id            int unsigned,
     yearId        int unsigned not null,
@@ -42,21 +69,21 @@ create table elttl_test.tennisFixture
     charset = utf8mb3;
 
 create index id
-    on elttl_test.tennisFixture (id);
+    on tennisFixture (id);
 
 create index teamIdLeft
-    on elttl_test.tennisFixture (teamIdLeft);
+    on tennisFixture (teamIdLeft);
 
 create index teamIdRight
-    on elttl_test.tennisFixture (teamIdRight);
+    on tennisFixture (teamIdRight);
 
 create index yearId
-    on elttl_test.tennisFixture (yearId);
+    on tennisFixture (yearId);
 
-alter table elttl_test.tennisFixture
+alter table tennisFixture
     modify id int unsigned auto_increment;
 
-create table elttl_test.tennisPlayer
+create table tennisPlayer
 (
     id                int unsigned,
     yearId            int unsigned           not null,
@@ -72,18 +99,18 @@ create table elttl_test.tennisPlayer
     charset = utf8mb3;
 
 create index id
-    on elttl_test.tennisPlayer (id);
+    on tennisPlayer (id);
 
 create index teamId
-    on elttl_test.tennisPlayer (teamId);
+    on tennisPlayer (teamId);
 
 create index yearId
-    on elttl_test.tennisPlayer (yearId);
+    on tennisPlayer (yearId);
 
-alter table elttl_test.tennisPlayer
+alter table tennisPlayer
     modify id int unsigned auto_increment;
 
-create table elttl_test.tennisTeam
+create table tennisTeam
 (
     id          int unsigned,
     yearId      int unsigned not null,
@@ -97,41 +124,24 @@ create table elttl_test.tennisTeam
     charset = utf8mb3;
 
 create index divisionId
-    on elttl_test.tennisTeam (divisionId);
+    on tennisTeam (divisionId);
 
 create index id
-    on elttl_test.tennisTeam (id);
+    on tennisTeam (id);
 
 create index secretaryId
-    on elttl_test.tennisTeam (secretaryId);
+    on tennisTeam (secretaryId);
 
 create index venueId
-    on elttl_test.tennisTeam (venueId);
+    on tennisTeam (venueId);
 
 create index yearId
-    on elttl_test.tennisTeam (yearId);
+    on tennisTeam (yearId);
 
-alter table elttl_test.tennisTeam
+alter table tennisTeam
     modify id int unsigned auto_increment;
 
-create table elttl_test.options
-(
-    id    int unsigned auto_increment
-        primary key,
-    name  varchar(255) default '' not null,
-    value varchar(255) default '' not null
-)
-    charset = utf8mb3;
-
-create table elttl_test.tennisYear
-(
-    id    int unsigned,
-    name  varchar(10) not null,
-    value longtext    not null comment 'can be very large as older archives are just html constructs'
-)
-    charset = utf8mb3;
-
-create table elttl_test.tennisDivision
+create table tennisDivision
 (
     id     int unsigned,
     yearId int unsigned not null,
@@ -140,15 +150,14 @@ create table elttl_test.tennisDivision
     charset = utf8mb3;
 
 create index id
-    on elttl_test.tennisDivision (id);
+    on tennisDivision (id);
 
 create index yearId
-    on elttl_test.tennisDivision (yearId);
+    on tennisDivision (yearId);
 
-alter table elttl_test.tennisDivision
+alter table tennisDivision
     modify id int unsigned auto_increment;
 
--- auto-generated definition
 create table tennisVenue
 (
     id       int unsigned,
@@ -167,4 +176,3 @@ create index yearId
 
 alter table tennisVenue
     modify id int unsigned auto_increment;
-

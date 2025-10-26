@@ -3,6 +3,7 @@ import '@testing-library/jest-dom'
 import { getConnection } from '@/lib/database'
 import generateFixtures from '@/app/admin/api/season/generate-fixtures/generateFixtures'
 import EncounterStatus from '@/constants/EncounterStatus'
+import { setup, tearDown } from '@/lib/testDatabase'
 
 const yearId = 12
 const teamCount = 3
@@ -121,7 +122,7 @@ test('it will not remove fixture or encounter data from other years', async () =
 })
 
 beforeAll(async () => {
-  const connection = await getConnection()
+  const connection = await setup()
 
   await connection.execute('INSERT INTO tennisYear (id, name, value) VALUES (12, \'2024\', \'\');')
   await connection.execute('INSERT INTO options (id, name, value) VALUES (20, \'year_id\', \'12\');')
@@ -143,18 +144,7 @@ INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueI
 INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueId, divisionId) VALUES (3, 12, 'Super Spins', 'super-spins', 1, 42, 5, 1);
   `)
 
-  connection.release()
+  connection.close()
 })
 
-afterAll(async () => {
-  const connection = await getConnection()
-
-  await connection.execute('DELETE FROM tennisYear;')
-  await connection.execute('DELETE FROM options;')
-  await connection.execute('DELETE FROM tennisDivision;')
-  await connection.execute('DELETE FROM tennisTeam;')
-  await connection.execute('DELETE FROM tennisFixture;')
-  await connection.execute('DELETE FROM tennisEncounter;')
-
-  connection.release()
-})
+afterAll(tearDown)

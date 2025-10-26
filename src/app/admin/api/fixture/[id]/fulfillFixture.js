@@ -1,7 +1,7 @@
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 import EncounterStatus from '@/constants/EncounterStatus'
-import { getRankChanges } from '@/lib/encounter'
+import { doesEncounterHaveNoPlayer, getRankChanges } from '@/lib/encounter'
 import {
   getSideIndex,
   getSidesCapitalized,
@@ -31,7 +31,7 @@ export const getPlayerStructFromEncounterStruct = (encounterStruct) => {
   ]
 }
 
-export async function rollBackFixture (currentYearId, fixtureId, playerRanks) {
+async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
   const connection = await getConnection()
 
   // Find the existing encounters for this fixture
@@ -60,28 +60,31 @@ export async function rollBackFixture (currentYearId, fixtureId, playerRanks) {
   existingEncounters.map(async (encounter) => {
     for (const sideCapitalized of getSidesCapitalized()) {
       const playerId = parseInt(encounter[`playerId${sideCapitalized}`])
-      const playerRank = playerRanks[playerId]
-      const playerRankChange = encounter[`playerRankChange${sideCapitalized}`]
-      playerRanks[playerId] = playerRank - playerRankChange
-    }
 
-    const deleteEncounterData = {
-      yearId: currentYearId,
-      encounterId: encounter.id
+      if (!doesEncounterHaveNoPlayer(encounter)) {
+        const playerRank = playerRanks[playerId]
+        const playerRankChange = encounter[`playerRankChange${sideCapitalized}`]
+        playerRanks[playerId] = playerRank - playerRankChange
+      }
     }
+  })
 
-    await connection.execute(`
-            DELETE FROM tennisEncounter
-            WHERE yearId = :yearId
-              and id = :encounterId
-        `, deleteEncounterData)
+  const encounterIdsSql = existingEncounters.map(encounter => encounter.id).join(',')
+
+  await connection.execute(`
+        DELETE FROM tennisEncounter
+        WHERE yearId = :yearId
+          and id in(${encounterIdsSql})
+    `, {
+    yearId: currentYearId,
+    encounterIdsSql
   })
 
   connection.release()
 }
 
 // @todo validation routine for the encounters to check that there is a 3 within each encounter row (winner)
-export default async function (fixtureId, encounterStruct) {
+export default async function (fixtureId, encounterStruct, rollbackOnly = false) {
   if (encounterStruct.length > maxEncounters) {
     throw new Error(`Encounter structure exceeds maximum of ${maxEncounters} encounters. Received ${encounterStruct.length}.`)
   }
@@ -113,6 +116,20 @@ export default async function (fixtureId, encounterStruct) {
     throw new Error(`Fixture with ID ${fixtureId} not found for year ${currentYear.id}.`)
   }
 
+  if (!fixture.timeFulfilled && rollbackOnly) {
+    throw new Error(`Cannot rollback a fixture that has not been fulfilled.`)
+  }
+
+  const nowEpoch = Date.now().toString()
+
+  // Update the fixture time fulfilled
+  const updateFixtureData = {
+    yearId: currentYear.id,
+    fixtureId,
+    timeFulfilled: rollbackOnly ? 0 : nowEpoch.substring(0, nowEpoch.length - 3)
+  }
+
+  // @todo lets abrstract this out so that we can get the players ranks out elsewhere
   const [players] = await connection.execute(`
       SELECT
           id,
@@ -149,57 +166,44 @@ export default async function (fixtureId, encounterStruct) {
 
   // Apply the new rank changes
   // @todo can we split this off?
-  for (const encounter of encounterStruct) {
-    let rankChanges = [0, 0]
+  if (!rollbackOnly) {
+    for (const encounter of encounterStruct) {
+      let rankChanges = [0, 0]
 
-    if (
-      encounter.status === EncounterStatus.DOUBLES ||
-      encounter.playerIdLeft === null ||
-      encounter.playerIdRight === null ||
-      encounter.playerIdLeft === 0 ||
-      encounter.playerIdRight === 0
-    ) {
-      // 'Skipping apply rank changes for doubles or missing player'
-    } else {
-      rankChanges = getRankChanges(
-        encounter.scoreLeft,
-        encounter.scoreRight,
-        playerRanks[encounter.playerIdLeft],
-        playerRanks[encounter.playerIdRight]
-      )
+      if (doesEncounterHaveNoPlayer(encounter)) {
+        // 'Skipping apply rank changes for doubles or missing player'
+      } else {
+        rankChanges = getRankChanges(
+          encounter.scoreLeft,
+          encounter.scoreRight,
+          playerRanks[encounter.playerIdLeft],
+          playerRanks[encounter.playerIdRight]
+        )
 
-      for (const sideCapitalized of getSidesCapitalized()) {
-        const sideIndex = getSideIndex(sideCapitalized)
-        playerRanks[encounter[`playerId${sideCapitalized}`]] = playerRanks[encounter[`playerId${sideCapitalized}`]] + rankChanges[sideIndex]
+        for (const sideCapitalized of getSidesCapitalized()) {
+          const sideIndex = getSideIndex(sideCapitalized)
+          playerRanks[encounter[`playerId${sideCapitalized}`]] = playerRanks[encounter[`playerId${sideCapitalized}`]] + rankChanges[sideIndex]
+        }
       }
+
+      const insertData = {
+        yearId: currentYear.id,
+        fixtureId,
+        playerIdLeft: encounter.playerIdLeft,
+        playerIdRight: encounter.playerIdRight,
+        playerRankChangeLeft: rankChanges[getSideIndex(SIDE_LEFT)],
+        playerRankChangeRight: rankChanges[getSideIndex(SIDE_RIGHT)],
+        scoreLeft: encounter.scoreLeft,
+        scoreRight: encounter.scoreRight,
+        status: encounter.status
+      }
+
+      await connection.execute(`
+            INSERT INTO tennisEncounter
+            (yearId, fixtureId, playerIdLeft, playerIdRight, playerRankChangeLeft, playerRankChangeRight, scoreLeft, scoreRight, status)
+            VALUES (:yearId, :fixtureId, :playerIdLeft, :playerIdRight, :playerRankChangeLeft, :playerRankChangeRight, :scoreLeft, :scoreRight, :status)
+        `, insertData)
     }
-
-    const insertData = {
-      yearId: currentYear.id,
-      fixtureId,
-      playerIdLeft: encounter.playerIdLeft,
-      playerIdRight: encounter.playerIdRight,
-      playerRankChangeLeft: rankChanges[getSideIndex(SIDE_LEFT)],
-      playerRankChangeRight: rankChanges[getSideIndex(SIDE_RIGHT)],
-      scoreLeft: encounter.scoreLeft,
-      scoreRight: encounter.scoreRight,
-      status: encounter.status
-    }
-
-    await connection.execute(`
-          INSERT INTO tennisEncounter
-          (yearId, fixtureId, playerIdLeft, playerIdRight, playerRankChangeLeft, playerRankChangeRight, scoreLeft, scoreRight, status)
-          VALUES (:yearId, :fixtureId, :playerIdLeft, :playerIdRight, :playerRankChangeLeft, :playerRankChangeRight, :scoreLeft, :scoreRight, :status)
-      `, insertData)
-  }
-
-  const nowEpoch = Date.now().toString()
-
-  // Update the fixture time fulfilled
-  const updateFixtureData = {
-    yearId: currentYear.id,
-    fixtureId,
-    timeFulfilled: nowEpoch.substring(0, nowEpoch.length - 3)
   }
 
   await connection.execute(`
