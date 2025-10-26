@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import { getRankChanges } from '@/lib/encounter'
+import { test, expect } from '@jest/globals'
 
 test('it calculates rank changes', () => {
   const rankChanges = getRankChanges(0, 3, 2500, 2600)

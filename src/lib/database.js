@@ -10,7 +10,6 @@ const pool = mysql.createPool({
 })
 
 const setupConnectionConfig = (connection) => {
-
   // Configure the connection to allow :named placeholders.
   connection.config.namedPlaceholders = true
 }

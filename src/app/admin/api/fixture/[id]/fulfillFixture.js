@@ -117,7 +117,7 @@ export default async function (fixtureId, encounterStruct, rollbackOnly = false)
   }
 
   if (!fixture.timeFulfilled && rollbackOnly) {
-    throw new Error(`Cannot rollback a fixture that has not been fulfilled.`)
+    throw new Error('Cannot rollback a fixture that has not been fulfilled.')
   }
 
   const nowEpoch = Date.now().toString()

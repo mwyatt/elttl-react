@@ -59,7 +59,7 @@ CREATE TABLE tennisPlayer (
     nameFirst         VARCHAR(75)  DEFAULT '' NULL,
     nameLast          VARCHAR(75)  DEFAULT '' NULL,
     slug              VARCHAR(255) NULL,
-    ${"`rank`"}            INT UNSIGNED NULL,
+    ${'`rank`'}            INT UNSIGNED NULL,
     phoneLandline     VARCHAR(30)  DEFAULT '' NULL,
     phoneMobile       VARCHAR(30)  DEFAULT '' NULL,
     ettaLicenseNumber VARCHAR(10)  DEFAULT '' NULL,
@@ -105,7 +105,7 @@ CREATE TABLE tennisVenue (
     INDEX id_idx (id),
     INDEX yearId_idx (yearId)
 ) CHARSET = utf8mb3;
-`,
+`
   ]
 
   commands.forEach(async (command) => {

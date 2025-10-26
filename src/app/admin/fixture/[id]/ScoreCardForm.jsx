@@ -41,6 +41,27 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
     setIsLoading(false)
   }
 
+  const handleRollback = async (event) => {
+    setIsLoading(true)
+    event.preventDefault()
+
+    const response = await fetch(`/admin/api/fixture/${fixture.id}/rollback`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authentication: cookie
+      },
+      body: JSON.stringify({
+        encounterStruct
+      })
+    })
+
+    const data = await response.json()
+
+    setFeedbackMessage(data.message)
+    setIsLoading(false)
+  }
+
   // @todo validation for all encounters to have a score that has a winner === 3
 
   useEffect(() => {
@@ -141,6 +162,17 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
       <FullLoader isLoading={isLoading} />
       <input name='fixtureId' type='hidden' value={fixture.id} />
       <input name='encounterStruct' type='hidden' value={JSON.stringify(encounterStruct)} />
+      <div>
+        {fixture.timeFulfilled !== 0 && (
+          <button
+            disabled={isLoading}
+            type='submit' className='bg-stone-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-400'
+            onClick={(e) => handleRollback(e)}
+          >
+            Reset Fixture
+          </button>
+        )}
+      </div>
       <div className='flex gap-4 mb-4'>
         <div className='flex-1'>
           <PlayerSelect

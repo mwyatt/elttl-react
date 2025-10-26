@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 
 import { getConnection } from '@/lib/database'
 import { setup, tearDown } from '@/lib/testDatabase'
+import { test, expect, beforeAll, afterAll } from '@jest/globals'
 
 test('it can set up the database and tear it down', async () => {
   const connection = await getConnection()

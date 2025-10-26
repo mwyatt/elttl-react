@@ -1,10 +1,9 @@
 import '@testing-library/jest-dom'
-
-// @todo rename to fulfillFixture.test.js
 import { getConnection } from '@/lib/database'
 import fulfillFixture from '@/app/admin/api/fixture/[id]/fulfillFixture'
 import EncounterStatus from '@/constants/EncounterStatus'
 import { setup, tearDown } from '@/lib/testDatabase'
+import { test, expect, beforeEach, beforeAll, afterEach, afterAll } from '@jest/globals'
 
 const currentYearId = 12
 
@@ -218,7 +217,7 @@ test('it can rollback and refulfill a fixture when it is already fulfilled', asy
   const encounterStruct = [
     { playerIdLeft: 0, playerIdRight: 5, scoreLeft: 1, scoreRight: 3, status: '' },
     { playerIdLeft: 3, playerIdRight: 4, scoreLeft: 2, scoreRight: 3, status: '' },
-    { playerIdLeft: 3, playerIdRight: 5, scoreLeft: 2, scoreRight: 3, status: '' },
+    { playerIdLeft: 3, playerIdRight: 5, scoreLeft: 2, scoreRight: 3, status: '' }
   ]
 
   await fulfillFixture(fixtureId, encounterStruct)
@@ -238,8 +237,8 @@ test('it will produce the right rank changes when fulfilling', async () => {
   const connection = await getConnection()
   const fixtureId = 3718
 
-  await connection.execute('UPDATE tennisPlayer SET \`rank\` = 2500 WHERE id = 1;')
-  await connection.execute('UPDATE tennisPlayer SET \`rank\` = 2600 WHERE id = 4;')
+  await connection.execute('UPDATE tennisPlayer SET `rank` = 2500 WHERE id = 1;')
+  await connection.execute('UPDATE tennisPlayer SET `rank` = 2600 WHERE id = 4;')
 
   const encounterStruct = [
     { playerIdLeft: 1, playerIdRight: 4, scoreLeft: 0, scoreRight: 3, status: '' },
@@ -371,8 +370,6 @@ test('it will throw an error if the fixture could not be found', async () => {
 })
 
 test('it keeps previous / existing encounter data intact during fulfillment and rollback', async () => {
-  return
-
   const connection = await getConnection()
   const fixtureId = 3721
 
@@ -393,7 +390,6 @@ test('it keeps previous / existing encounter data intact during fulfillment and 
 
   expect(encountersAfterAFulfillment).toEqual(existingEncounters)
 
-  // Rollback the fixture
   await fulfillFixture(fixtureId, basicEncounterStruct)
 
   const [encountersAfterRollback] = await connection.execute(`
