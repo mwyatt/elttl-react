@@ -39,12 +39,12 @@ export const getPlayerRanks = async (connection, yearId, encounterStruct) => {
 
 export const getPlayerIdsFromEncounterStruct = (encounterStruct) => {
   return lodash.filter([
-      encounterStruct[0].playerIdLeft,
-      encounterStruct[2].playerIdLeft,
-      encounterStruct[1].playerIdLeft,
-      encounterStruct[1].playerIdRight,
-      encounterStruct[0].playerIdRight,
-      encounterStruct[2].playerIdRight,
+    encounterStruct[0].playerIdLeft,
+    encounterStruct[2].playerIdLeft,
+    encounterStruct[1].playerIdLeft,
+    encounterStruct[1].playerIdRight,
+    encounterStruct[0].playerIdRight,
+    encounterStruct[2].playerIdRight
   ], value => value !== 0)
 }
 

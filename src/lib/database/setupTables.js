@@ -108,7 +108,7 @@ CREATE TABLE tennisVenue (
 `
   ]
 
-  await Promise.all(commands.map(command => connection.query(command)));
+  await Promise.all(commands.map(command => connection.query(command)))
 
   return connection
 }

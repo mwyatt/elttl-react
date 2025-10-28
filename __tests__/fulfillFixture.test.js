@@ -404,7 +404,7 @@ test('it will throw an error if one of the encounters does not have a winner', a
     { playerIdLeft: 0, playerIdRight: 0, scoreLeft: 0, scoreRight: 2, status: '' }
   ]
 
-    await expect(fulfillFixture(3721, encounterStruct)).rejects.toThrow(
+  await expect(fulfillFixture(3721, encounterStruct)).rejects.toThrow(
     'All encounters must have a winner with a score of 3.'
   )
 })
@@ -430,15 +430,15 @@ beforeEach(async () => {
     VALUES (3719, 12, 1, 2, 0);`,
       `    INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
     VALUES (3718, 12, 1, 2, 0);`,
-      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (1, 12, 'Ryan', 1960);`,
-      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (2, 12, 'Dylan', 1457);`,
-      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (3, 12, 'Scott', 1895);`,
-      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (4, 12, 'Dan', 2012);`,
-      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (5, 12, 'Ian', 1829);`,
-      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (6, 12, 'Francis', 2029);`
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (1, 12, \'Ryan\', 1960);',
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (2, 12, \'Dylan\', 1457);',
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (3, 12, \'Scott\', 1895);',
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (4, 12, \'Dan\', 2012);',
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (5, 12, \'Ian\', 1829);',
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (6, 12, \'Francis\', 2029);'
   ]
 
-  await Promise.all(commands.map(command => connection.query(command)));
+  await Promise.all(commands.map(command => connection.query(command)))
 
   connection.release()
 })
