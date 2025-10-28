@@ -162,17 +162,17 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
       <FullLoader isLoading={isLoading} />
       <input name='fixtureId' type='hidden' value={fixture.id} />
       <input name='encounterStruct' type='hidden' value={JSON.stringify(encounterStruct)} />
-      <div>
-        {fixture.timeFulfilled !== 0 && (
+      {fixture.timeFulfilled !== 0 && (
+        <div className='flex justify-end text-sm mb-4'>
           <button
             disabled={isLoading}
-            type='submit' className='bg-stone-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-400'
+            type='submit' className='bg-stone-500 border-b-stone-700 border-b-2 rounded px-2 py-1 text-white font-bold capitalize hover:bg-stone-400'
             onClick={(e) => handleRollback(e)}
           >
             Reset Fixture
           </button>
-        )}
-      </div>
+        </div>
+      )}
       <div className='flex gap-4 mb-4'>
         <div className='flex-1'>
           <PlayerSelect
