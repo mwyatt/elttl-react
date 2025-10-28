@@ -10,25 +10,42 @@ import {
   SIDE_LEFT,
   SIDE_RIGHT
 } from '@/constants/encounter'
+import lodash from 'lodash'
+import { playerGetMany } from '@/repository/player'
+const TRACE_RANK_CHANGES = false
 
-// @todo could use scorecardStructure to infer this
-export const getPlayerStructFromEncounterStruct = (encounterStruct) => {
-  if (encounterStruct.length < minEncounters) {
-    throw new Error('Encounter structure must contain at least 3 encounters to infer the player positions.')
+const logRankChange = (...args) => {
+  if (TRACE_RANK_CHANGES) {
+    console.debug('TRACE_RANK_CHANGES', ...args)
+  }
+}
+
+export const getPlayerRanks = async (connection, yearId, encounterStruct) => {
+  const playerIds = lodash.uniq(getPlayerIdsFromEncounterStruct(encounterStruct))
+  const players = await playerGetMany(connection, yearId, playerIds)
+
+  if (players.length !== playerIds.length) {
+    throw new Error('Unable to find all involved players.')
   }
 
-  return [
-    {
-      1: encounterStruct[0].playerIdLeft,
-      2: encounterStruct[2].playerIdLeft,
-      3: encounterStruct[1].playerIdLeft
-    },
-    {
-      1: encounterStruct[1].playerIdRight,
-      2: encounterStruct[0].playerIdRight,
-      3: encounterStruct[2].playerIdRight
-    }
-  ]
+  // Create a map of player ranks for easy access
+  const playerRanks = {}
+  players.forEach((player) => {
+    playerRanks[parseInt(player.id)] = player.rank
+  })
+
+  return playerRanks
+}
+
+export const getPlayerIdsFromEncounterStruct = (encounterStruct) => {
+  return lodash.filter([
+      encounterStruct[0].playerIdLeft,
+      encounterStruct[2].playerIdLeft,
+      encounterStruct[1].playerIdLeft,
+      encounterStruct[1].playerIdRight,
+      encounterStruct[0].playerIdRight,
+      encounterStruct[2].playerIdRight,
+  ], value => value !== 0)
 }
 
 async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
@@ -65,6 +82,8 @@ async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
         const playerRank = playerRanks[playerId]
         const playerRankChange = encounter[`playerRankChange${sideCapitalized}`]
         playerRanks[playerId] = playerRank - playerRankChange
+
+        logRankChange('rolling back rank change:', playerRankChange, playerRanks)
       }
     }
   })
@@ -83,15 +102,24 @@ async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
   connection.release()
 }
 
-// @todo validation routine for the encounters to check that there is a 3 within each encounter row (winner)
 export default async function (fixtureId, encounterStruct, rollbackOnly = false) {
+  const sidesCapitalized = getSidesCapitalized()
+
   if (encounterStruct.length > maxEncounters) {
     throw new Error(`Encounter structure exceeds maximum of ${maxEncounters} encounters. Received ${encounterStruct.length}.`)
   }
 
-  const connection = await getConnection()
-  const playerStruct = getPlayerStructFromEncounterStruct(encounterStruct)
+  const hasEncounterWithoutWinner = encounterStruct.some((encounter) => {
+    return encounter[`score${sidesCapitalized[0]}`] !== 3 && encounter[`score${sidesCapitalized[1]}`] !== 3
+  })
 
+  if (hasEncounterWithoutWinner) {
+    throw new Error('All encounters must have a winner with a score of 3.')
+  }
+
+  const connection = await getConnection()
+
+  // @todo experiment with transaction, simulate failure part way through and check to see if db rolled back
   // await connection.beginTransaction()
 
   const currentYear = await getCurrentYear()
@@ -112,11 +140,11 @@ export default async function (fixtureId, encounterStruct, rollbackOnly = false)
 
   if (!fixture) {
     connection.release()
-
     throw new Error(`Fixture with ID ${fixtureId} not found for year ${currentYear.id}.`)
   }
 
   if (!fixture.timeFulfilled && rollbackOnly) {
+    connection.release()
     throw new Error('Cannot rollback a fixture that has not been fulfilled.')
   }
 
@@ -129,43 +157,17 @@ export default async function (fixtureId, encounterStruct, rollbackOnly = false)
     timeFulfilled: rollbackOnly ? 0 : nowEpoch.substring(0, nowEpoch.length - 3)
   }
 
-  // @todo lets abrstract this out so that we can get the players ranks out elsewhere
-  const [players] = await connection.execute(`
-      SELECT
-          id,
-          tp.rank
-      FROM tennisPlayer tp
-      WHERE yearId = :yearId
-      and id = :playerIdLeftOne
-      or id = :playerIdLeftTwo
-      or id = :playerIdLeftThree
-      or id = :playerIdRightOne
-      or id = :playerIdRightTwo
-      or id = :playerIdRightThree
-  `, {
-    yearId: currentYear.id,
-    playerIdLeftOne: playerStruct[0][1],
-    playerIdLeftTwo: playerStruct[0][2],
-    playerIdLeftThree: playerStruct[0][3],
-    playerIdRightOne: playerStruct[1][1],
-    playerIdRightTwo: playerStruct[1][2],
-    playerIdRightThree: playerStruct[1][3]
-  })
+  if (encounterStruct.length < minEncounters) {
+    throw new Error('Encounter structure must contain at least 3 encounters to infer the player positions.')
+  }
 
-  // @todo throw an error if any players are not found that should be
-
-  // Create a map of player ranks for easy access
-  const playerRanks = {}
-  players.forEach((player) => {
-    playerRanks[parseInt(player.id)] = player.rank
-  })
+  const playerRanks = await getPlayerRanks(connection, currentYear.id, encounterStruct)
 
   if (fixture.timeFulfilled) {
     await rollBackFixture(currentYear.id, fixtureId, playerRanks)
   }
 
   // Apply the new rank changes
-  // @todo can we split this off?
   if (!rollbackOnly) {
     for (const encounter of encounterStruct) {
       let rankChanges = [0, 0]
@@ -184,6 +186,8 @@ export default async function (fixtureId, encounterStruct, rollbackOnly = false)
           const sideIndex = getSideIndex(sideCapitalized)
           playerRanks[encounter[`playerId${sideCapitalized}`]] = playerRanks[encounter[`playerId${sideCapitalized}`]] + rankChanges[sideIndex]
         }
+
+        logRankChange('applying new rank changes:', rankChanges, playerRanks)
       }
 
       const insertData = {
@@ -212,6 +216,8 @@ export default async function (fixtureId, encounterStruct, rollbackOnly = false)
       WHERE tf.yearId = :yearId
         and id = :fixtureId
   `, updateFixtureData)
+
+  logRankChange('player ranks before update:', playerRanks)
 
   // Update player ranks in memory
   for (const playerId in playerRanks) {

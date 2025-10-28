@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { getConnection } from '@/lib/database'
-import fulfillFixture from '@/app/admin/api/fixture/[id]/fulfillFixture'
+import fulfillFixture, { getPlayerRanks } from '@/app/admin/api/fixture/[id]/fulfillFixture'
 import EncounterStatus from '@/constants/EncounterStatus'
 import { setup, tearDown } from '@/lib/testDatabase'
 import { test, expect, beforeEach, beforeAll, afterEach, afterAll } from '@jest/globals'
@@ -232,8 +232,7 @@ test('it can rollback and refulfill a fixture when it is already fulfilled', asy
   connection.release()
 })
 
-// @todo flesh out with concurrent rank changes
-test('it will produce the right rank changes when fulfilling', async () => {
+test('it will produce the right rank changes when fulfilling and fulfilling consecutively', async () => {
   const connection = await getConnection()
   const fixtureId = 3718
 
@@ -254,14 +253,23 @@ test('it will produce the right rank changes when fulfilling', async () => {
   expect(encounters[0].playerRankChangeLeft).toEqual(-5)
   expect(encounters[0].playerRankChangeRight).toEqual(8)
 
-  const [players] = await connection.execute(`
-      SELECT id, \`rank\`
-      FROM tennisPlayer
-      WHERE id = :playerIdLeft OR id = :playerIdRight
-  `, { playerIdLeft: 1, playerIdRight: 4 })
+  const playerRanks = await getPlayerRanks(connection, 12, encounterStruct)
 
-  expect(players[0].rank).toEqual(2495)
-  expect(players[1].rank).toEqual(2608)
+  expect(playerRanks[1]).toEqual(2495)
+  expect(playerRanks[4]).toEqual(2608)
+
+  const nextEncounterStruct = [
+    { playerIdLeft: 1, playerIdRight: 4, scoreLeft: 0, scoreRight: 3, status: '' },
+    { playerIdLeft: 1, playerIdRight: 4, scoreLeft: 3, scoreRight: 0, status: '' },
+    { playerIdLeft: 0, playerIdRight: 0, scoreLeft: 0, scoreRight: 3, status: '' }
+  ]
+
+  await fulfillFixture(fixtureId, nextEncounterStruct)
+
+  const nextPlayerRanks = await getPlayerRanks(connection, 12, nextEncounterStruct)
+
+  expect(nextPlayerRanks[1]).toEqual(2516)
+  expect(nextPlayerRanks[4]).toEqual(2594)
 
   connection.release()
 })
@@ -282,23 +290,16 @@ test('it will produce the right rank changes when rolling back', async () => {
     INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (11, 12, 'Dylan', 2100);
   `)
 
-  const [beforePlayers] = await connection.execute(`
-    SELECT * FROM tennisPlayer
-    WHERE id = :id OR id = :id2
-  `, { id: 10, id2: 11 })
-  expect(beforePlayers.length).toBe(2)
-  expect(beforePlayers[0].rank).toBe(2000)
-  expect(beforePlayers[1].rank).toBe(2100)
+  const playerRanks = await getPlayerRanks(connection, 12, encounterStruct)
+
+  expect(playerRanks[10]).toBe(2000)
+  expect(playerRanks[11]).toBe(2100)
 
   await fulfillFixture(fixtureId, encounterStruct)
 
-  const [afterPlayers] = await connection.execute(`
-    SELECT * FROM tennisPlayer
-    WHERE id = :id OR id = :id2
-  `, { id: 10, id2: 11 })
-  expect(afterPlayers.length).toBe(2)
-  expect(afterPlayers[0].rank).toBe(2010)
-  expect(afterPlayers[1].rank).toBe(2103)
+  const secondPlayerRanks = await getPlayerRanks(connection, 12, encounterStruct)
+  expect(secondPlayerRanks[10]).toBe(2010)
+  expect(secondPlayerRanks[11]).toBe(2103)
 
   const [afterEncounters] = await connection.execute(`
     SELECT * FROM tennisEncounter
@@ -314,15 +315,9 @@ test('it will produce the right rank changes when rolling back', async () => {
   `, { fixtureId })
   expect(afterRollbackEncounters.length).toBe(3)
 
-  const [afterRollbackPlayers] = await connection.execute(`
-    SELECT * FROM tennisPlayer
-    WHERE id = :id OR id = :id2
-  `, { id: 10, id2: 11 })
-  expect(afterRollbackPlayers.length).toBe(2)
-  expect(afterRollbackPlayers[0].rank).toBe(2010)
-  expect(afterRollbackPlayers[1].rank).toBe(2103)
-
-  //   players are expected to have the same rank after rollback and fulfilment of the same encounters
+  const thirdPlayerRanks = await getPlayerRanks(connection, 12, encounterStruct)
+  expect(thirdPlayerRanks[10]).toBe(2010)
+  expect(thirdPlayerRanks[11]).toBe(2103)
 
   connection.release()
 })
@@ -402,6 +397,18 @@ test('it keeps previous / existing encounter data intact during fulfillment and 
   connection.release()
 })
 
+test('it will throw an error if one of the encounters does not have a winner', async () => {
+  const encounterStruct = [
+    { playerIdLeft: 1, playerIdRight: 4, scoreLeft: 0, scoreRight: 3, status: '' },
+    { playerIdLeft: 0, playerIdRight: 0, scoreLeft: 0, scoreRight: 3, status: '' },
+    { playerIdLeft: 0, playerIdRight: 0, scoreLeft: 0, scoreRight: 2, status: '' }
+  ]
+
+    await expect(fulfillFixture(3721, encounterStruct)).rejects.toThrow(
+    'All encounters must have a winner with a score of 3.'
+  )
+})
+
 beforeAll(async () => {
   const connection = await setup()
 
@@ -414,42 +421,24 @@ beforeAll(async () => {
 beforeEach(async () => {
   const connection = await getConnection()
 
-  await connection.execute(`
-    INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
-    VALUES (3721, 12, 1, 2, 0);
-  `)
-  await connection.execute(`
-    INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
-    VALUES (3720, 12, 1, 2, 0);
-  `)
-  await connection.execute(`
-    INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
-    VALUES (3719, 12, 1, 2, 0);
-  `)
-  await connection.execute(`
-    INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
-    VALUES (3718, 12, 1, 2, 0);
-  `)
+  const commands = [
+      `INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
+      VALUES (3721, 12, 1, 2, 0);`,
+      `INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
+    VALUES (3720, 12, 1, 2, 0);`,
+      `INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
+    VALUES (3719, 12, 1, 2, 0);`,
+      `    INSERT INTO tennisFixture (id, yearId, teamIdLeft, teamIdRight, timeFulfilled)
+    VALUES (3718, 12, 1, 2, 0);`,
+      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (1, 12, 'Ryan', 1960);`,
+      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (2, 12, 'Dylan', 1457);`,
+      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (3, 12, 'Scott', 1895);`,
+      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (4, 12, 'Dan', 2012);`,
+      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (5, 12, 'Ian', 1829);`,
+      `INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (6, 12, 'Francis', 2029);`
+  ]
 
-  await connection.execute(`
-    INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (1, 12, 'Ryan', 1960);
-  `)
-  await connection.execute(`
-    INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (2, 12, 'Dylan', 1457);
-  `)
-  await connection.execute(`
-    INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (3, 12, 'Scott', 1895);
-  `)
-
-  await connection.execute(`
-    INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (4, 12, 'Dan', 2012);
-  `)
-  await connection.execute(`
-    INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (5, 12, 'Ian', 1829);
-  `)
-  await connection.execute(`
-    INSERT INTO tennisPlayer (id, yearId, nameLast, \`rank\`) VALUES (6, 12, 'Francis', 2029);
-  `)
+  await Promise.all(commands.map(command => connection.query(command)));
 
   connection.release()
 })
