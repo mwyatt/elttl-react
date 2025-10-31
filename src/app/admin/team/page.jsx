@@ -12,7 +12,7 @@ export default async function Page () {
       <h2 className='text-2xl p-4'>Teams</h2>
 
       {teams.map(team => (
-        <p><Link className='text-primary-500 underline' href={`/admin/team/${team.id}`}>{team.name}</Link> - {team.divisionName}</p>
+        <p key={team.id}><Link className='text-primary-500 underline' href={`/admin/team/${team.id}`}>{team.name}</Link> - {team.divisionName}</p>
       ))}
     </>
   )

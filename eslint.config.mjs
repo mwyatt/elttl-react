@@ -12,7 +12,8 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals'),
   ...compat.config({
-    extends: ['next', 'prettier']
+    plugins: ['jest'],
+    extends: ['next', 'prettier', 'plugin:jest/recommended']
   })
 ]
 
