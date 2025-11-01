@@ -1,4 +1,4 @@
-name: Run Jest Tests with MySQL 8.0.42
+name: Run Jest Tests
 
 on:
   push:
@@ -34,4 +34,7 @@ jobs:
           DB_PORT: 3306
           DB_USER: root
           DB_NAME: elttl_test
+          MYSQL_TEST_DATABASE: elttl_test
+          MYSQL_ROOT_USER: root
+          MYSQL_HOSTNAME: localhost
         run: npm test
