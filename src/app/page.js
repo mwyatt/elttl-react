@@ -10,6 +10,7 @@ import { fetchJson } from '@/app/lib/fetchWrapper'
 import SeasonTotals from '@/components/home/SeasonTotals'
 import SessionsToday from '@/components/home/SessionsToday'
 import ImageGallery from '@/components/home/ImageGallery'
+import Image from 'next/image'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -104,10 +105,7 @@ export default async function Page () {
         <div className='flex flex-wrap'>
           {galleryImages.map((image, index) => (
             <div key={index} className='overflow-hidden basis-1/5 height-6'>
-              <img
-                className='w-full'
-                src={image.url} alt=''
-              />
+              <Image className='w-full' src={image.url} alt='' />
             </div>
           ))}
         </div>

@@ -102,7 +102,7 @@ async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
   connection.release()
 }
 
-export default async function (fixtureId, encounterStruct, rollbackOnly = false) {
+export default async function fulfillFixture (fixtureId, encounterStruct, rollbackOnly = false) {
   const sidesCapitalized = getSidesCapitalized()
 
   if (encounterStruct.length > maxEncounters) {

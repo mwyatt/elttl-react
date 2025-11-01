@@ -14,7 +14,10 @@ const eslintConfig = [
   ...compat.config({
     plugins: ['jest'],
     extends: ['next', 'prettier', 'plugin:jest/recommended']
-  })
+  }),
+  {
+    ignores: ['.next/**/*']
+  }
 ]
 
 export default eslintConfig

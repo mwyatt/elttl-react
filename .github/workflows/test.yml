@@ -1,4 +1,4 @@
-name: Run Jest Tests
+name: Tests
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
 
 jobs:
   test:
+    name: Jest
     runs-on: ubuntu-24.04
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,13 +28,16 @@ jobs:
           mysql-version: '8.0.42'
           root-password: ''
 
-      - name: Run Jest tests
+      - name: Lint
+        run: npm run lint
+
+      - name: Jest
         env:
-          DB_HOST: localhost
-          DB_PORT: 3306
+#          DB_HOST: localhost
+#          DB_PORT: 3306
           DB_USER: root
-          DB_NAME: elttl_test
+#          DB_NAME: elttl_test
           MYSQL_TEST_DATABASE: elttl_test
           MYSQL_ROOT_USER: root
-          MYSQL_HOSTNAME: localhost
-        run: npm test
+#          MYSQL_HOSTNAME: localhost
+        run: npm run test
