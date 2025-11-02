@@ -46,26 +46,26 @@ export default async function Page ({ params }) {
       <table className='table-auto w-full mt-4'>
         <thead>
           <tr>
-            <th className='p-1 sm:p-2 md:p-4'>Name</th>
-            <th className='p-1 sm:p-2 md:p-4'>W<span className='hidden sm:inline'>on</span></th>
-            <th className='p-1 sm:p-2 md:p-4'>D<span className='hidden sm:inline'>raw</span></th>
-            <th className='p-1 sm:p-2 md:p-4'>L<span className='hidden sm:inline'>oss</span></th>
-            <th className='p-1 sm:p-2 md:p-4'>Pl<span className='hidden sm:inline'>aye</span>d</th>
-            <th className='p-1 sm:p-2 md:p-4'>P<span className='hidden sm:inline'>oin</span>ts</th>
+            <th className='p-2 md:p-4'>Name</th>
+            <th className='p-2 md:p-4'>W<span className='hidden sm:inline'>on</span></th>
+            <th className='p-2 md:p-4'>D<span className='hidden sm:inline'>raw</span></th>
+            <th className='p-2 md:p-4'>L<span className='hidden sm:inline'>oss</span></th>
+            <th className='p-2 md:p-4'>Pl<span className='hidden sm:inline'>aye</span>d</th>
+            <th className='p-2 md:p-4'>P<span className='hidden sm:inline'>oin</span>ts</th>
           </tr>
         </thead>
         <tbody>
 
           {stats.map((stat, index) => (
             <tr key={index} className='border-t border-dashed'>
-              <td className='p-1 sm:p-2 md:p-4'>
+              <td className='p-2 md:p-4'>
                 <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
               </td>
-              <td className='p-1 sm:p-2 md:p-4 text-center'>{stat.won}</td>
-              <td className='p-1 sm:p-2 md:p-4 text-center'>{stat.draw}</td>
-              <td className='p-1 sm:p-2 md:p-4 text-center'>{stat.loss}</td>
-              <td className='p-1 sm:p-2 md:p-4 text-center'>{stat.played}</td>
-              <td className='p-1 sm:p-2 md:p-4 text-center'>{stat.points}</td>
+              <td className='p-2 md:p-4 text-center'>{stat.won}</td>
+              <td className='p-2 md:p-4 text-center'>{stat.draw}</td>
+              <td className='p-2 md:p-4 text-center'>{stat.loss}</td>
+              <td className='p-2 md:p-4 text-center'>{stat.played}</td>
+              <td className='p-2 md:p-4 text-center'>{stat.points}</td>
             </tr>
           ))}
 

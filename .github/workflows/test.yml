@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Jest
+    name: Lint, Standard, and Jest
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -36,11 +36,7 @@ jobs:
 
       - name: Jest
         env:
-#          DB_HOST: localhost
-#          DB_PORT: 3306
           DB_USER: root
-#          DB_NAME: elttl_test
           MYSQL_TEST_DATABASE: elttl_test
           MYSQL_ROOT_USER: root
-#          MYSQL_HOSTNAME: localhost
         run: npm run test

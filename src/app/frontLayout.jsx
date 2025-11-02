@@ -32,9 +32,9 @@ export default async function FrontLayout ({ children, paddedContent = true, max
       </div>
 
       <div>
-        <div className='max-w-[1440px] mx-auto p-4 flex flex-col md:flex-row gap-4'>
+        <div className='max-w-[1440px] mx-auto flex flex-col md:flex-row'>
           {advertisementsSecondary.map((advertisement, index) => (
-            <div key={index} className='p-4 bg-tertiary-500 text-white rounded bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3'>
+            <div key={index} className='p-6 bg-[#8d9584] md:border-r text-white bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3 border-b border-stone-500 md:border-b-0'>
               <h2 className='mb-4 text-2xl font-bold'>{advertisement.title}</h2>
               <p className='my-3 text-lg'>{advertisement.description}</p>
               <div className='mt-6 flex justify-end'>
@@ -52,7 +52,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
         </div>
       </div>
 
-      <footer className='bg-tertiary-500 mt-8'>
+      <footer className='bg-tertiary-500'>
         <div className='md:flex max-w-[1440px] mx-auto'>
           <div className='basis-1/4 p-4 text-white'>
             <div className='mb-1'><Link href='/contact-us' className='underline font-bold'>&copy; {appName}</Link></div>
