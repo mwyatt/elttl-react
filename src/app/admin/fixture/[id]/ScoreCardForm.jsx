@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { PlayerSelect } from '@/app/admin/fixture/[id]/PlayerSelect'
 import {
   getOtherSideCapitalized,
@@ -62,10 +62,15 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
     setIsLoading(false)
   }
 
-  // @todo validation for all encounters to have a score that has a winner === 3
+  const handleChangePlayer = (structPosition, optionValue) => {
+    setPlayerStruct(
+      prev => {
+        const newStruct = [...prev]
+        newStruct[structPosition[0]][structPosition[1]] = optionValue
+        return newStruct
+      }
+    )
 
-  useEffect(() => {
-    // @todo use new player struct to update encounter struct with player ids
     const newEncounterStruct = encounterStruct.map((encounter, index) => {
       let playerIdLeft = playerStruct[0][scorecardStructure[index][0]]
       let playerIdRight = playerStruct[1][scorecardStructure[index][1]]
@@ -86,7 +91,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
     })
 
     setEncounterStruct(newEncounterStruct)
-  }, [playerStruct])
+  }
 
   const getGrandTotal = (side) => {
     const sideCapitalized = getSideCapitalized(side)
@@ -179,7 +184,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamLeftId}
             structPosition={[0, 1]}
             playerSelectedId={playerStruct[0][1]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -189,7 +194,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamRightId}
             structPosition={[1, 1]}
             playerSelectedId={playerStruct[1][1]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -201,7 +206,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamLeftId}
             structPosition={[0, 2]}
             playerSelectedId={playerStruct[0][2]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -211,7 +216,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamRightId}
             structPosition={[1, 2]}
             playerSelectedId={playerStruct[1][2]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -223,7 +228,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamLeftId}
             structPosition={[0, 3]}
             playerSelectedId={playerStruct[0][3]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -233,7 +238,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamRightId}
             structPosition={[1, 3]}
             playerSelectedId={playerStruct[1][3]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />

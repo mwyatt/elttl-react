@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import { getConnection } from '@/lib/database'
 import createNewSeason from '@/app/admin/api/season/createNewSeason'
 import { setup, tearDown } from '@/lib/testDatabase'
-import { test, expect, beforeEach, beforeAll, afterEach, afterAll } from '@jest/globals'
+import { test, expect, beforeAll, afterAll } from '@jest/globals'
 
 test('it can create a new season with a copy of the previous years data', async () => {
   const connection = await getConnection()

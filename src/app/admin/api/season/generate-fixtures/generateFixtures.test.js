@@ -32,7 +32,7 @@ test('it will throw an error if the year does not exist', async () => {
   )
 
   await expect(generateFixtures(999)).rejects.toThrow(
-    'Year with ID 9999 does not exist'
+    'Year with ID 999 does not exist'
   )
 })
 

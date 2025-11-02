@@ -11,6 +11,7 @@ import SeasonTotals from '@/components/home/SeasonTotals'
 import SessionsToday from '@/components/home/SessionsToday'
 import ImageGallery from '@/components/home/ImageGallery'
 import Image from 'next/image'
+import RelativeTime from '@/components/RelativeTime'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -69,7 +70,8 @@ export default async function Page () {
               <p
                 className='text-sm text-gray-500 mb-2'
                 title={dayjs.unix(press.timePublished).format('DD/MM/YYYY HH:mm')}
-              >{dayjs.unix(press.timePublished).fromNow()}
+              >
+                <RelativeTime timestamp={press.timePublished} />
               </p>
               <h3 className='text-lg'><Link className={linkStyles.join(' ')} href={press.url}>{press.title}</Link></h3>
             </div>

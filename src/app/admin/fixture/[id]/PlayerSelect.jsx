@@ -8,21 +8,21 @@ const CreatableSelect = dynamic(() => import('react-select/creatable'), { ssr: f
 // @todo prevent the same player being selected twice in either team
 export function PlayerSelect ({
   teamId,
-  structPosition,
   players,
   playerSelectedId,
-  setPlayerStruct,
+  structPosition,
+  handleChangePlayer,
   playerStruct
 }) {
   const playersSelected = Object.keys(playerStruct[getSideIndex(SIDE_LEFT)]).map((key) => {
     if (playerSelectedId === playerStruct[getSideIndex(SIDE_LEFT)][key]) {
-      return
+      return null
     }
     return playerStruct[getSideIndex(SIDE_LEFT)][key]
   }).concat(
     Object.keys(playerStruct[getSideIndex(SIDE_RIGHT)]).map((key) => {
       if (playerSelectedId === playerStruct[getSideIndex(SIDE_RIGHT)][key]) {
-        return
+        return null
       }
       return playerStruct[getSideIndex(SIDE_RIGHT)][key]
     })
@@ -62,13 +62,7 @@ export function PlayerSelect ({
     <CreatableSelect
       options={options}
       defaultValue={selectedOption}
-      onChange={option => setPlayerStruct(
-        prev => {
-          const newStruct = [...prev]
-          newStruct[structPosition[0]][structPosition[1]] = option.value
-          return newStruct
-        }
-      )}
+      onChange={option => handleChangePlayer(structPosition, option.value)}
     />
   )
 }

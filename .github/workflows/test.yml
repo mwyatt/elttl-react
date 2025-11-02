@@ -31,6 +31,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Standard
+        run: npm run standard
+
       - name: Jest
         env:
 #          DB_HOST: localhost

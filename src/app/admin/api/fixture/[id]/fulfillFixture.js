@@ -1,6 +1,5 @@
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
-import EncounterStatus from '@/constants/EncounterStatus'
 import { doesEncounterHaveNoPlayer, getRankChanges } from '@/lib/encounter'
 import {
   getSideIndex,

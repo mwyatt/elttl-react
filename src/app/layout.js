@@ -4,10 +4,10 @@ import Environments from '@/constants/Environments'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { cookies } from 'next/headers'
 import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
-import { Open_Sans } from 'next/font/google'
+import { Open_Sans as OpenSans } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 
-const openSans = Open_Sans({
+const openSans = OpenSans({
   subsets: ['latin'],
   weight: ['400', '700'],
   display: 'swap'

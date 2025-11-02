@@ -3,8 +3,6 @@ import { apiUrl } from '@/constants/url'
 import DatePretty from '@/components/DatePretty'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMetaTitle } from '@/constants/MetaData'
-import { StatusCodes } from 'http-status-codes'
-import { notFound } from 'next/navigation'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export async function generateMetadata (

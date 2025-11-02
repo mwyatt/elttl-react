@@ -1,7 +1,6 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import React from 'react'
-import { apiUrl } from '@/constants/url'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'

@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
 import { logout } from '@/app/login/actions'
 import { StatusCodes } from 'http-status-codes'
+import { getCurrentYear } from '@/app/lib/year'
+import { getConnection } from '@/lib/database'
 
-export async function GET (request) {
+export async function GET () {
   logout()
 
   const connection = await getConnection()

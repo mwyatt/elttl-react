@@ -9,6 +9,7 @@ import { fetchJson } from '@/app/lib/fetchWrapper'
 import CookieBanner from '@/components/CookieBanner'
 import { cookies } from 'next/headers'
 import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
@@ -87,8 +88,11 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             <Link href='https://www.facebook.com/pages/East-Lancashire-Table-Tennis-League/118206128284149' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
               <BiLogoFacebook size={30} />
             </Link>
-            <Link href='http://tabletennisengland.co.uk/' target='_blank' className='inline-block m-2 w-32' rel='noreferrer'>
-              <img className='block w-20 md:w-32' src='https://www.tabletennisengland.co.uk/content/themes/table-tennis-england/img/main-logo.svg' alt='Table Tennnis England logo' />
+            <Link href='http://tabletennisengland.co.uk/' target='_blank' className='inline-block m-2 w-32 h-auto' rel='noreferrer'>
+              <Image
+                className='block w-20 md:w-32 h-auto' src='https://www.tabletennisengland.co.uk/content/themes/table-tennis-england/img/main-logo.svg' alt='Table Tennnis England logo'
+                width={0} height={0}
+              />
             </Link>
           </div>
         </div>

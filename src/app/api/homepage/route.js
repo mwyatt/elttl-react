@@ -3,7 +3,7 @@ import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 import { StatusCodes } from 'http-status-codes'
 
-export async function GET (request) {
+export async function GET () {
   const connection = await getConnection()
   const currentYear = await getCurrentYear()
 

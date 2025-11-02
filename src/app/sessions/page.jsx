@@ -16,7 +16,7 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic'
 
-export default async function Page ({ params, searchParams }) {
+export default async function Page () {
   const { currentYear } = await fetchJson('/general')
   const now = dayjs()
 

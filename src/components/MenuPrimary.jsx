@@ -5,13 +5,11 @@ import { BiSolidChevronDown, BiSolidChevronUp } from 'react-icons/bi'
 
 export default function MenuPrimary ({ items, primaryOpenStatuses, setPrimaryOpenStatuses }) {
   const handleClick = (index) => {
-    primaryOpenStatuses.forEach((status, i) => {
-      if (i !== index) {
-        status.isOpen = false
-      }
-    })
-    primaryOpenStatuses[index].isOpen = !primaryOpenStatuses[index].isOpen
-    setPrimaryOpenStatuses([...primaryOpenStatuses])
+    const updatedStatuses = primaryOpenStatuses.map((status, i) => ({
+      ...status,
+      isOpen: i === index ? !status.isOpen : false
+    }))
+    setPrimaryOpenStatuses(updatedStatuses)
   }
 
   return (
