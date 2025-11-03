@@ -9,7 +9,7 @@ export function LogoutForm () {
   const [state, logoutAction] = useActionState(logout, undefined)
 
   return (
-    <form action={logoutAction}>
+    <form action={logoutAction} data-state={state}>
       <button disabled={pending} type='submit' className='bg-tertiary-500 border-b-stone-700 border-b-2 rounded px-3 py-2 text-white font-bold capitalize hover:bg-stone-600'>
         Logout
       </button>

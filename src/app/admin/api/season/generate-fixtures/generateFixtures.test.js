@@ -3,6 +3,8 @@ import '@testing-library/jest-dom'
 import { getConnection } from '@/lib/database'
 import generateFixtures from '@/app/admin/api/season/generate-fixtures/generateFixtures'
 import EncounterStatus from '@/constants/EncounterStatus'
+import { setup, tearDown } from '@/lib/testDatabase'
+import { test, expect, beforeAll, afterAll } from '@jest/globals'
 
 const yearId = 12
 const teamCount = 3
@@ -25,12 +27,13 @@ test('it can generate fixtures for all the teams in all the divisions for the ye
 })
 
 test('it will throw an error if the year does not exist', async () => {
-  await generateFixtures().catch((error) => {
-    expect(error.message).toBe('yearId is required')
-  })
-  await generateFixtures(9999).catch((error) => {
-    expect(error.message).toBe('Year with ID 9999 does not exist')
-  })
+  await expect(generateFixtures()).rejects.toThrow(
+    'yearId is required'
+  )
+
+  await expect(generateFixtures(999)).rejects.toThrow(
+    'Year with ID 999 does not exist'
+  )
 })
 
 test('it will throw an error if there are fixtures already', async () => {
@@ -39,9 +42,9 @@ test('it will throw an error if there are fixtures already', async () => {
   const [fixturesBefore] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesBefore.length).toBe(teamCount * (teamCount - 1)) // Each team plays every other team once
 
-  await generateFixtures(yearId).catch((error) => {
-    expect(error.message).toBe(`Year with ID ${yearId} already has fixtures. Use 'ignoreExistingFixtures' to bypass this check.`)
-  })
+  await expect(generateFixtures(yearId)).rejects.toThrow(
+    `Year with ID ${yearId} already has fixtures. Use 'ignoreExistingFixtures' to bypass this check.`
+  )
 
   connection.release()
 })
@@ -121,7 +124,7 @@ test('it will not remove fixture or encounter data from other years', async () =
 })
 
 beforeAll(async () => {
-  const connection = await getConnection()
+  const connection = await setup()
 
   await connection.execute('INSERT INTO tennisYear (id, name, value) VALUES (12, \'2024\', \'\');')
   await connection.execute('INSERT INTO options (id, name, value) VALUES (20, \'year_id\', \'12\');')
@@ -143,18 +146,7 @@ INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueI
 INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueId, divisionId) VALUES (3, 12, 'Super Spins', 'super-spins', 1, 42, 5, 1);
   `)
 
-  connection.release()
+  connection.close()
 })
 
-afterAll(async () => {
-  const connection = await getConnection()
-
-  await connection.execute('DELETE FROM tennisYear;')
-  await connection.execute('DELETE FROM options;')
-  await connection.execute('DELETE FROM tennisDivision;')
-  await connection.execute('DELETE FROM tennisTeam;')
-  await connection.execute('DELETE FROM tennisFixture;')
-  await connection.execute('DELETE FROM tennisEncounter;')
-
-  connection.release()
-})
+afterAll(tearDown)

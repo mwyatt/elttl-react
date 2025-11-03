@@ -1,5 +1,4 @@
 import FrontLayout from '@/app/frontLayout'
-import { apiUrl } from '@/constants/url'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
 import DatePretty from '@/components/DatePretty'
@@ -16,7 +15,7 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic'
 
-export default async function Page ({ params, searchParams }) {
+export default async function Page ({ searchParams }) {
   const pageMin = 1
   let { page } = await searchParams
   if (!page || isNaN(page) || parseInt(page) < pageMin) {

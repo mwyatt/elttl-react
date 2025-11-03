@@ -3,16 +3,16 @@
 import Link from 'next/link'
 import { allHomeButtonStyles } from '@/lib/styles'
 
-export default function SeasonTotals ({ yearName, totals }) {
-  const Panel = ({ name, total, url }) => (
-    <Link
-      href={url} className='flex-wrap flex p-6 grow text-xl flex-col items-center gap-2 rounded bg-primary-500 text-white'
-    >
-      <span className='text-5xl font-semibold'>{total}</span>
-      {name}
-    </Link>
-  )
+const Panel = ({ name, total, url }) => (
+  <Link
+    href={url} className='flex-wrap flex p-6 grow text-xl flex-col items-center gap-2 rounded bg-primary-500 text-white'
+  >
+    <span className='text-5xl font-semibold'>{total}</span>
+    {name}
+  </Link>
+)
 
+export default function SeasonTotals ({ yearName, totals }) {
   return (
     <div>
       <div className='flex p-4 items-center'>

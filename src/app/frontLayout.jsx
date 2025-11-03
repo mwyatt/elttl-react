@@ -9,8 +9,15 @@ import { fetchJson } from '@/app/lib/fetchWrapper'
 import CookieBanner from '@/components/CookieBanner'
 import { cookies } from 'next/headers'
 import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata = {
+  icons: {
+    icon: '/icon.png'
+  }
+}
 
 export default async function FrontLayout ({ children, paddedContent = true, maxWidth = true }) {
   const appName = getMetaTitle()
@@ -31,9 +38,9 @@ export default async function FrontLayout ({ children, paddedContent = true, max
       </div>
 
       <div>
-        <div className='max-w-[1440px] mx-auto p-4 flex flex-col md:flex-row gap-4'>
+        <div className='max-w-[1440px] mx-auto flex flex-col md:flex-row'>
           {advertisementsSecondary.map((advertisement, index) => (
-            <div key={index} className='p-4 bg-tertiary-500 text-white rounded bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3'>
+            <div key={index} className='p-6 bg-[#8d9584] md:border-r text-white bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3 border-b border-stone-500 md:border-b-0'>
               <h2 className='mb-4 text-2xl font-bold'>{advertisement.title}</h2>
               <p className='my-3 text-lg'>{advertisement.description}</p>
               <div className='mt-6 flex justify-end'>
@@ -51,7 +58,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
         </div>
       </div>
 
-      <footer className='bg-tertiary-500 mt-8'>
+      <footer className='bg-tertiary-500'>
         <div className='md:flex max-w-[1440px] mx-auto'>
           <div className='basis-1/4 p-4 text-white'>
             <div className='mb-1'><Link href='/contact-us' className='underline font-bold'>&copy; {appName}</Link></div>
@@ -87,8 +94,11 @@ export default async function FrontLayout ({ children, paddedContent = true, max
             <Link href='https://www.facebook.com/pages/East-Lancashire-Table-Tennis-League/118206128284149' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
               <BiLogoFacebook size={30} />
             </Link>
-            <Link href='http://tabletennisengland.co.uk/' target='_blank' className='inline-block m-2 w-32' rel='noreferrer'>
-              <img className='block w-20 md:w-32' src='https://www.tabletennisengland.co.uk/content/themes/table-tennis-england/img/main-logo.svg' alt='Table Tennnis England logo' />
+            <Link href='http://tabletennisengland.co.uk/' target='_blank' className='inline-block m-2 w-32 h-auto' rel='noreferrer'>
+              <Image
+                className='block w-20 md:w-32 h-auto' src='https://www.tabletennisengland.co.uk/content/themes/table-tennis-england/img/main-logo.svg' alt='Table Tennnis England logo'
+                width={0} height={0}
+              />
             </Link>
           </div>
         </div>

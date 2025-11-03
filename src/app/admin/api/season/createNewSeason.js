@@ -1,7 +1,7 @@
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 
-export default async function () {
+export default async function createNewSeason () {
   const connection = await getConnection()
   const currentYear = await getCurrentYear()
 

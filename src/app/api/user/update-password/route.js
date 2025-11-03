@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
 import Environments from '@/constants/Environments'
 
-export async function GET (request) {
+export async function GET ({ request }) {
   if (process.env.NEXT_PUBLIC_ENVIRONMENT === Environments.LIVE) {
     return NextResponse.json(
       'This endpoint is not available in the live environment',
@@ -23,7 +23,7 @@ export async function GET (request) {
     theHash = hash
   })
 
-  const response = await connection.execute(`
+  await connection.execute(`
       UPDATE user
       SET password = :password
       WHERE email = :email
@@ -36,7 +36,8 @@ export async function GET (request) {
     console.log({
       password,
       theHash,
-      result
+      result,
+      err
     })
   })
 

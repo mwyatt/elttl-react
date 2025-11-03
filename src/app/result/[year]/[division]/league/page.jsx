@@ -1,11 +1,9 @@
 import FrontLayout from '@/app/frontLayout'
 import Link from 'next/link'
 import React from 'react'
-import { apiUrl } from '@/constants/url'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { linkStyles } from '@/lib/styles'
-import MainHeading from '@/components/MainHeading'
 import { capitalizeFirstLetter } from '@/lib/misc'
 import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
@@ -48,26 +46,26 @@ export default async function Page ({ params }) {
       <table className='table-auto w-full mt-4'>
         <thead>
           <tr>
-            <th className='p-1 sm:p-2 md:p-4'>Name</th>
-            <th className='p-1 sm:p-2 md:p-4'>W<span className='hidden sm:inline'>on</span></th>
-            <th className='p-1 sm:p-2 md:p-4'>D<span className='hidden sm:inline'>raw</span></th>
-            <th className='p-1 sm:p-2 md:p-4'>L<span className='hidden sm:inline'>oss</span></th>
-            <th className='p-1 sm:p-2 md:p-4'>Pl<span className='hidden sm:inline'>aye</span>d</th>
-            <th className='p-1 sm:p-2 md:p-4'>P<span className='hidden sm:inline'>oin</span>ts</th>
+            <th className='p-2 md:p-4'>Name</th>
+            <th className='p-2 md:p-4'>W<span className='hidden sm:inline'>on</span></th>
+            <th className='p-2 md:p-4'>D<span className='hidden sm:inline'>raw</span></th>
+            <th className='p-2 md:p-4'>L<span className='hidden sm:inline'>oss</span></th>
+            <th className='p-2 md:p-4'>Pl<span className='hidden sm:inline'>aye</span>d</th>
+            <th className='p-2 md:p-4'>P<span className='hidden sm:inline'>oin</span>ts</th>
           </tr>
         </thead>
         <tbody>
 
           {stats.map((stat, index) => (
             <tr key={index} className='border-dashed border-t hover:bg-gray-100'>
-              <td className='p-1 sm:p-2 md:p-4'>
+              <td className='p-2 md:p-4'>
                 <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
               </td>
-              <td className='text-center p-1 sm:p-2 md:p-4'>{stat.won}</td>
-              <td className='text-center p-1 sm:p-2 md:p-4'>{stat.draw}</td>
-              <td className='text-center p-1 sm:p-2 md:p-4'>{stat.loss}</td>
-              <td className='text-center p-1 sm:p-2 md:p-4'>{stat.played}</td>
-              <td className='text-center p-1 sm:p-2 md:p-4'>{stat.points}</td>
+              <td className='text-center p-2 md:p-4'>{stat.won}</td>
+              <td className='text-center p-2 md:p-4'>{stat.draw}</td>
+              <td className='text-center p-2 md:p-4'>{stat.loss}</td>
+              <td className='text-center p-2 md:p-4'>{stat.played}</td>
+              <td className='text-center p-2 md:p-4'>{stat.points}</td>
             </tr>
           ))}
 

@@ -1,4 +1,5 @@
 import { rankChangeMap } from '@/constants/encounter.js'
+import EncounterStatus from '@/constants/EncounterStatus'
 
 export function getRankChanges (
   scoreLeft,
@@ -21,4 +22,14 @@ export function getRankChanges (
   }
 
   return new Error('No rank changes assigned')
+}
+
+export function doesEncounterHaveNoPlayer (encounter) {
+  return (
+    encounter.status === EncounterStatus.DOUBLES ||
+    encounter.playerIdLeft === null ||
+    encounter.playerIdRight === null ||
+    encounter.playerIdLeft === 0 ||
+    encounter.playerIdRight === 0
+  )
 }

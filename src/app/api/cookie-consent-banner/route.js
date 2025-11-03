@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import { CookieBannerConsentChoiceKey } from '@/constants/Cookies'
 import dayjs from 'dayjs'
 
-export async function PUT (request, { params }) {
+export async function PUT (request) {
   const { decision } = await request.json()
   const cookieStore = await cookies()
   const expireDate = dayjs().add(6, 'months')

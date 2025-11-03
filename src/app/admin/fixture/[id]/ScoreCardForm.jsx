@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { PlayerSelect } from '@/app/admin/fixture/[id]/PlayerSelect'
 import {
   getOtherSideCapitalized,
@@ -41,10 +41,36 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
     setIsLoading(false)
   }
 
-  // @todo validation for all encounters to have a score that has a winner === 3
+  const handleRollback = async (event) => {
+    setIsLoading(true)
+    event.preventDefault()
 
-  useEffect(() => {
-    // @todo use new player struct to update encounter struct with player ids
+    const response = await fetch(`/admin/api/fixture/${fixture.id}/rollback`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authentication: cookie
+      },
+      body: JSON.stringify({
+        encounterStruct
+      })
+    })
+
+    const data = await response.json()
+
+    setFeedbackMessage(data.message)
+    setIsLoading(false)
+  }
+
+  const handleChangePlayer = (structPosition, optionValue) => {
+    setPlayerStruct(
+      prev => {
+        const newStruct = [...prev]
+        newStruct[structPosition[0]][structPosition[1]] = optionValue
+        return newStruct
+      }
+    )
+
     const newEncounterStruct = encounterStruct.map((encounter, index) => {
       let playerIdLeft = playerStruct[0][scorecardStructure[index][0]]
       let playerIdRight = playerStruct[1][scorecardStructure[index][1]]
@@ -65,7 +91,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
     })
 
     setEncounterStruct(newEncounterStruct)
-  }, [playerStruct])
+  }
 
   const getGrandTotal = (side) => {
     const sideCapitalized = getSideCapitalized(side)
@@ -141,13 +167,24 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
       <FullLoader isLoading={isLoading} />
       <input name='fixtureId' type='hidden' value={fixture.id} />
       <input name='encounterStruct' type='hidden' value={JSON.stringify(encounterStruct)} />
+      {fixture.timeFulfilled !== 0 && (
+        <div className='flex justify-end text-sm mb-4'>
+          <button
+            disabled={isLoading}
+            type='submit' className='bg-stone-500 border-b-stone-700 border-b-2 rounded px-2 py-1 text-white font-bold capitalize hover:bg-stone-400'
+            onClick={(e) => handleRollback(e)}
+          >
+            Reset Fixture
+          </button>
+        </div>
+      )}
       <div className='flex gap-4 mb-4'>
         <div className='flex-1'>
           <PlayerSelect
             teamId={fixture.teamLeftId}
             structPosition={[0, 1]}
             playerSelectedId={playerStruct[0][1]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -157,7 +194,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamRightId}
             structPosition={[1, 1]}
             playerSelectedId={playerStruct[1][1]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -169,7 +206,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamLeftId}
             structPosition={[0, 2]}
             playerSelectedId={playerStruct[0][2]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -179,7 +216,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamRightId}
             structPosition={[1, 2]}
             playerSelectedId={playerStruct[1][2]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -191,7 +228,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamLeftId}
             structPosition={[0, 3]}
             playerSelectedId={playerStruct[0][3]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />
@@ -201,7 +238,7 @@ export function ScoreCardForm ({ fixture, players, encounters, cookie }) {
             teamId={fixture.teamRightId}
             structPosition={[1, 3]}
             playerSelectedId={playerStruct[1][3]}
-            setPlayerStruct={setPlayerStruct}
+            handleChangePlayer={handleChangePlayer}
             players={players}
             playerStruct={playerStruct}
           />

@@ -2,6 +2,8 @@ import '@testing-library/jest-dom'
 
 import { getConnection } from '@/lib/database'
 import createNewSeason from '@/app/admin/api/season/createNewSeason'
+import { setup, tearDown } from '@/lib/testDatabase'
+import { test, expect, beforeAll, afterAll } from '@jest/globals'
 
 test('it can create a new season with a copy of the previous years data', async () => {
   const connection = await getConnection()
@@ -38,7 +40,7 @@ test('it can create a new season with a copy of the previous years data', async 
 })
 
 beforeAll(async () => {
-  const connection = await getConnection()
+  const connection = await setup()
 
   await connection.execute('INSERT INTO tennisYear (id, name, value) VALUES (11, \'2023\', \'\');')
   await connection.execute('INSERT INTO tennisYear (id, name, value) VALUES (12, \'2024\', \'\');')
@@ -78,18 +80,7 @@ INSERT INTO tennisTeam (id, yearId, name, slug, homeWeekday, secretaryId, venueI
 INSERT INTO tennisVenue (id, yearId, name, slug, location) VALUES (1, 12, 'Burnley Boys Club', 'burnley-boys-club', 'https://maps.app.goo.gl/z3BZEWqnFK9PPwoK7');
   `)
 
-  connection.release()
+  connection.close()
 })
 
-afterAll(async () => {
-  const connection = await getConnection()
-
-  await connection.execute('DELETE FROM tennisYear;')
-  await connection.execute('DELETE FROM options;')
-  await connection.execute('DELETE FROM tennisDivision;')
-  await connection.execute('DELETE FROM tennisTeam;')
-  await connection.execute('DELETE FROM tennisVenue;')
-  await connection.execute('DELETE FROM tennisPlayer;')
-
-  connection.release()
-})
+afterAll(tearDown)

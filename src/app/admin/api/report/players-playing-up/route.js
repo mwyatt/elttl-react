@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes'
 import { lodash } from 'lodash'
 import { getSideIndex, SIDE_LEFT, SIDE_RIGHT } from '@/constants/encounter'
 
-export async function GET (request) {
+export async function GET () {
   const connection = await getConnection()
   const currentYear = await getCurrentYear()
 

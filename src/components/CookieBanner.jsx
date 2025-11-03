@@ -28,7 +28,7 @@ export default function CookieBanner ({ isCookieBannerDismissed }) {
       } else {
         console.error('Error while setting cookie consent decision.')
       }
-    } catch (error) {
+    } catch {
       console.error('Error while setting cookie consent decision.')
       setIsDisabled(false)
     }

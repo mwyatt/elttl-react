@@ -60,24 +60,13 @@ export default async function Page () {
           <p className='my-4 font-bold'>Membership</p>
           <p className='my-4'>4. The members of the League (“League Members”) shall be:</p>
           <ol className='list-disc pl-12 my-4'>
-            <li>All persons who register to play in the League during the season (which shall commence immediately <span
-              className='hljs-keyword'
-                                                                                                                   >after
-            </span> <span className='hljs-keyword'>the</span> Annual General Meeting
+            <li>All persons who register to play in the League during the season (which shall commence immediately
+              <span className='hljs-keyword'>after</span> <span className='hljs-keyword'>the</span> Annual General Meeting
               (“AGM”) held <span className='hljs-keyword'>in</span> May each <span className='hljs-built_in'>year</span>
-              <span className='hljs-keyword'>and</span> <span className='hljs-keyword'>end</span> <span
-                className='hljs-keyword'
-                                                                                                  >with
-              </span>
-              <span className='hljs-keyword'>the</span> AGM <span className='hljs-keyword'>the</span> following <span
-                className='hljs-built_in'
-                                                                                                                >year
-              </span>) <span className='hljs-keyword'>and</span> who have paid all fees
-              due <span className='hljs-keyword'>for</span> <span className='hljs-keyword'>that</span> Season <span
-                className='hljs-keyword'
-                                                                                                              >as
-              </span> provided <span className='hljs-keyword'>by</span>
-              <span className='hljs-keyword'>the</span> Rules <span className='hljs-keyword'>below</span> (“League
+              <span className='hljs-keyword'>and</span> <span className='hljs-keyword'>end</span> <span className='hljs-keyword'>with</span>
+              <span className='hljs-keyword'>the</span> AGM <span className='hljs-keyword'>the</span> following <span className='hljs-built_in'>year</span>) <span className='hljs-keyword'>and</span> who have paid all fees
+              due <span className='hljs-keyword'>for</span> <span className='hljs-keyword'>that</span> Season <span className='hljs-keyword'>as</span> provided
+              <span className='hljs-keyword'>by</span> <span className='hljs-keyword'>the</span> Rules <span className='hljs-keyword'>below</span> (“League
               Players”)
             </li>
             <li>Any former player members of the League or other persons who (in either case) are accepted by the

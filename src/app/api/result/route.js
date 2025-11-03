@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { StatusCodes } from 'http-status-codes'
 
-export async function GET (request) {
+export async function GET () {
   const connection = await getConnection()
 
   const [years] = await connection.query(`
