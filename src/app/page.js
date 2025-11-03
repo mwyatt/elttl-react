@@ -4,7 +4,6 @@ import Link from 'next/link'
 import FixtureCard from '@/components/FixtureCard'
 import { getMetaDescription, getMetaTitle } from '@/constants/MetaData'
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { allHomeButtonStyles, linkStyles } from '@/lib/styles'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import SeasonTotals from '@/components/home/SeasonTotals'
@@ -30,14 +29,10 @@ export default async function Page () {
     seasonTotals
   } = await fetchJson('/homepage')
 
-  dayjs.extend(relativeTime)
-
   return (
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
         <div className='md:p-6 flex-1 flex flex-col gap-6'>
-          {/* <CarouselElttl advertisements={advertisementsPrimary} /> */}
-
           {advertisementsPrimary.map((advertisement) => (
             <div
               key={advertisement.id}
@@ -81,7 +76,7 @@ export default async function Page () {
 
       <SeasonTotals totals={seasonTotals} yearName={currentYear} />
 
-      {latestFixtures.length > 0 && (
+      {latestFixtures.length < 1 && (
         <div>
           <h2 className='text-2xl p-4'>Latest Fulfilled Fixtures</h2>
           <div className='flex flex-wrap gap-3 mb-6 p-4'>
