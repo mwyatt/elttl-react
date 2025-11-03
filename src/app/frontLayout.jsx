@@ -13,6 +13,12 @@ import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  icons: {
+    icon: '/icon.png'
+  }
+}
+
 export default async function FrontLayout ({ children, paddedContent = true, maxWidth = true }) {
   const appName = getMetaTitle()
   const {
