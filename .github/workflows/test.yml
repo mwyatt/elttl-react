@@ -1,26 +1,42 @@
-#name: Run Jest Tests
-#
-#on:
-#  push:
-#    branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
-#
-#jobs:
-#  test:
-#    runs-on: ubuntu-24.04
-#
-#    steps:
-#    - name: Checkout code
-#      uses: actions/checkout@v4
-#
-#    - name: Set up Node.js
-#      uses: actions/setup-node@v4
-#      with:
-#        node-version: '20'
-#
-#    - name: Install dependencies
-#      run: npm install
-#
-#    - name: Run Jest tests
-#      run: npm test
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Lint, Standard, and Jest
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set up MySQL 8.0.42
+        uses: shogo82148/actions-setup-mysql@v1
+        with:
+          mysql-version: '8.0.42'
+          root-password: ''
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Standard
+        run: npm run standard
+
+      - name: Jest
+        env:
+          DB_USER: root
+          MYSQL_TEST_DATABASE: elttl_test
+          MYSQL_ROOT_USER: root
+        run: npm run test

@@ -21,23 +21,23 @@ export default function InformationTable ({ yearName, teams }) {
     <table className='table-auto w-full mt-4 mb-12'>
       <thead>
         <tr className='text-left'>
-          <th className='p-1 sm:p-2 md:p-4'>Team</th>
-          <th className='p-1 sm:p-2 md:p-4 hidden sm:table-cell'>Venue</th>
-          <th className='p-1 sm:p-2 md:p-4'>Secretary</th>
-          <th className='p-1 sm:p-2 md:p-4'>Contact</th>
+          <th className='p-2 md:p-4'>Team</th>
+          <th className='p-2 md:p-4 hidden sm:table-cell'>Venue</th>
+          <th className='p-2 md:p-4'>Secretary</th>
+          <th className='p-2 md:p-4'>Contact</th>
         </tr>
       </thead>
       <tbody>
 
         {teams.map((team, index) => (
           <tr key={index} className='border-t border-dashed hover:bg-gray-100'>
-            <td className='p-1 sm:p-2 md:p-4'>
+            <td className='p-2 md:p-4'>
               <Link className={linkStyles.join(' ')} href={`/result/${yearName}/team/${team.slug}`}>{team.name}</Link>
             </td>
-            <td className='p-1 sm:p-2 md:p-4 hidden sm:table-cell'>
+            <td className='p-2 md:p-4 hidden sm:table-cell'>
               <Link className={linkStyles.join(' ')} href={`/result/${yearName}/venue/${team.venueSlug}`}>{team.venueName}</Link>
             </td>
-            <td className='p-1 sm:p-2 md:p-4'>
+            <td className='p-2 md:p-4'>
               {team.secretarySlug && (
                 <Link className={linkStyles.join(' ')} href={`/result/${yearName}/player/${team.secretarySlug}`}>
                   <span className='sm:hidden'>{getShortPlayerName(team.secretaryName)}</span>
@@ -45,7 +45,7 @@ export default function InformationTable ({ yearName, teams }) {
                 </Link>
               )}
             </td>
-            <td className='p-1 sm:p-2 md:p-4'>
+            <td className='p-2 md:p-4'>
               {getContact(team.secretaryPhoneLandline, team.secretaryPhoneMobile)}
             </td>
           </tr>

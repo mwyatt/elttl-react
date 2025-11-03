@@ -1,6 +1,6 @@
 import { getConnection } from '@/lib/database'
 
-export default async function (yearId, ignoreExistingFixtures = false) {
+export default async function generateFixtures (yearId, ignoreExistingFixtures = false) {
   if (yearId === undefined || yearId === null) {
     throw new Error('yearId is required')
   }

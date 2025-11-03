@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server'
-import { getConnection } from '@/lib/database'
-import { getCurrentYear } from '@/app/lib/year'
 import fulfillFixture from '@/app/admin/api/fixture/[id]/fulfillFixture'
 import { StatusCodes } from 'http-status-codes'
 

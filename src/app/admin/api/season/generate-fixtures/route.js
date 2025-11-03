@@ -3,7 +3,7 @@ import { getCurrentYear } from '@/app/lib/year'
 import generateFixtures from '@/app/admin/api/season/generate-fixtures/generateFixtures'
 import { StatusCodes } from 'http-status-codes'
 
-export async function GET (request) {
+export async function GET () {
   const currentYear = await getCurrentYear()
 
   // Generate the seasons fixtures

@@ -1,7 +1,5 @@
-import { getConnection, getConnectionNoTable, pool } from '@/lib/database'
+import { getConnectionNoTable, pool } from '@/lib/database'
 import setupTables from '@/lib/database/setupTables'
-const fs = require('fs')
-const path = require('path')
 
 const testDatabaseName = process.env.MYSQL_TEST_DATABASE
 

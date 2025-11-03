@@ -27,12 +27,13 @@ test('it can generate fixtures for all the teams in all the divisions for the ye
 })
 
 test('it will throw an error if the year does not exist', async () => {
-  await generateFixtures().catch((error) => {
-    expect(error.message).toBe('yearId is required')
-  })
-  await generateFixtures(9999).catch((error) => {
-    expect(error.message).toBe('Year with ID 9999 does not exist')
-  })
+  await expect(generateFixtures()).rejects.toThrow(
+    'yearId is required'
+  )
+
+  await expect(generateFixtures(999)).rejects.toThrow(
+    'Year with ID 999 does not exist'
+  )
 })
 
 test('it will throw an error if there are fixtures already', async () => {
@@ -41,9 +42,9 @@ test('it will throw an error if there are fixtures already', async () => {
   const [fixturesBefore] = await connection.execute('SELECT * FROM tennisFixture')
   expect(fixturesBefore.length).toBe(teamCount * (teamCount - 1)) // Each team plays every other team once
 
-  await generateFixtures(yearId).catch((error) => {
-    expect(error.message).toBe(`Year with ID ${yearId} already has fixtures. Use 'ignoreExistingFixtures' to bypass this check.`)
-  })
+  await expect(generateFixtures(yearId)).rejects.toThrow(
+    `Year with ID ${yearId} already has fixtures. Use 'ignoreExistingFixtures' to bypass this check.`
+  )
 
   connection.release()
 })

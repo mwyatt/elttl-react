@@ -7,7 +7,7 @@ export function Form ({ team, divisions }) {
   const [state, updateAction, pending] = useActionState(update, undefined)
 
   return (
-    <form action={updateAction} className='flex max-w-[300px] flex-col gap-2'>
+    <form action={updateAction} className='flex max-w-[300px] flex-col gap-2' data-state={state}>
 
       <input className='border border-tertiary-500 p-2' type='hidden' value={team.id} name='id' />
       <input className='border border-tertiary-500 p-2' type='text' defaultValue={team.name} name='name' />
