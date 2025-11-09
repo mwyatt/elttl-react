@@ -1,11 +1,13 @@
+use elttl_003;
+
 drop table if exists tennisWeek;
 
 create table tennisWeek
 (
-    id          int unsigned not null auto_increment primary key,
-    description varchar(255) null,
-    yearId      int unsigned not null,
-        timeStart int unsigned null
+    id        int unsigned not null auto_increment primary key,
+    yearId    int unsigned not null,
+    type      varchar(24)  not null,
+    timeStart int unsigned not null
 )
     charset = utf8mb3;
 
