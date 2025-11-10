@@ -249,13 +249,13 @@ test('it can rollback and refulfill a fixture with different players', async () 
       SELECT \`rank\`
       FROM tennisPlayer
       WHERE id = :playerId
-  `, { playerId: 7  })
+  `, { playerId: 7 })
   expect(initialNewPlayers[0].rank).toBe(1400)
 
   const firstEncounterStruct = [
     { playerIdLeft: 1, playerIdRight: 5, scoreLeft: 1, scoreRight: 3, status: '' },
     { playerIdLeft: 3, playerIdRight: 4, scoreLeft: 2, scoreRight: 3, status: '' },
-    { playerIdLeft: 2, playerIdRight: 6, scoreLeft: 3, scoreRight: 0, status: '' },
+    { playerIdLeft: 2, playerIdRight: 6, scoreLeft: 3, scoreRight: 0, status: '' }
   ]
 
   await fulfillFixture(fixtureId, firstEncounterStruct)
@@ -263,7 +263,7 @@ test('it can rollback and refulfill a fixture with different players', async () 
   const secondEncounterStruct = [
     { playerIdLeft: 1, playerIdRight: 5, scoreLeft: 1, scoreRight: 3, status: '' },
     { playerIdLeft: 3, playerIdRight: 4, scoreLeft: 2, scoreRight: 3, status: '' },
-    { playerIdLeft: 7, playerIdRight: 6, scoreLeft: 3, scoreRight: 0, status: '' },
+    { playerIdLeft: 7, playerIdRight: 6, scoreLeft: 3, scoreRight: 0, status: '' }
   ]
 
   await fulfillFixture(fixtureId, secondEncounterStruct)
@@ -281,7 +281,7 @@ test('it can rollback and refulfill a fixture with different players', async () 
       SELECT \`rank\`
       FROM tennisPlayer
       WHERE id = :playerId
-  `, { playerId: 7  })
+  `, { playerId: 7 })
   expect(newPlayers[0].rank).toBe(1475)
 
   connection.release()
