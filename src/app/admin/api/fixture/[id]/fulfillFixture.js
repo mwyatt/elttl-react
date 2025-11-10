@@ -47,7 +47,7 @@ export const getPlayerIdsFromEncounterStruct = (encounterStruct) => {
   ], value => value !== 0)
 }
 
-async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
+async function rollBackFixture (currentYearId, fixtureId) {
   const connection = await getConnection()
 
   // Find the existing encounters for this fixture
@@ -69,6 +69,9 @@ async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
     fixtureId
   })
 
+  // We need the player ranks for the existing encounters to roll them back
+  const playerRanks = await getPlayerRanks(connection, currentYearId, existingEncounters)
+
   // reverse the order of encounters
   existingEncounters.reverse()
 
@@ -82,7 +85,7 @@ async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
         const playerRankChange = encounter[`playerRankChange${sideCapitalized}`]
         playerRanks[playerId] = playerRank - playerRankChange
 
-        logRankChange('rolling back rank change:', playerRankChange, playerRanks)
+        logRankChange('rolling back rank change:', { playerId, playerRank, playerRankChange }, playerRanks)
       }
     }
   })
@@ -99,9 +102,13 @@ async function rollBackFixture (currentYearId, fixtureId, playerRanks = null) {
   })
 
   connection.release()
+
+  return playerRanks
 }
 
 export default async function fulfillFixture (fixtureId, encounterStruct, rollbackOnly = false) {
+  logRankChange('fulfilling fixture:', fixtureId, encounterStruct)
+
   const sidesCapitalized = getSidesCapitalized()
 
   if (encounterStruct.length > maxEncounters) {
@@ -160,11 +167,19 @@ export default async function fulfillFixture (fixtureId, encounterStruct, rollba
     throw new Error('Encounter structure must contain at least 3 encounters to infer the player positions.')
   }
 
-  const playerRanks = await getPlayerRanks(connection, currentYear.id, encounterStruct)
+  let playerRanks = {}
 
   if (fixture.timeFulfilled) {
-    await rollBackFixture(currentYear.id, fixtureId, playerRanks)
+    playerRanks = await rollBackFixture(currentYear.id, fixtureId)
   }
+
+  // We need the player ranks for the new encounter structure to apply the rank changes
+  // Some of the players may not have existed in the previous structure, so we need to get all player ranks again
+  // Merge the existing player ranks from the rollback with any new players
+  const newPlayerRanks = await getPlayerRanks(connection, currentYear.id, encounterStruct)
+  playerRanks = { ...newPlayerRanks, ...playerRanks }
+
+  logRankChange('player ranks after rollback and merge:', playerRanks)
 
   // Apply the new rank changes
   if (!rollbackOnly) {
@@ -174,6 +189,12 @@ export default async function fulfillFixture (fixtureId, encounterStruct, rollba
       if (doesEncounterHaveNoPlayer(encounter)) {
         // 'Skipping apply rank changes for doubles or missing player'
       } else {
+        logRankChange('getting rank changes:', [
+          encounter,
+          playerRanks[encounter.playerIdLeft],
+          playerRanks[encounter.playerIdRight]
+        ])
+
         rankChanges = getRankChanges(
           encounter.scoreLeft,
           encounter.scoreRight,
