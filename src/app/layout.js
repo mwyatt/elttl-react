@@ -15,7 +15,10 @@ const openSans = OpenSans({
 
 export const metadata = {
   title: getMetaTitle(),
-  description: getMetaDescription()
+  description: getMetaDescription(),
+  icons: {
+    icon: '/icon.png'
+  }
 }
 
 const isLiveEnvironment = process.env.NEXT_PUBLIC_ENVIRONMENT === Environments.LIVE

@@ -232,6 +232,61 @@ test('it can rollback and refulfill a fixture when it is already fulfilled', asy
   connection.release()
 })
 
+test('it can rollback and refulfill a fixture with different players', async () => {
+  const connection = await getConnection()
+  const fixtureId = 3721
+
+  // Player 2 will only be involved with the first fulfillment, but not the second
+  const [initialPlayers] = await connection.execute(`
+      SELECT \`rank\`
+      FROM tennisPlayer
+      WHERE id = :playerId
+  `, { playerId: 2 })
+  expect(initialPlayers[0].rank).toBe(1457)
+
+  // Player 7 will only be involved with the second fulfillment
+  const [initialNewPlayers] = await connection.execute(`
+      SELECT \`rank\`
+      FROM tennisPlayer
+      WHERE id = :playerId
+  `, { playerId: 7 })
+  expect(initialNewPlayers[0].rank).toBe(1400)
+
+  const firstEncounterStruct = [
+    { playerIdLeft: 1, playerIdRight: 5, scoreLeft: 1, scoreRight: 3, status: '' },
+    { playerIdLeft: 3, playerIdRight: 4, scoreLeft: 2, scoreRight: 3, status: '' },
+    { playerIdLeft: 2, playerIdRight: 6, scoreLeft: 3, scoreRight: 0, status: '' }
+  ]
+
+  await fulfillFixture(fixtureId, firstEncounterStruct)
+
+  const secondEncounterStruct = [
+    { playerIdLeft: 1, playerIdRight: 5, scoreLeft: 1, scoreRight: 3, status: '' },
+    { playerIdLeft: 3, playerIdRight: 4, scoreLeft: 2, scoreRight: 3, status: '' },
+    { playerIdLeft: 7, playerIdRight: 6, scoreLeft: 3, scoreRight: 0, status: '' }
+  ]
+
+  await fulfillFixture(fixtureId, secondEncounterStruct)
+
+  // Player 2 was involved with the first fulfillment, but not the second - their rank should result as unchanged
+  const [unchangedPlayers] = await connection.execute(`
+      SELECT \`rank\`
+      FROM tennisPlayer
+      WHERE id = :playerId
+  `, { playerId: 2 })
+  expect(unchangedPlayers[0].rank).toBe(1457)
+
+  // Player 7 was only involved with the second fulfillment - their rank should have changed
+  const [newPlayers] = await connection.execute(`
+      SELECT \`rank\`
+      FROM tennisPlayer
+      WHERE id = :playerId
+  `, { playerId: 7 })
+  expect(newPlayers[0].rank).toBe(1475)
+
+  connection.release()
+})
+
 test('it will produce the right rank changes when fulfilling and fulfilling consecutively', async () => {
   const connection = await getConnection()
   const fixtureId = 3718
@@ -435,7 +490,8 @@ beforeEach(async () => {
       'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (3, 12, \'Scott\', 1895);',
       'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (4, 12, \'Dan\', 2012);',
       'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (5, 12, \'Ian\', 1829);',
-      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (6, 12, \'Francis\', 2029);'
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (6, 12, \'Francis\', 2029);',
+      'INSERT INTO tennisPlayer (id, yearId, nameLast, `rank`) VALUES (7, 12, \'David\', 1400);'
   ]
 
   await Promise.all(commands.map(command => connection.query(command)))
