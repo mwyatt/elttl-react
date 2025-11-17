@@ -87,7 +87,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
               ))}
             </nav>
           </div>
-          <div className='basis-1/4 mt-4'>
+          <div className='basis-1/4 mt-4' data-version='1.0.0'>
             <Link href='https://x.com/eastlancstt' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
               <PiXLogoFill size={30} />
             </Link>

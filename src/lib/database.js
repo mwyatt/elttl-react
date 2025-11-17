@@ -2,12 +2,16 @@ import mysql from 'mysql2/promise'
 
 const isTest = process.env.NODE_ENV === 'test'
 
-const pool = mysql.createPool({
+const connectionConfig = {
   host: process.env.MYSQL_HOSTNAME,
   user: process.env.MYSQL_ROOT_USER,
   password: process.env.MYSQL_ROOT_PASSWORD,
   database: isTest ? process.env.MYSQL_TEST_DATABASE : process.env.MYSQL_DATABASE
-})
+}
+
+const pool = mysql.createPool(connectionConfig)
+
+console.log('Connecting to database:', connectionConfig)
 
 const setupConnectionConfig = (connection) => {
   // Configure the connection to allow :named placeholders.

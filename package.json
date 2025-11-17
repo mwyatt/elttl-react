@@ -11,7 +11,8 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "jest --detectOpenHandles",
-    "test:watch": "jest --watch --detectOpenHandles"
+    "test:watch": "jest --watch --detectOpenHandles",
+    "checks": "npm run standard:fix && npm run lint:fix && npm run test"
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.10",
