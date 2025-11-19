@@ -34,6 +34,11 @@ const hyndburnPracticeEvening = {
   name: 'Practice 7:00 PM - 10:00 PM',
   cost: '£5'
 }
+const stpetersPracticeEvening = {
+  name: 'Practice 7:00 PM - 10:00 PM',
+  cost: '£5',
+  contactId: 25
+}
 
 export const sessions = {
   1: {
@@ -46,7 +51,6 @@ export const sessions = {
     ]
   },
   2: {
-    [sessionVenueIds.sionchurch]: [batAndChatMorning],
     [sessionVenueIds.hyndburn]: [hyndburnPracticeEvening]
   },
   3: {
@@ -61,7 +65,7 @@ export const sessions = {
   },
   4: {
     [sessionVenueIds.hyndburn]: [batAndChatMorning, hyndburnPracticeEvening],
-    [sessionVenueIds.stpeters]: [hyndburnPracticeEvening]
+    [sessionVenueIds.stpeters]: [stpetersPracticeEvening]
   },
   5: {
     [sessionVenueIds.hyndburn]: [
