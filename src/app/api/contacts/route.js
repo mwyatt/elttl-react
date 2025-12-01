@@ -10,17 +10,17 @@ export async function GET () {
 
   const players = await playerGetBySlugs(connection, currentYear.id, [
     'david-heys',
-'mick-moir',
-'bryan-edwards',
-'darren-wright',
-'neil-hepworth',
-'colin-hooper',
+    'mick-moir',
+    'bryan-edwards',
+    'darren-wright',
+    'neil-hepworth',
+    'colin-hooper',
     'trevor-elkington'
 
   ])
 
   return NextResponse.json({
     players,
-    currentYearName: currentYear.name,
+    currentYearName: currentYear.name
   }, { status: StatusCodes.OK })
 }

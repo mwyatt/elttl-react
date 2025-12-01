@@ -4,7 +4,7 @@ import Link from 'next/link'
 import ElttlEmblem from '@/components/icons/ElttlEmblem'
 import MenuPrimary from '@/components/MenuPrimary'
 import { useState } from 'react'
-import { BiBook, BiCode, BiMap, BiNews, BiTrophy } from 'react-icons/bi'
+import { BiBook, BiCode, BiMap, BiNews, BiQuestionMark, BiTrophy } from 'react-icons/bi'
 
 export default function Header ({ appName, menuPrimary }) {
   const [primaryOpenStatuses, setPrimaryOpenStatuses] = useState(
@@ -13,6 +13,8 @@ export default function Header ({ appName, menuPrimary }) {
 
   const getIcon = (name) => {
     switch (name) {
+      case 'About Us':
+        return <BiQuestionMark className='mt-1 mr-2' size={20} />
       case 'Download Handbook':
         return <BiBook className='mt-1 mr-2' size={20} />
       case 'Fixtures':
