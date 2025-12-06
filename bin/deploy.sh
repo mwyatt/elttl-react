@@ -1,4 +1,13 @@
-echo "⚠️  Are you sure you want to proceed deployment to the LIVE server? (y/n)"
+#!/bin/bash
+
+SERVER_IP="$1"
+
+if [[ -z "$SERVER_IP" ]]; then
+  echo "❌ Please provide the server IP address as the first argument."
+  exit 1
+fi
+
+echo "⚠️  Are you sure you want to proceed deployment to the LIVE server ($SERVER_IP)? (y/n)"
 read -r confirm
 
 if [[ "$confirm" != "y" ]]; then
@@ -8,8 +17,8 @@ fi
 
 echo "🚀 Proceeding with deployment..."
 
-ssh root@144.126.233.12 'pm2 stop standalone'
-rsync -a --delete /home/martin/Sites/elttl-react/.next/standalone/ root@144.126.233.12:/var/www/elttl-standalone/
-rsync -a --delete /home/martin/Sites/elttl-react/.next/static root@144.126.233.12:/var/www/elttl-standalone/.next/
-rsync -a --delete /home/martin/Sites/elttl-react/public root@144.126.233.12:/var/www/elttl-standalone/
-ssh root@144.126.233.12 'pm2 start standalone'
+ssh root@"$SERVER_IP" 'pm2 stop standalone'
+rsync -a --delete /home/martin/Sites/elttl-react/.next/standalone/ root@"$SERVER_IP":/var/www/elttl-standalone/
+rsync -a --delete /home/martin/Sites/elttl-react/.next/static root@"$SERVER_IP":/var/www/elttl-standalone/.next/
+rsync -a --delete /home/martin/Sites/elttl-react/public root@"$SERVER_IP":/var/www/elttl-standalone/
+ssh root@"$SERVER_IP" 'pm2 start standalone'

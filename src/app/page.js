@@ -76,7 +76,7 @@ export default async function Page () {
 
       <SeasonTotals totals={seasonTotals} yearName={currentYear} />
 
-      {latestFixtures.length < 1 && (
+      {latestFixtures.length > 0 && (
         <div>
           <h2 className='text-2xl p-4'>Latest Fulfilled Fixtures</h2>
           <div className='flex flex-wrap gap-3 mb-6 p-4'>

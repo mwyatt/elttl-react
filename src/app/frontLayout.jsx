@@ -30,7 +30,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
   const isCookieBannerDismissed = cookieStore.get(CookieBannerConsentChoiceKey)?.value.length > 0
 
   return (
-    <div className=''>
+    <div data-version={process.env.NEXT_CURRENT_VERSION}>
       <Header appName={appName} menuPrimary={menuPrimary} />
 
       <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''} bg-white/80`}>
@@ -87,7 +87,7 @@ export default async function FrontLayout ({ children, paddedContent = true, max
               ))}
             </nav>
           </div>
-          <div className='basis-1/4 mt-4' data-version='1.0.0'>
+          <div className='basis-1/4 mt-4'>
             <Link href='https://x.com/eastlancstt' target='_blank' className='p-2 bg-stone-100 rounded-full m-2 inline-block' rel='noreferrer'>
               <PiXLogoFill size={30} />
             </Link>
