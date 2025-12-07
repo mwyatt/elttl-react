@@ -13,7 +13,7 @@ export default function Login () {
             <ElttlEmblem />
           </Link>
         </div>
-        <div className={'text-xs text-stone-400 text-center mb-4'}>Version {process.env.NEXT_CURRENT_VERSION}</div>
+        <div className='text-xs text-stone-400 text-center mb-4'>Version {process.env.NEXT_CURRENT_VERSION}</div>
         <LoginForm />
       </div>
     </div>
