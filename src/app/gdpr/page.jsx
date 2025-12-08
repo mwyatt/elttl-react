@@ -101,7 +101,7 @@ export default async function Page () {
               <li>
                 <p className='my-4'>We will always comply with the General Data Protection Regulation (GDPR)
                   when dealing with your personal data. Further details on the GDPR can be
-                  found at the website for the Information Commissioner (<QuickLink href='www.ico.gov.uk' external />).
+                  found at the website for the Information Commissioner (<QuickLink href='https://ico.org.uk/concerns/' name='www.ico.gov.uk' external />).
                   For the purposes of the GDPR, we will be the “controller” of all personal
                   data we hold about you.
                 </p>
