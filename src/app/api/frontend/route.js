@@ -48,7 +48,7 @@ export async function GET () {
 
     // @todo get assets - sftp could be easiest method to store initially
     // would be ideal to allow updating of these for logged in users
-    gdpr: { name: 'GDPR', url: '/GDPR-2018-2019.pdf', target: '_blank' },
+    gdpr: { name: 'GDPR', url: '/gdpr' },
     diciplineProcedure: { name: 'Code of Conduct', url: '/code-of-conduct' },
     safeguardingPolicy: { name: 'Safeguarding Policy', url: '/safeguarding-guidance-2020.pdf', target: '_blank' }
   }
@@ -67,6 +67,7 @@ export async function GET () {
     //   commonLinks.safeguardingPolicy
     // ],
     footLinks: [
+      { area: 1, name: 'About Us', url: '/about-us' },
       { area: 1, name: 'Coaching & Sessions', url: '/sessions' },
       { area: 1, ...commonLinks.prePractice },
       { area: 1, ...commonLinks.competitions },
@@ -84,6 +85,7 @@ export async function GET () {
         name: 'The League',
         url: '/',
         children: [
+          { name: 'About Us', url: '/about-us' },
           { name: 'Download Handbook', url: '/handbook-2025-2026.pdf', target: '_blank' },
           { name: 'Press Releases', url: '/press' },
           commonLinks.competitions,
