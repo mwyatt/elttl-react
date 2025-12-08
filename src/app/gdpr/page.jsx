@@ -2,8 +2,6 @@ import FrontLayout from '@/app/frontLayout'
 import MainHeading from '@/components/MainHeading'
 import { getMetaTitle } from '@/constants/MetaData'
 import SubHeading from '@/components/SubHeading'
-import { linkStyles } from '@/lib/styles'
-import Link from 'next/link'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import { QuickLink } from '@/app/about-us/page'
 
@@ -59,7 +57,8 @@ export default async function Page () {
             <p className='my-4'>Data must be kept safe and secure and must be kept accurate and up to date. </p>
           </li>
           <li>
-            <p className='my-4'>An individual can request a copy of all of the personal information held about them (this
+            <p className='my-4'>An individual can request a copy of all of the personal information held about them
+              (this
               is called a Subject Access Request) and must be allowed to have all of their data deleted
               or returned to them, if they so wish, within a month.
             </p>
@@ -102,7 +101,8 @@ export default async function Page () {
               <li>
                 <p className='my-4'>We will always comply with the General Data Protection Regulation (GDPR)
                   when dealing with your personal data. Further details on the GDPR can be
-                  found at the website for the Information Commissioner (<QuickLink href='www.ico.gov.uk' external />). For the purposes of the GDPR, we will be the “controller” of all personal
+                  found at the website for the Information Commissioner (<QuickLink href='www.ico.gov.uk' external />).
+                  For the purposes of the GDPR, we will be the “controller” of all personal
                   data we hold about you.
                 </p>
               </li>
@@ -115,7 +115,8 @@ export default async function Page () {
             </p>
             <ol className='list-decimal pl-12'>
               <li>
-                <p className='my-4'>We are the East Lancashire Table Tennis League. We can be contacted via our Hon. Secretary (see {handbookLink})
+                <p className='my-4'>We are the East Lancashire Table Tennis League. We can be contacted via our Hon.
+                  Secretary (see {handbookLink})
                 </p>
               </li>
             </ol>
@@ -276,40 +277,45 @@ export default async function Page () {
               <li>
                 <p className='my-4'>We will not transfer your personal data outside the EU without your consent. </p>
               </li>
-              <li><p className='my-4'>We will not transfer your personal data outside the EU without your consent. </p></li>
-              <li><p className='my-4'>Please note however that where you are transmitting information to us over
-                the internet this can never be guaranteed to be 100% secure.
-                  </p>
+              <li><p className='my-4'>We will not transfer your personal data outside the EU without your consent. </p>
               </li>
-              <li><p className='my-4'>We will notify you promptly in the event of any breach of your personal data
-                which might expose you to serious risk.
-                  </p>
+              <li>
+                <p className='my-4'>Please note however that where you are transmitting information to us over
+                  the internet this can never be guaranteed to be 100% secure.
+                </p>
+              </li>
+              <li>
+                <p className='my-4'>We will notify you promptly in the event of any breach of your personal data
+                  which might expose you to serious risk.
+                </p>
               </li>
             </ol>
 
           </li>
 
           <li>
-            <p className='my-4 font-bold'>Who else has access to the information you provide us?
-            </p>
+            <p className='my-4 font-bold'>Who else has access to the information you provide us?</p>
             <ol className='list-decimal pl-12'>
-              <li><p className='my-4'>We will never sell your personal data. We will not share your personal data
-                with any third parties without your prior consent (which you are free to
-                withhold) except where required to do so by law or as set out in the table
-                above or paragraph 5.2 below.
-                  </p>
+              <li>
+                <p className='my-4'>We will never sell your personal data. We will not share your personal data
+                  with any third parties without your prior consent (which you are free to
+                  withhold) except where required to do so by law or as set out in the table
+                  above or paragraph 5.2 below.
+                </p>
               </li>
-              <li><p className='my-4'>We may pass your personal data to third parties who are service providers,
-                agents and subcontractors to us for the purposes of completing tasks and
-                providing services to you on our behalf (e.g. to print newsletters and send
-                you mailings).
-                  </p>
+              <li>
+                <p className='my-4'>We may pass your personal data to third parties who are service providers,
+                  agents and subcontractors to us for the purposes of completing tasks and
+                  providing services to you on our behalf (e.g. to print newsletters and send
+                  you mailings).
+                </p>
               </li>
-              <li><p className='my-4'>However, we disclose only the personal data that is necessary for the third
-                party to deliver the service and we have a contract in place that requires
-                them to keep your information secure and not to use it for their own
-                purposes.
-                  </p>
+              <li>
+                <p className='my-4'>However, we disclose only the personal data that is necessary for the third
+                  party to deliver the service and we have a contract in place that requires
+                  them to keep your information secure and not to use it for their own
+                  purposes.
+                </p>
               </li>
             </ol>
 
@@ -318,19 +324,21 @@ export default async function Page () {
             <p className='my-4 font-bold'>How long do we keep your information?
             </p>
             <ol className='list-decimal pl-12'>
-              <li><p className='my-4'>We will hold your personal data on our systems for as long as you are a
-                member of the League and for as long afterwards as it is in the League’s
-                legitimate interest to do so or for as long as is necessary to comply with our
-                legal obligations. We will review your personal data every year to establish
-                whether we are still entitled to process it. If we decide that we are not
-                entitled to do so, we will stop processing your personal data except that we
-                will retain your personal data in an archived form in order to be able to
-                comply with future legal obligations.
-                  </p>
+              <li>
+                <p className='my-4'>We will hold your personal data on our systems for as long as you are a
+                  member of the League and for as long afterwards as it is in the League’s
+                  legitimate interest to do so or for as long as is necessary to comply with our
+                  legal obligations. We will review your personal data every year to establish
+                  whether we are still entitled to process it. If we decide that we are not
+                  entitled to do so, we will stop processing your personal data except that we
+                  will retain your personal data in an archived form in order to be able to
+                  comply with future legal obligations.
+                </p>
               </li>
-              <li><p className='my-4'> We securely destroy all financial information once we have used it and no
-                longer need it.
-                  </p>
+              <li>
+                <p className='my-4'> We securely destroy all financial information once we have used it and no
+                  longer need it.
+                </p>
               </li>
             </ol>
 
@@ -358,7 +366,7 @@ export default async function Page () {
 
                   <QuickLink href='https://ico.org.uk/concerns/' external /><br />
                   0303 123 1113.<br />
-                  Information Commissioner's Office<br />
+                  Information Commissioner&apos;s Office<br />
                   Wycliffe House<br />
                   Water Lane<br />
                   Wilmslow<br />
