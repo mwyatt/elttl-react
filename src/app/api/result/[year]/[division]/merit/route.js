@@ -4,6 +4,7 @@ import { getYearDivisionId } from '@/app/lib/year'
 import { getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 import { StatusCodes } from 'http-status-codes'
 import { uniq } from 'lodash'
+import { getEncounterMerit } from '@/lib/encounter'
 
 export async function GET (request, { params }) {
   const { year, division } = await params
@@ -49,51 +50,8 @@ export async function GET (request, { params }) {
     yearId: yearDivisionId.yearId
   })
 
-  const sides = getSidesCapitalized()
-  let stats = {}
-  const playerIds = []
-
-  for (const encounter of encounters) {
-    for (const side of sides) {
-      const playerSlug = encounter[`player${side}Slug`]
-      const playerId = encounter[`player${side}Id`]
-      playerIds.push(playerId)
-      if (!(playerSlug in stats)) {
-        stats[playerSlug] = {
-          player: {
-            id: playerId,
-            name: encounter[`player${side}Name`],
-            slug: playerSlug,
-            rank: encounter[`player${side}Rank`]
-          },
-          team: {
-            name: encounter[`team${side}Name`],
-            slug: encounter[`team${side}Slug`]
-          },
-          won: 0,
-          played: 0,
-          encounter: 0,
-          average: 0
-        }
-      }
-
-      const score = parseInt(encounter[`score${side}`])
-      const opposingScore = parseInt(encounter[`score${getOtherSideCapitalized(side)}`])
-      stats[playerSlug].won += score
-      stats[playerSlug].played += (score + opposingScore)
-      stats[playerSlug].encounter++
-    }
-  }
-
-  // calculate average
-  for (const playerSlug in stats) {
-    stats[playerSlug].average = stats[playerSlug].won / stats[playerSlug].played
-  }
-
-  // sort by average
-  stats = Object.values(stats).sort((a, b) => {
-    return b.average - a.average
-  })
+  let stats = getEncounterMerit(encounters)
+  const playerIds = stats.map(s => s.player.id)
 
   const uniquePlayerIds = uniq(playerIds)
   const playerIdsQuery = uniquePlayerIds.join(',')
