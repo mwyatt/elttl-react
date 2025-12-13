@@ -18,7 +18,7 @@ fi
 echo "🚀 Proceeding with deployment..."
 
 ssh root@"$SERVER_IP" 'pm2 stop standalone'
-rsync -a --delete /home/martin/Sites/elttl-react/.next/standalone/ root@"$SERVER_IP":/var/www/elttl-standalone/
-rsync -a --delete /home/martin/Sites/elttl-react/.next/static root@"$SERVER_IP":/var/www/elttl-standalone/.next/
-rsync -a --delete /home/martin/Sites/elttl-react/public root@"$SERVER_IP":/var/www/elttl-standalone/
+rsync -a --delete /home/martin/Sites/elttl-react/.next/standalone/ root@"$SERVER_IP":/home/nextjs/elttl-standalone/
+rsync -a --delete /home/martin/Sites/elttl-react/.next/static root@"$SERVER_IP":/home/nextjs/elttl-standalone/.next/
+rsync -a --delete /home/martin/Sites/elttl-react/public root@"$SERVER_IP":/home/nextjs/elttl-standalone/
 ssh root@"$SERVER_IP" 'pm2 start standalone'
