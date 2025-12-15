@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const dynamic = 'force-dynamic'
@@ -13,9 +13,9 @@ export default async function Page () {
       <p>Here are all the seasons past and present.</p>
       <div className='flex gap-4 mt-8 flex-wrap text-center'>
         {data.map((season) => (
-          <Link href={`/result/${season.name}`} key={season.name} className='px-6 py-3 border border-primary-500 rounded font-bold flex-grow flex-basis-24'>
+          <GeneralLink href={`/result/${season.name}`} key={season.name} className='px-6 py-3 border border-primary-500 rounded font-bold flex-grow flex-basis-24'>
             {season.name}
-          </Link>
+          </GeneralLink>
         ))}
       </div>
     </FrontLayout>

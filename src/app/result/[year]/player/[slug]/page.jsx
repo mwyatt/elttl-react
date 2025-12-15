@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import FixtureCard from '@/components/FixtureCard'
 import { apiUrl } from '@/constants/url'
 import SubHeading from '@/components/SubHeading'
@@ -35,9 +35,9 @@ export default async function Page ({ params }) {
       return <span className='text-tertiary-500'>{playerName}</span>
     }
     return (
-      <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
+      <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
         {playerName}
-      </Link>
+      </GeneralLink>
     )
   }
 
@@ -58,7 +58,7 @@ export default async function Page ({ params }) {
         <div className='flex-1'>
 
           <SubHeading name='General Information' />
-          <p>Plays for the <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</Link> team with a rank of <span className='font-bold'>{player.rank}</span> and has had <span className='font-bold'>{encounters.length}</span> encounters with other players so far this season.</p>
+          <p>Plays for the <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</GeneralLink> team with a rank of <span className='font-bold'>{player.rank}</span> and has had <span className='font-bold'>{encounters.length}</span> encounters with other players so far this season.</p>
 
           <SubHeading name='Contact Information' />
           {player.phoneLandline && (

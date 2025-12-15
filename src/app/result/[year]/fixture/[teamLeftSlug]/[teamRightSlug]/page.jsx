@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import RankChange from '@/components/player/RankChange'
 import { apiUrl } from '@/constants/url'
 import encounterStatus from '@/constants/EncounterStatus'
@@ -63,12 +63,12 @@ export default async function Page ({ params }) {
       return <span className='text-gray-500 line-through'>Absent<span className='hidden sm:inline'> Player</span></span>
     }
     return (
-      <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
+      <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
 
         <span className='sm:hidden'>{getShortPlayerName(playerName)}</span>
         <span className='hidden sm:inline'>{playerName}</span>
 
-      </Link>
+      </GeneralLink>
     )
   }
 
@@ -86,7 +86,7 @@ export default async function Page ({ params }) {
 
       <div className='max-w-[768px] mx-auto'>
         <MainHeading name={`${teamLeft.name} vs ${teamRight.name}`} />
-        <p className='mb-8'>Home team venue <Link className={linkStyles.join(' ')} href={`/result/${year}/venue/${venue.slug}`}>{venue.name}</Link></p>
+        <p className='mb-8'>Home team venue <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/venue/${venue.slug}`}>{venue.name}</GeneralLink></p>
         <div>
           {!fixtureFulfilled && (
             <p>Fixture has not yet been fulfilled, please check back later.</p>

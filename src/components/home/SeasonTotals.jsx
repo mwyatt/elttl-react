@@ -1,15 +1,15 @@
 'use client'
 
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { allHomeButtonStyles } from '@/lib/styles'
 
 const Panel = ({ name, total, url }) => (
-  <Link
+  <GeneralLink
     href={url} className='flex-wrap flex p-6 grow text-xl flex-col items-center gap-2 rounded bg-primary-500 text-white'
   >
     <span className='text-5xl font-semibold'>{total}</span>
     {name}
-  </Link>
+  </GeneralLink>
 )
 
 export default function SeasonTotals ({ yearName, totals }) {
@@ -18,7 +18,7 @@ export default function SeasonTotals ({ yearName, totals }) {
       <div className='flex p-4 items-center'>
 
         <h2 className='text-2xl grow'>Season {yearName}-{parseInt(yearName) + 1}</h2>
-        <Link className={allHomeButtonStyles} href={`/result/${yearName}`}>Season Overview</Link>
+        <GeneralLink className={allHomeButtonStyles} href={`/result/${yearName}`}>Season Overview</GeneralLink>
       </div>
       <div className='flex flex-wrap gap-3 mb-6 p-4'>
         <Panel name='Divisions' url={`/result/${yearName}`} total={totals.divisions} />

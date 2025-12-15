@@ -3,7 +3,7 @@ import Address from '@/components/Address'
 import DirectionsButton from '@/components/DirectionsButton'
 import MainHeading from '@/components/MainHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { linkStyles } from '@/lib/styles'
 import SubHeading from '@/components/SubHeading'
 import { DeveloperEmail } from '@/constants/MetaData'
@@ -46,7 +46,7 @@ export default async function Page () {
           </div>
 
           <SubHeading name='Website Maintainer' />
-          <p>Always open to ideas and criticism of the website so please provide any feedback to <Link className={linkStyles.join(' ')} href={`mailto:${DeveloperEmail}`}>{DeveloperEmail}</Link>.</p>
+          <p>Always open to ideas and criticism of the website so please provide any feedback to <GeneralLink className={linkStyles.join(' ')} href={`mailto:${DeveloperEmail}`}>{DeveloperEmail}</GeneralLink>.</p>
         </div>
       </div>
 

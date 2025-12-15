@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { apiUrl } from '@/constants/url'
 import MainHeading from '@/components/MainHeading'
 import SubHeading from '@/components/SubHeading'
@@ -49,14 +49,14 @@ export default async function Page ({ params }) {
           <div className='flex flex-wrap gap-3'>
 
             {teams.map((team) => (
-              <Link
+              <GeneralLink
                 href={`/result/${year}/team/${team.slug}`}
                 className='p-4 border border-primary-500 text-primary-500 min-w-48 max-w-64 rounded grow basis-0'
                 key={team.slug}
               >
                 <span className='float-right text-gray-500 text-sm'>{team.divisionName}</span>
                 <div>{team.name}</div>
-              </Link>
+              </GeneralLink>
             ))}
           </div>
 
