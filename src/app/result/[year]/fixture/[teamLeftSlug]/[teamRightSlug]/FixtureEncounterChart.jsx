@@ -19,20 +19,23 @@ export default function FixtureEncounterChart ({ year, encounters, teamLeftName,
   )
   const chartData = []
   const encountersByLabel = {}
+  const awayPlayerSlugs = []
   let currentPointsLeft = 0
   let currentPointsRight = 0
 
   scorecardStructure.forEach((scorecardRow, index) => {
     const encounter = encounters[index]
+    const encounterLabel = `${scorecardRow[0]} v ${scorecardRow[1]}`
 
     chartData.push({
-      name: `${encounter.playerLeftName} vs ${encounter.playerRightName}`,
-      scorecardNumbers: `${scorecardRow[0]}/${scorecardRow[1]}`,
+      name: `${encounter.playerLeftName} v ${encounter.playerRightName}`,
+      scorecardNumbers: encounterLabel,
       leftPoints: currentPointsLeft += encounter.scoreLeft,
       rightPoints: currentPointsRight += encounter.scoreRight
     })
 
-    encountersByLabel[`${scorecardRow[0]}/${scorecardRow[1]}`] = encounter
+    encountersByLabel[encounterLabel] = encounter
+    awayPlayerSlugs.push(encounter.playerRightSlug)
   })
 
   const CustomTooltip = ({ active, payload, label }) => {
@@ -58,13 +61,13 @@ export default function FixtureEncounterChart ({ year, encounters, teamLeftName,
   return (
     <>
       {/* Demo tip card */}
-      <TipCard
-        isVisible={false}
-        leftName='left name'
-        rightName='right name'
-        scoreLeft={3}
-        scoreRight={2}
-      />
+      {/* <TipCard */}
+      {/*  isVisible={false} */}
+      {/*  leftName='left name' */}
+      {/*  rightName='right name' */}
+      {/*  scoreLeft={3} */}
+      {/*  scoreRight={2} */}
+      {/* /> */}
 
       <LineChart
         style={{ width: '100%', aspectRatio: 1.618 }}
@@ -113,7 +116,13 @@ export default function FixtureEncounterChart ({ year, encounters, teamLeftName,
               })}
             >
               <td className='p-2 md:p-4'>
-                <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${stat.player.slug}`}>
+
+                <Link
+                  className={[
+                    linkStyles.join(' '),
+                    awayPlayerSlugs.includes(stat.player.slug) ? 'text-tertiary-500 border-b-tertiary-500' : ''
+                  ].join(' ')} href={`/result/${year}/player/${stat.player.slug}`}
+                >
                   <span className='sm:hidden'>{getShortPlayerName(stat.player.name)}</span>
                   <span className='hidden sm:inline'>{stat.player.name}</span>
                 </Link>
