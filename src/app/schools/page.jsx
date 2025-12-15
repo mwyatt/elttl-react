@@ -1,7 +1,7 @@
 import FrontLayout from '@/app/frontLayout'
 import MainHeading from '@/components/MainHeading'
 import { getMetaTitle } from '@/constants/MetaData'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { linkStyles } from '@/lib/styles'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import { QuickLink } from '@/app/about-us/page'
@@ -33,7 +33,7 @@ export default async function Page () {
         <p className='my-6'>A number of schools in the area actively encourage table tennis and have a table tennis club during or after school.</p>
         <p className='my-6'>If your school is interested in developing table tennis as an activity please contact {davidHeysLink}.</p>
         <p className='my-6'>We are happy to speak to table tennis enthusiasts from primary or secondary schools in either the mainstream or private sector.</p>
-        <p className='my-6'>Please take a look at our <Link href='/sessions' className={linkStyles.join(' ')}>Sessions</Link> page for information on the currently available practice and coaching in the local area.</p>
+        <p className='my-6'>Please take a look at our <GeneralLink href='/sessions' className={linkStyles.join(' ')}>Sessions</GeneralLink> page for information on the currently available practice and coaching in the local area.</p>
       </div>
     </FrontLayout>
   )

@@ -9,8 +9,8 @@ export default async function Page () {
         <h1 className='text-2xl mb-4'>Constitution and Rules</h1>
         {/* @todo key and links to different areas of the rules */}
         {/* <div> */}
-        {/*  <Link href={'#constitution'}>Constitution</Link> */}
-        {/*  <Link href={'#constitution'}>Constitution</Link> */}
+        {/*  <GeneralLink href={'#constitution'}>Constitution</GeneralLink> */}
+        {/*  <GeneralLink href={'#constitution'}>Constitution</GeneralLink> */}
         {/* </div> */}
         <div className='text-sm'>
           <h2 id='constitution' className='text-xl mb-2 font-semibold text-center underline'>CONSTITUTION</h2>

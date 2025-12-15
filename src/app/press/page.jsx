@@ -1,6 +1,6 @@
 import FrontLayout from '@/app/frontLayout'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import DatePretty from '@/components/DatePretty'
 import MainHeading from '@/components/MainHeading'
 import { BiCaretLeft, BiCaretRight } from 'react-icons/bi'
@@ -41,21 +41,21 @@ export default async function Page ({ searchParams }) {
         />
         <MainHeading name='Press Releases' />
         <div className='flex justify-between my-6'>
-          <Link className='flex items-center border border-primary-500 text-primary-500 py-1 pr-3 pl-2 rounded' href={`/press?page=${prevPage}`}>
+          <GeneralLink className='flex items-center border border-primary-500 text-primary-500 py-1 pr-3 pl-2 rounded' href={`/press?page=${prevPage}`}>
             <BiCaretLeft size={21} className='mr-1' />
             Previous
-          </Link>
-          <Link className='flex items-center border border-primary-500 text-primary-500 py-1 pr-2 pl-3 rounded' href={`/press?page=${nextPage}`}>
+          </GeneralLink>
+          <GeneralLink className='flex items-center border border-primary-500 text-primary-500 py-1 pr-2 pl-3 rounded' href={`/press?page=${nextPage}`}>
             Next
             <BiCaretRight size={21} className='ml-2' />
-          </Link>
+          </GeneralLink>
         </div>
         {contents.map((content, index) => (
           <div className='p-4 border-b' key={index}>
             <p className='text-sm text-gray-500 mb-2'>
               <DatePretty time={content.timePublished} />
             </p>
-            <h2><Link className={linkStyles.join(' ')} href={`/press/${content.slug}`}>{content.title}</Link></h2>
+            <h2><GeneralLink className={linkStyles.join(' ')} href={`/press/${content.slug}`}>{content.title}</GeneralLink></h2>
             <h3 className='mt-2'>{content.author}</h3>
           </div>
         ))}

@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import MainHeading from '@/components/MainHeading'
 import SubHeading from '@/components/SubHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -48,10 +48,10 @@ export default async function Page ({ params }) {
         <div className='flex-1'>
 
           <SubHeading name='General Information' />
-          <p className='my-2'>Team in the <Link className={linkStyles.join(' ')} href={`/result/${year}/${team.divisionSlug}`}>{team.divisionName}</Link> division playing at the <Link className={linkStyles.join(' ')} href={`/result/${year}/venue/${team.venueSlug}`}>{team.venueName}</Link> venue on a <strong>{homeNightMap[team.homeWeekday]}</strong> night.</p>
+          <p className='my-2'>Team in the <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/${team.divisionSlug}`}>{team.divisionName}</GeneralLink> division playing at the <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/venue/${team.venueSlug}`}>{team.venueName}</GeneralLink> venue on a <strong>{homeNightMap[team.homeWeekday]}</strong> night.</p>
 
           {team.secretaryName && (
-            <p>Secretary is <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${team.secretarySlug}`}>{team.secretaryName}</Link></p>
+            <p>Secretary is <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/player/${team.secretarySlug}`}>{team.secretaryName}</GeneralLink></p>
           )}
           {!team.secretaryName && (
             <p>There is no team secretary currently.</p>
@@ -80,13 +80,13 @@ export default async function Page ({ params }) {
             {players.map((player, index) => (
               <div key={index} className='flex p-4 gap-4 border-t border-dashed hover:bg-gray-100'>
                 <div className='flex-2'>
-                  <Link
+                  <GeneralLink
                     href={`/result/${year}/player/${player.slug}`}
                     className={linkStyles.join(' ')}
                     key={player.slug}
                   >
                     {player.name}
-                  </Link>
+                  </GeneralLink>
                 </div>
                 <div className='flex-1 text-right'>
                   <span className='float-right text-tertiary-500'>{player.rank}</span>

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 
 export default function Breadcrumbs ({ items = [] }) {
   if (items.length === 1) {
@@ -6,7 +6,7 @@ export default function Breadcrumbs ({ items = [] }) {
   }
   const getLink = (item) => {
     if (item.href) {
-      return <Link className='text-primary-500' href={item.href}>{item.name}</Link>
+      return <GeneralLink className='text-primary-500' href={item.href}>{item.name}</GeneralLink>
     }
     return <span className='text-stone-400 cursor-auto'>{item.name}</span>
   }

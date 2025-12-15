@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import React from 'react'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -61,13 +61,13 @@ export default async function Page ({ params }) {
           {stats.map((stat, index) => (
             <tr key={index} className='border-t border-dashed hover:bg-gray-100'>
               <td className='p-2 md:p-4'>
-                <Link className={linkStyles.join(' ')} href={`/result/${year}/player/${stat.player.slug}`}>
+                <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/player/${stat.player.slug}`}>
                   <span className='sm:hidden'>{getShortPlayerName(stat.player.name)}</span>
                   <span className='hidden sm:inline'>{stat.player.name}</span>
-                </Link>
+                </GeneralLink>
               </td>
               <td className='p-2 hidden sm:block md:p-4'>
-                <Link className={`${linkStyles.join(' ')} text-tertiary-500 border-b-tertiary-500`} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
+                <GeneralLink className={`${linkStyles.join(' ')} text-tertiary-500 border-b-tertiary-500`} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</GeneralLink>
               </td>
               <td className='p-2 md:p-4 text-center'>{stat.player.rank}</td>
               <td className='p-2 md:p-4 text-center'>{stat.won}</td>

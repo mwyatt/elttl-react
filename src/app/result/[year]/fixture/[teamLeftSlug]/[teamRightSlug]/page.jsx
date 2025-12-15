@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import RankChange from '@/components/player/RankChange'
 import { apiUrl } from '@/constants/url'
 import { linkStyles } from '@/lib/styles'
@@ -66,7 +66,7 @@ export default async function Page ({ params }) {
       return <span className='text-gray-500 line-through'>Absent<span className='hidden sm:inline'> Player</span></span>
     }
     return (
-      <Link
+      <GeneralLink
         className={[
           linkStyles.join(' '),
           isAwayPlayer ? 'text-tertiary-500 border-b-tertiary-500' : ''
@@ -74,7 +74,7 @@ export default async function Page ({ params }) {
       >
         <span className='sm:hidden'>{getShortPlayerName(playerName)}</span>
         <span className='hidden sm:inline'>{playerName}</span>
-      </Link>
+      </GeneralLink>
     )
   }
 
@@ -95,11 +95,11 @@ export default async function Page ({ params }) {
         <p className='mb-8'>
           Home team venue
           {' '}
-          <Link
+          <GeneralLink
             className={linkStyles.join(' ')}
             href={`/result/${year}/venue/${venue.slug}`}
           >{venue.name}
-          </Link>
+          </GeneralLink>
         </p>
         {!fixtureFulfilled && (
           <p>Fixture has not yet been fulfilled, please check back later.</p>
