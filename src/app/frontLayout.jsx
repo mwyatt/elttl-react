@@ -37,10 +37,10 @@ export default async function FrontLayout ({ children, paddedContent = true, max
         {children}
       </div>
 
-      <div>
-        <div className='max-w-[1440px] mx-auto flex flex-col md:flex-row'>
+      <div className='ml-4 mr-4 mb-8'>
+        <div className='max-w-[1440px] mx-auto flex flex-col md:flex-row gap-4 lg:pl-4 lg:pr-4'>
           {advertisementsSecondary.map((advertisement, index) => (
-            <div key={index} className='p-6 bg-[#8d9584] md:border-r text-white bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3 border-b border-stone-500 md:border-b-0'>
+            <div key={index} className='p-4 bg-stone-300 text-secondary-700 bg-[url(/table-lip.png)] bg-right-bottom bg-no-repeat flex-basis-1/3 md:basis-1/3 rounded'>
               <h2 className='mb-4 text-2xl font-bold'>{advertisement.title}</h2>
               <p className='my-3 text-lg'>{advertisement.description}</p>
               <div className='mt-6 flex justify-end'>
