@@ -12,7 +12,7 @@ import { getShortPlayerName } from '@/lib/player'
 import EncounterStatus from '@/constants/EncounterStatus'
 import classNames from 'classnames'
 
-export default function ({ year, encounters, teamLeftName, teamRightName }) {
+export default function FixtureEncounterChart ({ year, encounters, teamLeftName, teamRightName }) {
   const tailwindFull = resolveConfig(tailwindConfig)
   const stats = getEncounterMerit(
     encounters.filter(encounter => encounter.status !== EncounterStatus.DOUBLES)
@@ -34,24 +34,6 @@ export default function ({ year, encounters, teamLeftName, teamRightName }) {
 
     encountersByLabel[`${scorecardRow[0]}/${scorecardRow[1]}`] = encounter
   })
-
-  const TipCard = ({ isVisible, leftName, rightName, scoreLeft, scoreRight }) => {
-    return (
-      <div
-        className='p-2 rounded bg-stone-100 border border-stone-300 shadow flex gap-2'
-        style={{ visibility: isVisible ? 'visible' : 'hidden' }}
-      >
-        <p className='flex flex-col gap-1'>
-          <span className='text-primary-500'>{leftName}</span>
-          <span className='text-secondary-500'>{rightName}</span>
-        </p>
-        <p className='flex flex-col gap-1'>
-          <span className='text-primary-500'>{scoreLeft}</span>
-          <span className='text-secondary-500'>{scoreRight}</span>
-        </p>
-      </div>
-    )
-  }
 
   const CustomTooltip = ({ active, payload, label }) => {
     const isVisible = active && payload && payload.length
@@ -136,10 +118,9 @@ export default function ({ year, encounters, teamLeftName, teamRightName }) {
                   <span className='hidden sm:inline'>{stat.player.name}</span>
                 </Link>
               </td>
-              <td className='p-2 md:p-4 text-center'>{stat.encountersWon} <span
-                className='text-stone-300'
-                                                                          >/
-                                                                          </span> {stat.encountersLost}
+              <td className='p-2 md:p-4 text-center'>
+                {stat.encountersWon}
+                <span className='text-stone-300'>/</span> {stat.encountersLost}
               </td>
               <td className='p-2 md:p-4 text-center'>{stat.won}</td>
               <td className='p-2 md:p-4 text-center'>{stat.lost}</td>
@@ -151,5 +132,23 @@ export default function ({ year, encounters, teamLeftName, teamRightName }) {
       </table>
 
     </>
+  )
+}
+
+const TipCard = ({ isVisible, leftName, rightName, scoreLeft, scoreRight }) => {
+  return (
+    <div
+      className='p-2 rounded bg-stone-100 border border-stone-300 shadow flex gap-2'
+      style={{ visibility: isVisible ? 'visible' : 'hidden' }}
+    >
+      <p className='flex flex-col gap-1'>
+        <span className='text-primary-500'>{leftName}</span>
+        <span className='text-secondary-500'>{rightName}</span>
+      </p>
+      <p className='flex flex-col gap-1'>
+        <span className='text-primary-500'>{scoreLeft}</span>
+        <span className='text-secondary-500'>{scoreRight}</span>
+      </p>
+    </div>
   )
 }

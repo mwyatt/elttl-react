@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getYearDivisionId } from '@/app/lib/year'
-import { getOtherSideCapitalized, getSidesCapitalized } from '@/constants/encounter'
 import { StatusCodes } from 'http-status-codes'
 import { uniq } from 'lodash'
 import { getEncounterMerit } from '@/lib/encounter'

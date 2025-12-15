@@ -88,11 +88,13 @@ export default async function Page ({ params }) {
 
       <div className='max-w-[768px] mx-auto'>
         <MainHeading name={`${teamLeft.name} vs ${teamRight.name}`} />
-        <p className='mb-8'>Home team venue <Link
-          className={linkStyles.join(' ')}
-          href={`/result/${year}/venue/${venue.slug}`}
-                                            >{venue.name}
-        </Link>
+        <p className='mb-8'>
+          Home team venue
+          <Link
+            className={linkStyles.join(' ')}
+            href={`/result/${year}/venue/${venue.slug}`}
+          >{venue.name}
+          </Link>
         </p>
         <div>
           {!fixtureFulfilled && (
