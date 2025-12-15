@@ -2,6 +2,8 @@ import FrontLayout from '@/app/frontLayout'
 import MainHeading from '@/components/MainHeading'
 import { getMetaTitle } from '@/constants/MetaData'
 import SubHeading from '@/components/SubHeading'
+import { fetchJson } from '@/app/lib/fetchWrapper'
+import { QuickLink } from '@/app/about-us/page'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,6 +13,24 @@ export const metadata = {
 }
 
 export default async function Page () {
+  const {
+    players,
+    currentYearName
+  } = await fetchJson('/contacts')
+
+  const getPlayerBySlug = (slug) => {
+    return players.find((player) => player.slug === slug)
+  }
+
+  const ianPickles = getPlayerBySlug('ian-pickles')
+  const ianPicklesLink = <QuickLink href={`/result/${currentYearName}/player/${ianPickles.slug}`} name={ianPickles.name} />
+  const adamHek = getPlayerBySlug('adam-hek')
+  const adamHekLink = <QuickLink href={`/result/${currentYearName}/player/${adamHek.slug}`} name={adamHek.name} />
+  const fredWade = getPlayerBySlug('fred-wade')
+  const fredWadeLink = <QuickLink href={`/result/${currentYearName}/player/${fredWade.slug}`} name={fredWade.name} />
+  const robinWillo = getPlayerBySlug('robin-willoughby')
+  const robinWilloLink = <QuickLink href={`/result/${currentYearName}/player/${robinWillo.slug}`} name={robinWillo.name} />
+
   return (
     <FrontLayout>
       <div className='max-w-[768px] mx-auto text-sm'>
@@ -92,7 +112,7 @@ export default async function Page () {
         <SubHeading name='COMPLAINTS and DISCIPLINARY PANEL' />
 
         <p className='my-4'>At the AGM of ELTTL, or otherwise at a meeting of the General Committee, a Complaints
-          and Disciplinary Panel (“the Panel”)will be appointed on an annual or ad-hoc basis
+          and Disciplinary Panel (“the Panel”) will be appointed on an annual or ad-hoc basis
           consisting of no less than three General Committee Members other than the Chairman
           (one of whom shall be appointed as the Panel Chairman) and one other non-executive
           ELTTL representative member.
@@ -255,33 +275,28 @@ export default async function Page () {
           </li>
           <li>
             <p className='my-4'>
-              a complaint which appears to fall outside the auspices of ELTTL and/or the
-              application of this Code
+              a complaint which appears to be without merit and intended to cause inconvenience, harassment or expense to ELTTL
             </p>
           </li>
           <li>
             <p className='my-4'>
-              a complaint which appears to fall outside the auspices of ELTTL and/or the
-              application of this Code
+              a complaint which appears to have no serious purpose or value and/or where investigating it would be out of proportion to the seriousness of the issues complained about
 
             </p>
           </li>
           <li>
             <p className='my-4'>
-              a complaint which appears to fall outside the auspices of ELTTL and/or the
-              application of this Code
+              an investigated complaint on which it is considered that no further action can usefully be taken and only new and substantive issues would merit a response.
             </p>
           </li>
         </ul>
-        <p className='my-4'>a complaint which appears to fall outside the auspices of ELTTL and/or the
-          application of this Code
+        <p className='my-4'>Any refusal decision of this kind will be made initially by the Chairman who will then call a meeting of the General Committee as soon as possible to confirm or overrule that decision.
         </p>
 
         <hr />
 
         <p className='my-4 '>Note: The following have been appointed initially to the Complaints and Disciplinary
-          Panel: Ian Pickles (Chairman), Henry Rawcliffe (Clerk), Fred Wade, and Robin Willoughby
-          (Non-Executive representative member) to serve until any other appointment is made
+          Panel: {ianPicklesLink} (Chairman), {adamHekLink}, {fredWadeLink}, and {robinWilloLink} to serve until any other appointment is made.
         </p>
 
       </div>

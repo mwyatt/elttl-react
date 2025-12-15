@@ -15,8 +15,12 @@ export async function GET () {
     'darren-wright',
     'neil-hepworth',
     'colin-hooper',
-    'trevor-elkington'
-
+    'trevor-elkington',
+    'ian-pickles',
+    'robin-willoughby',
+    'harry-rawcliffe',
+    'fred-wade',
+    'adam-hek'
   ])
 
   return NextResponse.json({

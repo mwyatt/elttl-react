@@ -32,11 +32,11 @@ export default async function Page () {
   return (
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
-        <div className='md:p-6 flex-1 flex flex-col gap-6'>
+        <div className='md:p-6 flex-1 flex flex-col'>
           {advertisementsPrimary.map((advertisement) => (
             <div
               key={advertisement.id}
-              className='p-6 flex-1 bg-tertiary-500 text-center md:text-left text-white md:rounded'
+              className='max-md:ml-4 max-md:mt-4 max-md:mr-4 p-6 flex-1 bg-tertiary-500 text-center md:text-left text-white rounded md:mb-4'
             >
               <h2 className='mb-4 text-5xl font-bold'>{advertisement.title}</h2>
               <p className='my-3 text-3xl'>{advertisement.description}</p>
