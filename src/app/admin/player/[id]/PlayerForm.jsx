@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import Feedback from '@/components/Feedback'
 import FullLoader from '@/components/FullLoader'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 
 export default function PlayerForm ({ cookie, player, teams }) {
   const [feedbackMessage, setFeedbackMessage] = useState('')
@@ -46,9 +46,9 @@ export default function PlayerForm ({ cookie, player, teams }) {
     <>
       <Feedback message={feedbackMessage} />
       <FullLoader isLoading={isLoading} />
-      <Link className='bg-stone-500 text-white px-2 py-1' href='/admin/player'>
+      <GeneralLink className='bg-stone-500 text-white px-2 py-1' href='/admin/player'>
         Back
-      </Link>
+      </GeneralLink>
       <h2 className='text-2xl p-4'>{player.name}</h2>
       <form className='flex flex-col gap-2 max-w-[500px]' ref={formRef} onSubmit={handleSubmit}>
         <div className='flex flex-col gap-2'>

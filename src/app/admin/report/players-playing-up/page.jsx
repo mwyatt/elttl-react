@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { linkStyles } from '@/lib/styles'
 import { adminApiFetch } from '@/constants/url'
 
@@ -25,13 +25,13 @@ export default async function Page () {
 
             <tr className='my-2' key={index}>
               <td className='p-2 border border-stone-300'>
-                <Link target='_blank' className={linkStyles.join(' ')} href={`/admin/fixture/${playingUp.fixtureId}`} rel='noreferrer'>{playingUp.fixtureId}</Link>
+                <GeneralLink target='_blank' className={linkStyles.join(' ')} href={`/admin/fixture/${playingUp.fixtureId}`} rel='noreferrer'>{playingUp.fixtureId}</GeneralLink>
               </td>
               <td className='p-2 border border-stone-300'>
-                <Link target='_blank' className={linkStyles.join(' ')} href={`/admin/player/${playingUp.player.id}`} rel='noreferrer'>{playingUp.player.name}</Link>
+                <GeneralLink target='_blank' className={linkStyles.join(' ')} href={`/admin/player/${playingUp.player.id}`} rel='noreferrer'>{playingUp.player.name}</GeneralLink>
               </td>
               <td className='p-2 border border-stone-300'>
-                <Link target='_blank' className={linkStyles.join(' ')} href={`/result/${yearName}/team/${playingUp.team.slug}`} rel='noreferrer'>{playingUp.team.name}</Link>
+                <GeneralLink target='_blank' className={linkStyles.join(' ')} href={`/result/${yearName}/team/${playingUp.team.slug}`} rel='noreferrer'>{playingUp.team.name}</GeneralLink>
               </td>
             </tr>
           ))}

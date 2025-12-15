@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import DatePretty from '@/components/DatePretty'
 
 export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled }) {
@@ -10,7 +10,7 @@ export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled 
   }
 
   return (
-    <Link
+    <GeneralLink
       href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}
       className={classes}
     >
@@ -29,6 +29,6 @@ export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled 
           <span className=''>{teamRight.score}</span>
         </div>
       </span>
-    </Link>
+    </GeneralLink>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { linkStyles } from '@/lib/styles'
 import { getShortPlayerName } from '@/lib/player'
 
@@ -32,17 +32,17 @@ export default function InformationTable ({ yearName, teams }) {
         {teams.map((team, index) => (
           <tr key={index} className='border-t border-dashed hover:bg-gray-100'>
             <td className='p-2 md:p-4'>
-              <Link className={linkStyles.join(' ')} href={`/result/${yearName}/team/${team.slug}`}>{team.name}</Link>
+              <GeneralLink className={linkStyles.join(' ')} href={`/result/${yearName}/team/${team.slug}`}>{team.name}</GeneralLink>
             </td>
             <td className='p-2 md:p-4 hidden sm:table-cell'>
-              <Link className={linkStyles.join(' ')} href={`/result/${yearName}/venue/${team.venueSlug}`}>{team.venueName}</Link>
+              <GeneralLink className={linkStyles.join(' ')} href={`/result/${yearName}/venue/${team.venueSlug}`}>{team.venueName}</GeneralLink>
             </td>
             <td className='p-2 md:p-4'>
               {team.secretarySlug && (
-                <Link className={linkStyles.join(' ')} href={`/result/${yearName}/player/${team.secretarySlug}`}>
+                <GeneralLink className={linkStyles.join(' ')} href={`/result/${yearName}/player/${team.secretarySlug}`}>
                   <span className='sm:hidden'>{getShortPlayerName(team.secretaryName)}</span>
                   <span className='hidden sm:inline'>{team.secretaryName}</span>
-                </Link>
+                </GeneralLink>
               )}
             </td>
             <td className='p-2 md:p-4'>

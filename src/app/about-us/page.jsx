@@ -3,7 +3,7 @@ import MainHeading from '@/components/MainHeading'
 import { getMetaTitle } from '@/constants/MetaData'
 import SubHeading from '@/components/SubHeading'
 import { linkStyles } from '@/lib/styles'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const dynamic = 'force-dynamic'
@@ -14,7 +14,7 @@ export const metadata = {
 }
 
 export const QuickLink = ({ href, name, external = false }) => {
-  return <Link className={linkStyles.join(' ')} href={href} target={external ? '_blank' : '_self'} rel='noreferrer'>{name === undefined ? href : name}</Link>
+  return <GeneralLink className={linkStyles.join(' ')} href={href} target={external ? '_blank' : '_self'} rel='noreferrer'>{name === undefined ? href : name}</GeneralLink>
 }
 
 export default async function Page () {
