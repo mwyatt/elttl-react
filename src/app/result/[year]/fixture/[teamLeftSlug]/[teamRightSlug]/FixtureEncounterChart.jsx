@@ -6,11 +6,11 @@ import { scorecardStructure } from '@/constants/encounter'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../../../../../../../tailwind.config.mjs'
 import { getEncounterMerit } from '@/lib/encounter'
-import Link from 'next/link'
 import { linkStyles } from '@/lib/styles'
 import { getShortPlayerName } from '@/lib/player'
 import EncounterStatus from '@/constants/EncounterStatus'
 import classNames from 'classnames'
+import GeneralLink from '@/components/GeneralLink'
 
 export default function FixtureEncounterChart ({ year, encounters, teamLeftName, teamRightName }) {
   const tailwindFull = resolveConfig(tailwindConfig)
@@ -99,7 +99,7 @@ export default function FixtureEncounterChart ({ year, encounters, teamLeftName,
         <thead>
           <tr>
             <th className='p-2 md:p-4' />
-            <th className='p-2 md:p-4'>R<span className='hidden sm:inline'>atio</span></th>
+            <th className='p-2 md:p-4 max-md:hidden'>R<span className='hidden sm:inline'>atio</span></th>
             <th className='p-2 md:p-4'>Games W<span className='hidden sm:inline'>on</span></th>
             <th className='p-2 md:p-4'>Games L<span className='hidden sm:inline'>ost</span></th>
             <th className='p-2 md:p-4'>Diff<span className='hidden sm:inline'>erence</span></th>
@@ -116,8 +116,7 @@ export default function FixtureEncounterChart ({ year, encounters, teamLeftName,
               })}
             >
               <td className='p-2 md:p-4'>
-
-                <Link
+                <GeneralLink
                   className={[
                     linkStyles.join(' '),
                     awayPlayerSlugs.includes(stat.player.slug) ? 'text-tertiary-500 border-b-tertiary-500' : ''
@@ -125,10 +124,11 @@ export default function FixtureEncounterChart ({ year, encounters, teamLeftName,
                 >
                   <span className='sm:hidden'>{getShortPlayerName(stat.player.name)}</span>
                   <span className='hidden sm:inline'>{stat.player.name}</span>
-                </Link>
+                </GeneralLink>
               </td>
-              <td className='p-2 md:p-4 text-center'>
+              <td className='p-2 md:p-4 text-center max-md:hidden'>
                 {stat.encountersWon}
+                {' '}
                 <span className='text-stone-300'>/</span> {stat.encountersLost}
               </td>
               <td className='p-2 md:p-4 text-center'>{stat.won}</td>
