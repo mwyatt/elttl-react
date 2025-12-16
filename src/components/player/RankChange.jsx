@@ -4,7 +4,7 @@ export default function RankChange ({ rankChange }) {
   }
 
   const classNames = [
-    'rounded-full p-1 inline-block w-10 h-7 text-center mx-2 text-sm'
+    'rounded-full p-1 inline-block w-10 h-7 text-center mx-2 text-sm max-md:hidden'
   ]
 
   const getRankChangeText = (change) => {
