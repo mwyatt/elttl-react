@@ -23,6 +23,8 @@ export async function GET () {
     'adam-hek'
   ])
 
+  connection.release()
+
   return NextResponse.json({
     players,
     currentYearName: currentYear.name
