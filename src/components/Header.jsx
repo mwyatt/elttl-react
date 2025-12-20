@@ -1,10 +1,10 @@
 'use client'
 
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import ElttlEmblem from '@/components/icons/ElttlEmblem'
 import MenuPrimary from '@/components/MenuPrimary'
 import { useState } from 'react'
-import { BiBook, BiCode, BiMap, BiNews, BiTrophy } from 'react-icons/bi'
+import { BiBook, BiCode, BiMap, BiNews, BiQuestionMark, BiTrophy } from 'react-icons/bi'
 
 export default function Header ({ appName, menuPrimary }) {
   const [primaryOpenStatuses, setPrimaryOpenStatuses] = useState(
@@ -13,6 +13,8 @@ export default function Header ({ appName, menuPrimary }) {
 
   const getIcon = (name) => {
     switch (name) {
+      case 'About Us':
+        return <BiQuestionMark className='mt-1 mr-2' size={20} />
       case 'Download Handbook':
         return <BiBook className='mt-1 mr-2' size={20} />
       case 'Fixtures':
@@ -31,7 +33,7 @@ export default function Header ({ appName, menuPrimary }) {
   return (
     <header className='border-b border-b-slate-300 bg-white drop-shadow-sm'>
       <div className='max-w-[1440px] sm:flex mx-auto border-l border-l-slate-200'>
-        <Link
+        <GeneralLink
           href='/'
           className='flex-1 flex flex-grow gap-2 sm:gap-4 p-4 items-center justify-center sm:justify-start border-b sm:border-none sm:max-w-[500px]'
           title={`${appName} - Home`}
@@ -42,7 +44,7 @@ export default function Header ({ appName, menuPrimary }) {
             <span className='hidden md:block text-4xl'>{appName}</span>
             <span className='md:hidden text-5xl font-bold'>ELTTL</span>
           </span>
-        </Link>
+        </GeneralLink>
         <MenuPrimary items={menuPrimary} primaryOpenStatuses={primaryOpenStatuses} setPrimaryOpenStatuses={setPrimaryOpenStatuses} />
       </div>
       <div>
@@ -59,20 +61,20 @@ export default function Header ({ appName, menuPrimary }) {
                 <div className='lg:flex lg:gap-4 lg:justify-center lg:items-center bg-stone-100'>
                   {primaryItem.children.map((secondaryItem) => (
                     <div key={secondaryItem.name} className=' lg:p-6 lg:text-lg'>
-                      <Link
+                      <GeneralLink
                         className='flex py-4 px-4 block text-lg text-primary-500 bg-white font-semibold rounded'
                         href={secondaryItem.url}
                         target={secondaryItem.target || '_self'}
                       >
                         {getIcon(secondaryItem.name)}
                         {secondaryItem.name}
-                      </Link>
+                      </GeneralLink>
 
                       {secondaryItem.children && (
                         <div className='sm:flex lg:block'>
                           {secondaryItem.children.map((tertiaryItem) => (
                             <div key={tertiaryItem.name}>
-                              <Link className='px-4 py-4 block text-lg border-t border-t-neutral-300' href={tertiaryItem.url}>{tertiaryItem.name}</Link>
+                              <GeneralLink className='px-4 py-4 block text-lg border-t border-t-neutral-300' href={tertiaryItem.url}>{tertiaryItem.name}</GeneralLink>
                             </div>
                           ))}
                         </div>

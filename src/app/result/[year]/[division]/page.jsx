@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import React from 'react'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -72,7 +72,7 @@ export default async function Page ({ params }) {
 
             {teams.map((team, index) => (
               <th className='border border-stone-400 p-2' key={index}>
-                <Link className={linkStyles.join(' ') + 'border-b-tertiary-500 text-tertiary-500'} href={`/result/${year}/team/${team.slug}`}>{team.name}</Link>
+                <GeneralLink className={linkStyles.join(' ') + 'border-b-tertiary-500 text-tertiary-500'} href={`/result/${year}/team/${team.slug}`}>{team.name}</GeneralLink>
               </th>
             ))}
 
@@ -83,13 +83,13 @@ export default async function Page ({ params }) {
           {teams.map((teamLeft, index) => (
             <tr key={index}>
               <td className='border border-stone-400 p-2'>
-                <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${teamLeft.slug}`}>{teamLeft.name}</Link>
+                <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/team/${teamLeft.slug}`}>{teamLeft.name}</GeneralLink>
               </td>
               {teams.map((teamRight, trIndex) => {
                 const leagueTableRow = getLeagueTableRow(teamLeft.slug, teamRight.slug)
                 let scoresContent = ''
                 if (leagueTableRow) {
-                  scoresContent = <Link className={linkStyles.join(' ')} href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}>{leagueTableRow.scoreLeft} - {leagueTableRow.scoreRight}</Link>
+                  scoresContent = <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}>{leagueTableRow.scoreLeft} - {leagueTableRow.scoreRight}</GeneralLink>
                 }
                 return (
                   <td key={trIndex} className='border border-stone-400 p-2 text-center'>

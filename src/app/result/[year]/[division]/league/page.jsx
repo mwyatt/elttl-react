@@ -1,5 +1,5 @@
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import React from 'react'
 import SubMenu from '@/app/result/[year]/[division]/SubMenu'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -59,7 +59,7 @@ export default async function Page ({ params }) {
           {stats.map((stat, index) => (
             <tr key={index} className='border-dashed border-t hover:bg-gray-100'>
               <td className='p-2 md:p-4'>
-                <Link className={linkStyles.join(' ')} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</Link>
+                <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/team/${stat.team.slug}`}>{stat.team.name}</GeneralLink>
               </td>
               <td className='text-center p-2 md:p-4'>{stat.won}</td>
               <td className='text-center p-2 md:p-4'>{stat.draw}</td>

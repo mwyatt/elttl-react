@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { linkStyles } from '@/lib/styles'
 
 export const dynamic = 'force-dynamic'
@@ -13,7 +13,7 @@ export default async function Page () {
           <h3 className='font-semibold text-lg mb-4 mt-6'>Reports</h3>
           <ul className='list-disc list-inside pl-4'>
             <li>
-              <Link href='/admin/report/players-playing-up' className={linkStyles.join(' ')}>Players Playing Up</Link>
+              <GeneralLink href='/admin/report/players-playing-up' className={linkStyles.join(' ')}>Players Playing Up</GeneralLink>
             </li>
           </ul>
         </div>

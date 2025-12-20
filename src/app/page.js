@@ -1,6 +1,6 @@
 import React from 'react'
 import FrontLayout from '@/app/frontLayout'
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import FixtureCard from '@/components/FixtureCard'
 import { getMetaDescription, getMetaTitle } from '@/constants/MetaData'
 import dayjs from 'dayjs'
@@ -32,20 +32,20 @@ export default async function Page () {
   return (
     <FrontLayout paddedContent={false} maxWidth>
       <div className='md:flex'>
-        <div className='md:p-6 flex-1 flex flex-col gap-6'>
+        <div className='md:p-6 flex-1 flex flex-col'>
           {advertisementsPrimary.map((advertisement) => (
             <div
               key={advertisement.id}
-              className='p-6 flex-1 bg-tertiary-500 text-center md:text-left text-white md:rounded'
+              className='max-md:ml-4 max-md:mt-4 max-md:mr-4 p-6 flex-1 bg-tertiary-500 text-center md:text-left text-white rounded md:mb-4'
             >
               <h2 className='mb-4 text-5xl font-bold'>{advertisement.title}</h2>
               <p className='my-3 text-3xl'>{advertisement.description}</p>
               <div className='mt-6 flex justify-end'>
-                <Link
+                <GeneralLink
                   className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg'
                   href={advertisement.url}
                 >{advertisement.action}
-                </Link>
+                </GeneralLink>
               </div>
             </div>
           ))}
@@ -57,7 +57,7 @@ export default async function Page () {
           <div className='flex p-4 items-center'>
             <h2 className='text-2xl grow'>Press Releases</h2>
             <div>
-              <Link className={allHomeButtonStyles} href='/press/'>All Press</Link>
+              <GeneralLink className={allHomeButtonStyles} href='/press/'>All Press</GeneralLink>
             </div>
           </div>
           {latestPress.map((press) => (
@@ -68,7 +68,7 @@ export default async function Page () {
               >
                 <RelativeTime timestamp={press.timePublished} />
               </p>
-              <h3 className='text-lg'><Link className={linkStyles.join(' ')} href={press.url}>{press.title}</Link></h3>
+              <h3 className='text-lg'><GeneralLink className={linkStyles.join(' ')} href={press.url}>{press.title}</GeneralLink></h3>
             </div>
           ))}
         </div>
@@ -76,7 +76,7 @@ export default async function Page () {
 
       <SeasonTotals totals={seasonTotals} yearName={currentYear} />
 
-      {latestFixtures.length < 1 && (
+      {latestFixtures.length > 0 && (
         <div>
           <h2 className='text-2xl p-4'>Latest Fulfilled Fixtures</h2>
           <div className='flex flex-wrap gap-3 mb-6 p-4'>

@@ -11,8 +11,6 @@ const connectionConfig = {
 
 const pool = mysql.createPool(connectionConfig)
 
-console.log('Connecting to database:', connectionConfig)
-
 const setupConnectionConfig = (connection) => {
   // Configure the connection to allow :named placeholders.
   connection.config.namedPlaceholders = true

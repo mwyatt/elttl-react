@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import GeneralLink from '@/components/GeneralLink'
 import { adminApiFetch } from '@/constants/url'
 
 export const dynamic = 'force-dynamic'
@@ -24,12 +24,12 @@ export default async function Page () {
         <tbody>
           {fixtures.map(fixture => (
             <tr key={fixture.id} className='border-t border-t-stone-200 hover:bg-stone-100'>
-              <td className='p-2'><Link href={`fixture/${fixture.id}`}>{fixture.id}</Link></td>
+              <td className='p-2'><GeneralLink href={`fixture/${fixture.id}`}>{fixture.id}</GeneralLink></td>
               <td className='p-2'>{fixture.divisionName}</td>
               <td className='p-2'>{fixture.teamLeftName}</td>
               <td className='p-2'>{fixture.teamRightName}</td>
               <td className='p-2'>{fixture.timeFulfilled ? 'Yes' : 'No'}</td>
-              <td className='p-2'><Link href={`fixture/${fixture.id}`} className='bg-stone-500 text-white px-2 py-1'>Edit</Link></td>
+              <td className='p-2'><GeneralLink href={`fixture/${fixture.id}`} className='bg-stone-500 text-white px-2 py-1'>Edit</GeneralLink></td>
             </tr>
           ))}
         </tbody>
