@@ -25,7 +25,7 @@ export default async function Layout ({ children }) {
           <LogoutForm />
         </div>
       </div>
-      <div className='max-w-[1440px] mx-auto'>
+      <div className='max-w-[1850px] mx-auto'>
         {children}
       </div>
     </div>

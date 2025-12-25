@@ -1,4 +1,5 @@
 export const WeekTypes = {
+  nothing: '',
   fixture: 'Fixtures',
   vets: 'Vets Handicap Competition',
   fred0: 'Fred Holden Preliminary Round',

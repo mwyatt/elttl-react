@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 import { StatusCodes } from 'http-status-codes'
+import { persistWeeks } from '@/repository/week'
 
 export async function GET () {
   const connection = await getConnection()
@@ -22,9 +23,11 @@ export async function GET () {
 select
     tf.id,
      concat(ttl.name, ' vs ', ttr.name) AS fullName,
+    ttl.id as teamLeftId,
     ttl.name as teamLeftName,
     ttl.homeWeekday,
     ttl.divisionId,
+    ttr.id as teamRightId,
     ttr.name as teamRightName,
     tf.weekId
 from tennisFixture tf
@@ -53,5 +56,22 @@ from tennisDivision td
     divisions,
     weeks,
     fixtures
+  }, { status: StatusCodes.OK })
+}
+
+export async function PUT (request) {
+  const { weeks, fixtures } = await request.json()
+
+  try {
+    await persistWeeks(weeks, fixtures)
+  } catch (error) {
+    console.error('Error saving weeks:', error)
+    return NextResponse.json({
+      message: error.message
+    }, { status: StatusCodes.UNPROCESSABLE_ENTITY })
+  }
+
+  return NextResponse.json({
+    message: `Weeks saved successfully!`
   }, { status: StatusCodes.OK })
 }
