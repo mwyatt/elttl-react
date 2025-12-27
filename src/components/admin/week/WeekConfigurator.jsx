@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { WeekTypes } from '@/constants/Week'
+import { WeekTypeLabels, WeekTypes } from '@/constants/Week'
 import { DndContext } from '@dnd-kit/core'
 import { Draggable } from './Draggable'
 import { Droppable } from './Droppable'
@@ -34,14 +34,6 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
 
   const [stateWeeks, setWeeks] = useState(initWeeks(weeks))
 
-  const initStateFixtures = (fixtures) => {
-    fixtures.forEach(fixture => {
-      fixture.hidden = false
-    })
-
-    return fixtures
-  }
-
   const [stateFixtures, setStateFixtures] = useState(fixtures)
 
   const isFixtureVisible = (fixture) => {
@@ -56,11 +48,13 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
 
     stateFixtures.forEach(fixture => {
       if (fixture.weekId === null && isFixtureVisible(fixture)) {
-        draggables.push(<Draggable key={fixture.id} id={fixture.id}>
-          <div className="border border-stone-300 p-1 rounded">
-            {fixture.fullName}
-          </div>
-        </Draggable>)
+        draggables.push(
+          <Draggable key={fixture.id} id={fixture.id}>
+            <div className='border border-stone-300 p-1 rounded'>
+              {fixture.fullName}
+            </div>
+          </Draggable>
+        )
       }
     })
 
@@ -112,7 +106,7 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
   }
 
   const handlePlaceAllFixturesRandomly = () => {
-    const fixtureWeeks = weeks.filter(week => week.type === 'fixture')
+    const fixtureWeeks = weeks.filter(week => week.type === WeekTypes.fixture)
 
     divisions.forEach(division => {
       const divisionFixtures = stateFixtures.filter(fixture => fixture.divisionId === division.id)
@@ -137,10 +131,10 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
     console.warn('- Alternate home and away games where possible')
     console.warn('- Ensure no team has more than 1 home or away game in the same week')
 
-    const unplacedFixtures = stateFixtures.filter(fixture => fixture.weekId === null && fixture.divisionId === currentDivisionId)
-    const fixtureWeeks = stateWeeks.filter(week => week.type === WeekTypes.fixture)
+    // const unplacedFixtures = stateFixtures.filter(fixture => fixture.weekId === null && fixture.divisionId === currentDivisionId)
+    // const fixtureWeeks = stateWeeks.filter(week => week.type === WeekTypes.fixture)
 
-    const teamIds = lodash.uniq(unplacedFixtures.map(fixture => fixture.teamLeftId))
+    // const teamIds = lodash.uniq(unplacedFixtures.map(fixture => fixture.teamLeftId))
 
     // console.log({ fixtureWeeks, teamIds })
 
@@ -174,7 +168,7 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
       }))
     }
 
-    const response = await fetch(`/admin/api/week`, {
+    const response = await fetch('/admin/api/week', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -222,6 +216,10 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
   }
 
   const handleGenerateWeeks = () => {
+    if (weekRange.start === '' || weekRange.end === '') {
+      return setFeedbackMessage('Please select both start and end weeks')
+    }
+
     const weeksBetween = getIsoWeeksBetween(weekRange.start, weekRange.end)
 
     setWeeks(weeksBetween)
@@ -262,19 +260,6 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
 
   const [teams, setTeams] = useState(getTeamsInDivision(currentDivisionId))
 
-  const getUnplacedFixtures = function () {
-    const unplacedFixtures = stateFixtures.filter(fixture => fixture.weekId === null && fixture.divisionId === currentDivisionId)
-
-    let fixtures = unplacedFixtures
-
-    if (teamId !== 0) {
-      fixtures = unplacedFixtures.filter(fixture => fixture.teamLeftId === teamId || fixture.teamRightId === teamId)
-    }
-
-    setStateFixtures(fixtures)
-    setCurrentTeamId(teamId)
-  }
-
   const handleFilterTeam = function (teamId) {
     setCurrentTeamId(teamId)
   }
@@ -295,36 +280,44 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <Feedback message={feedbackMessage}/>
-      <FullLoader isLoading={isLoading}/>
+      <Feedback message={feedbackMessage} />
+      <FullLoader isLoading={isLoading} />
 
-      <div className="flex items-center justify-between mb-6 text-sm">
-        <h2 className="text-2xl p-4">Weeks</h2>
+      <div className='flex items-center justify-between mb-6 text-sm'>
+        <h2 className='text-2xl p-4'>Weeks</h2>
         <div>
-          <input type={'week'} name={'weekStart'} className="border border-stone-300 p-2 m-2 text-sm"
-                 onChange={(e) => handleChangeWeekRange('start', e.target.value)} value={weekRange.start}/>
+          <input
+            type='week' name='weekStart' className='border border-stone-300 p-2 m-2 text-sm'
+            onChange={(e) => handleChangeWeekRange('start', e.target.value)} value={weekRange.start}
+          />
           <span>{stateWeeks.length} total weeks</span>
-          <input type={'week'} name={'weekEnd'} className="border border-stone-300 p-2 m-2 text-sm"
-                 onChange={(e) => handleChangeWeekRange('end', e.target.value)} value={weekRange.end}/>
-          <button className="bg-primary-500 text-white px-2 py-1 text-" onClick={handleGenerateWeeks}>Generate Weeks
+          <input
+            type='week' name='weekEnd' className='border border-stone-300 p-2 m-2 text-sm'
+            onChange={(e) => handleChangeWeekRange('end', e.target.value)} value={weekRange.end}
+          />
+          <button className='bg-primary-500 text-white px-2 py-1 text-' onClick={handleGenerateWeeks}>Generate Weeks
           </button>
         </div>
-        <button className="bg-primary-500 text-white px-2 py-1 text-" onClick={handleUnplaceAllFixtures}>Unplace all fixtures</button>
-        <button className="bg-primary-500 text-white px-2 py-1 text-" onClick={handlePlaceAllFixturesRandomly}>Place all fixtures randomly</button>
-        <button className="bg-primary-500 text-white px-2 py-1" onClick={handleSave}>Save</button>
+        <button className='bg-primary-500 text-white px-2 py-1 text-' onClick={handleUnplaceAllFixtures}>Unplace all fixtures</button>
+        <button className='bg-primary-500 text-white px-2 py-1 text-' onClick={handlePlaceAllFixturesRandomly}>Place all fixtures randomly</button>
+        <button className='bg-primary-500 text-white px-2 py-1' onClick={handleSave}>Save</button>
       </div>
-      <div className={'flex text-sm'}>
-        <div className={'w-1/5'}>
-          <div className={'flex'}>
-            <select name="division" id="division" className="grow border border-stone-300 p-1" value={currentDivisionId}
-                    onChange={(event) => handleFilterDivision(Number(event.target.value))}>
+      <div className='flex text-sm'>
+        <div className='w-1/5'>
+          <div className='flex'>
+            <select
+              name='division' id='division' className='grow border border-stone-300 p-1' value={currentDivisionId}
+              onChange={(event) => handleFilterDivision(Number(event.target.value))}
+            >
               <option key={0} value={0}>Filter Division</option>
               {divisions.map(division => (
                 <option key={division.id} value={division.id}>{division.name}</option>
               ))}
             </select>
-            <select name="team" id="team" className="grow border border-stone-300 p-1" value={currentTeamId}
-                    onChange={(event) => handleFilterTeam(Number(event.target.value))}>
+            <select
+              name='team' id='team' className='grow border border-stone-300 p-1' value={currentTeamId}
+              onChange={(event) => handleFilterTeam(Number(event.target.value))}
+            >
               <option key={0} value={0}>Filter Team</option>
               {teams.map(team => (
                 <option key={team.id} value={team.id}>{team.name}</option>
@@ -332,7 +325,7 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
             </select>
 
             {/* @todo auto place fixtures */}
-            <button className="bg-primary-500 text-white px-2 py-1 hidden" onClick={handleAutoPlaceFixtures}>Auto
+            <button className='bg-primary-500 text-white px-2 py-1 hidden' onClick={handleAutoPlaceFixtures}>Auto
               place
             </button>
           </div>
@@ -340,36 +333,38 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
             {getDraggableFixtures()}
           </div>
         </div>
-        <div className="flex flex-wrap w-4/5">
+        <div className='flex flex-wrap w-4/5'>
 
           {stateWeeks.map(week => (
-            <div data-week-id={week.id} key={week.id} className="flex flex-col items-center p-1 border border-stone-300">
+            <div data-week-id={week.id} key={week.id} className='flex flex-col items-center p-1 border border-stone-300'>
               <div>
                 {week.dateStart.day(1).format('DD/MM/YYYY')}
               </div>
               <div>
-                <select name="weekType" id="weekType" className="border border-stone-300 p-1" value={week.type}
-                        onChange={(event) => handleChangeWeekType(week.id, event.target.value)}>
-                  {Object.entries(WeekTypes).map(([key, value]) => (
-                    <option key={value} value={key}>{value}</option>
+                <select
+                  name='weekType' id='weekType' className='border border-stone-300 p-1' value={week.type}
+                  onChange={(event) => handleChangeWeekType(week.id, event.target.value)}
+                >
+                  {Object.entries(WeekTypeLabels).map(([id, label]) => (
+                    <option key={id} value={id}>{label}</option>
                   ))}
                 </select>
               </div>
-              {week.type === 'fixture' && (
+              {week.type === WeekTypes.fixture && (
                 <>
-                <Droppable week={week}>
-                  {droppedFixtureDataByWeekId[week.id].fixtures.map(fixture => (
-                    <Draggable key={fixture.id} id={fixture.id}>
-                      <div className="border border-stone-300 p-1 rounded">
-                        {fixture.fullName}
-                      </div>
-                    </Draggable>
-                  ))}
-                </Droppable>
+                  <Droppable week={week}>
+                    {droppedFixtureDataByWeekId[week.id].fixtures.map(fixture => (
+                      <Draggable key={fixture.id} id={fixture.id}>
+                        <div className='border border-stone-300 p-1 rounded'>
+                          {fixture.fullName}
+                        </div>
+                      </Draggable>
+                    ))}
+                  </Droppable>
                   {droppedFixtureDataByWeekId[week.id].fixturesHidden.length > 0 && (
-                <div>
-                  + {droppedFixtureDataByWeekId[week.id].fixturesHidden.length} other fixtures
-                </div>
+                    <div>
+                      + {droppedFixtureDataByWeekId[week.id].fixturesHidden.length} other fixtures
+                    </div>
                   )}
                 </>
               )}

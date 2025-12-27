@@ -11,6 +11,7 @@ import SessionsToday from '@/components/home/SessionsToday'
 import ImageGallery from '@/components/home/ImageGallery'
 import Image from 'next/image'
 import RelativeTime from '@/components/RelativeTime'
+import ThisWeek from '@/components/home/ThisWeek'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -26,7 +27,9 @@ export default async function Page () {
     latestFixtures,
     galleryImages,
     currentYear,
-    seasonTotals
+    seasonTotals,
+    week,
+    weekFixtures
   } = await fetchJson('/homepage')
 
   return (
@@ -51,6 +54,7 @@ export default async function Page () {
           ))}
 
           <SessionsToday yearName={currentYear} />
+          {/*<ThisWeek yearName={currentYear} week={week} fixtures={weekFixtures} />*/}
           <ImageGallery />
         </div>
         <div className='flex-1'>

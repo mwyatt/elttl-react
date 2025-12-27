@@ -20,14 +20,14 @@ export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled 
             <DatePretty time={timeFulfilled} />
           </span>
         )}
-        <div className='flex'>
+        <span className='flex'>
           <span className=' flex-grow'>{teamLeft.name}</span>
           <span className=''>{teamLeft.score}</span>
-        </div>
-        <div className='flex'>
+        </span>
+        <span className='flex'>
           <span className=' flex-grow'>{teamRight.name}</span>
           <span className=''>{teamRight.score}</span>
-        </div>
+        </span>
       </span>
     </GeneralLink>
   )

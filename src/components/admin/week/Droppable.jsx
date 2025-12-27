@@ -9,7 +9,7 @@ function Droppable (props) {
   })
 
   const classes = classNames('p-4 border border-dashed border-stone-300 rounded w-full min-w-20', {
-    'bg-stone-200': isOver,
+    'bg-stone-200': isOver
   })
 
   return (

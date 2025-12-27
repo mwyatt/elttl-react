@@ -72,6 +72,6 @@ export async function PUT (request) {
   }
 
   return NextResponse.json({
-    message: `Weeks saved successfully!`
+    message: 'Weeks saved successfully!'
   }, { status: StatusCodes.OK })
 }

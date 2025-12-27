@@ -1,25 +1,19 @@
-DROP TABLE IF EXISTS tennisWeeks;
 DROP TABLE IF EXISTS tennisWeek;
 
-# New tables which outline week commencing, to group up various events
 CREATE TABLE tennisWeek
 (
-    id             INT unsigned not null,
-    timeCommencing int unsigned NOT NULL KEY,
-    type           varchar(50)  NOT NULL,
-    yearId         INT unsigned NOT NULL,
-    FOREIGN KEY (yearId) REFERENCES tennisYear(id)
+    id        INT UNSIGNED     NOT NULL,
+    timeStart INT UNSIGNED     NOT NULL,
+    type      TINYINT UNSIGNED NOT NULL,
+    yearId    INT UNSIGNED     NOT NULL,
+    FOREIGN KEY (yearId) REFERENCES tennisYear (id),
+    PRIMARY KEY (id, yearId)
 );
-
-create index id
-    on tennisWeek (id);
-
-# Example types
-# 'fixture', 'holiday', 'tournament'
 
 # Add a column to the tennisFixture table which will then point to the weekId
 ALTER TABLE tennisFixture
     ADD COLUMN weekId INT DEFAULT NULL;
 
-# ideas:
-# you could say how many matches will be being played on a particular day at hyndburn
+# update all tennisFixture rows so that weekId is null
+UPDATE tennisFixture
+SET weekId = NULL where weekId IS not NULL;

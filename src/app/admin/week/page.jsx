@@ -8,7 +8,7 @@ export default async function Page () {
   const cookiePromise = await cookies()
   const cookie = cookiePromise.get('session')?.value
 
-  const response = await adminApiFetch(`/week`)
+  const response = await adminApiFetch('/week')
   const { divisions, weeks, fixtures } = await response.json()
 
   return (
