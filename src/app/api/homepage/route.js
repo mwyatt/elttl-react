@@ -120,15 +120,15 @@ export async function GET () {
   if (weeks.length > 0) {
     week = weeks[0]
     if (week.type === WeekTypes.fixture) {
-        [weekFixtures] = await connection.execute(`
+      [weekFixtures] = await connection.execute(`
             SELECT id
             FROM tennisFixture
             WHERE yearId = :yearId
               AND weekId = :weekId
         `, {
-          yearId: currentYear.id,
-          weekId: week.id
-        })
+        yearId: currentYear.id,
+        weekId: week.id
+      })
     }
   }
 
@@ -156,6 +156,6 @@ export async function GET () {
       }
     },
     week,
-    weekFixtures,
+    weekFixtures
   }, { status: StatusCodes.OK })
 }

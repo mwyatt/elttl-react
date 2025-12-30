@@ -54,7 +54,7 @@ export default async function Page () {
           ))}
 
           <SessionsToday yearName={currentYear} />
-          {/*<ThisWeek yearName={currentYear} week={week} fixtures={weekFixtures} />*/}
+          {/* <ThisWeek yearName={currentYear} week={week} fixtures={weekFixtures} /> */}
           <ImageGallery />
         </div>
         <div className='flex-1'>

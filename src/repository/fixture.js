@@ -31,3 +31,25 @@ export async function getFixturesByWeekId (yearId, weekId) {
 
   return fixtures
 }
+
+export async function getUnfulfilledFixtures () {
+  const connection = await getConnection()
+
+  const [fixtures] = await connection.execute(`
+    select
+        ttl.name teamLeftName,
+        ttl.slug teamLeftSlug,
+        ttr.name teamRightName,
+        ttr.slug teamRightSlug,
+        ttf.timeFulfilled
+        from tennisFixture ttf
+        left join tennisTeam ttl on ttl.id = ttf.teamIdLeft
+        left join tennisTeam ttr on ttr.id = ttf.teamIdRight
+    where timeFulfilled is null
+    group by ttf.id, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, ttf.timeFulfilled
+  `)
+
+  connection.release()
+
+  return fixtures
+}

@@ -7,7 +7,7 @@ export async function GET (request, { params }) {
   const { year } = await params
   const requestedYear = await getYearByName(year)
 
-    if (!requestedYear) {
+  if (!requestedYear) {
     return NextResponse.json(`Unable to find year with name '${year}'`, { status: StatusCodes.NOT_FOUND })
   }
 

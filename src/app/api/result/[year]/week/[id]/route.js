@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { StatusCodes } from 'http-status-codes'
 import { getYearByName } from '@/app/lib/year'
-import { getFixturesByWeekId } from '@/repository/fixture'
+import { getFixturesByWeekId, getUnfulfilledFixtures } from '@/repository/fixture'
+import { getPressByTitleLikeAndPublishedAfter } from '@/repository/content'
+import dayjs from 'dayjs'
+import { FredHoldenCupWeekTypes, WeekTypes } from '@/constants/Week'
 
 export async function GET (request, { params }) {
   const { year, id } = await params
@@ -30,8 +33,21 @@ export async function GET (request, { params }) {
   const week = weeks[0]
   const fixtures = await getFixturesByWeekId(currentYear.id, id)
 
+  let fredHoldenCupPress = []
+  if (FredHoldenCupWeekTypes.includes(week.type)) {
+      // @todo get weeks value from somewhere
+     fredHoldenCupPress = await getPressByTitleLikeAndPublishedAfter('fred', dayjs().subtract(40, 'weeks'))
+  }
+
+  let unfulfilledFixtures = []
+  if (week.type === WeekTypes.catchup) {
+     unfulfilledFixtures = await getUnfulfilledFixtures('fred', dayjs().subtract(40, 'weeks'))
+  }
+
   return NextResponse.json({
     week,
-    fixtures
+    fixtures,
+    fredHoldenCupPress,
+    unfulfilledFixtures
   }, { status: StatusCodes.OK })
 }

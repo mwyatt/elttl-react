@@ -2,6 +2,11 @@ import FrontLayout from '@/app/frontLayout'
 import MainHeading from '@/components/MainHeading'
 import { getMetaTitle } from '@/constants/MetaData'
 import SubHeading from '@/components/SubHeading'
+import {
+  DivisionalHandicapCompetitionContent,
+  FredHoldenCupCompetitionContent,
+  VetsCompetitionContent
+} from '@/components/CompetitionsContent'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,10 +30,7 @@ export default async function Page () {
         </p>
 
         <SubHeading name='The Fred Holden (Handicap) Cup' />
-        <p className='my-6'>The Fred Holden Trophy is contested by all the teams in the league, the competition is team handicapped.</p>
-        <p className='my-6'>It is a straightforward Knock out. A preliminary round will start the competition with the first round involving 32 teams.
-          It will then continue down to a final held at the end of the league programme.
-        </p>
+        <FredHoldenCupCompetitionContent />
 
         <SubHeading name='Annual Closed Competition - The Big Day' />
         <p className='my-6'>This full day event normally takes place on a Sunday in February and is open to all current League Members.</p>
@@ -51,21 +53,10 @@ export default async function Page () {
         </p>
 
         <h3 className='text-lg font-semibold mb-3 mt-5'>The Vets Competitions</h3>
-        <p className='my-6'>
-          The Vets Competitions are usually played on one or more evenings in December and are open to all current league
-          players &amp; Bat &amp; Chat regulars at HTTC and St Peters Burnley. Of late we have used the following categories:
-        </p>
-        <ul className='list-disc pl-6'>
-          <li>Younger Vets - 40 years and over</li>
-          <li>Older Vets - 60 years and over</li>
-        </ul>
+        <VetsCompetitionContent />
 
         <h3 className='text-lg font-semibold mb-3 mt-5'>The Divisional Handicap Competitions</h3>
-        <p className='my-6'>
-          We have recently reintroduced the Divisional Handicap Competitions to be played sometime in February. There is a Premier &amp; First Division
-          Competition one evening and a Second and Third Division Competition another. Player handicaps will be taken from the latest individual ranking
-          points and matches will be best of three games first to 21 points.
-        </p>
+        <DivisionalHandicapCompetitionContent />
 
         <h3 className='text-lg font-semibold mb-3 mt-5'>Hard Bat (Ping Pong) Competition and Summer League</h3>
         <p className='my-6'>
