@@ -35,13 +35,13 @@ export async function GET (request, { params }) {
 
   let fredHoldenCupPress = []
   if (FredHoldenCupWeekTypes.includes(week.type)) {
-      // @todo get weeks value from somewhere
-     fredHoldenCupPress = await getPressByTitleLikeAndPublishedAfter('fred', dayjs().subtract(40, 'weeks'))
+    // @todo get weeks value from somewhere
+    fredHoldenCupPress = await getPressByTitleLikeAndPublishedAfter('fred', dayjs().subtract(40, 'weeks'))
   }
 
   let unfulfilledFixtures = []
   if (week.type === WeekTypes.catchup) {
-     unfulfilledFixtures = await getUnfulfilledFixtures('fred', dayjs().subtract(40, 'weeks'))
+    unfulfilledFixtures = await getUnfulfilledFixtures('fred', dayjs().subtract(40, 'weeks'))
   }
 
   return NextResponse.json({

@@ -35,10 +35,10 @@ export default async function Page ({ params }) {
     if (playerSlug === slug) {
       return (
         <>
-                <span className='sm:hidden text-tertiary-500'>{getShortPlayerName(playerName)}</span>
-        <span className='hidden sm:inline text-tertiary-500'>{playerName}</span>
-          </>
-        )
+          <span className='sm:hidden text-tertiary-500'>{getShortPlayerName(playerName)}</span>
+          <span className='hidden sm:inline text-tertiary-500'>{playerName}</span>
+        </>
+      )
     }
     return (
       <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
@@ -69,13 +69,13 @@ export default async function Page ({ params }) {
 
           {(player.phoneLandline || player.phoneMobile) && (
             <>
-            <SubHeading name='Contact Information' />
-            {player.phoneLandline && (
-              <p className='mb-2'>Phone Landline: <a className='text-primary-500' href={`tel:${player.phoneLandline}`}>{player.phoneLandline}</a></p>
-            )}
-            {player.phoneMobile && (
-              <p className='mb-2'>Phone Mobile: <a className='text-primary-500' href={`tel:${player.phoneMobile}`}>{player.phoneMobile}</a></p>
-            )}
+              <SubHeading name='Contact Information' />
+              {player.phoneLandline && (
+                <p className='mb-2'>Phone Landline: <a className='text-primary-500' href={`tel:${player.phoneLandline}`}>{player.phoneLandline}</a></p>
+              )}
+              {player.phoneMobile && (
+                <p className='mb-2'>Phone Mobile: <a className='text-primary-500' href={`tel:${player.phoneMobile}`}>{player.phoneMobile}</a></p>
+              )}
             </>
           )}
 
@@ -100,22 +100,22 @@ export default async function Page ({ params }) {
 
           <SubHeading name='Season Performance' />
 
-          <div className={'grid grid-cols-10'}>
+          <div className='grid grid-cols-10'>
 
-          {encounters.map((encounter, index) => (
-            <div key={index} className={'contents'}>
-              <div className='col-span-4 pt-3 border-t border-dashed border-t-stone-300 pb-3'>
-                {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
-                <RankChange rankChange={encounter.playerRankChangeLeft} />
+            {encounters.map((encounter, index) => (
+              <div key={index} className='contents'>
+                <div className='col-span-4 pt-3 border-t border-dashed border-t-stone-300 pb-3'>
+                  {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
+                  <RankChange rankChange={encounter.playerRankChangeLeft} />
+                </div>
+                <div className=' text-right pt-3 border-t border-dashed border-t-stone-300 pb-3 pr-2'>{encounter.scoreLeft}</div>
+                <div className=' pt-3 border-t border-dashed border-t-stone-300 pb-3 pl-2'>{encounter.scoreRight}</div>
+                <div className='col-span-4  pt-3 border-t border-dashed border-t-stone-300 pb-3 text-right'>
+                  <RankChange rankChange={encounter.playerRankChangeRight} />
+                  {getPlayerLink(encounter.playerRightSlug, encounter.playerRightName)}
+                </div>
               </div>
-              <div className=' text-right pt-3 border-t border-dashed border-t-stone-300 pb-3 pr-2'>{encounter.scoreLeft}</div>
-              <div className=' pt-3 border-t border-dashed border-t-stone-300 pb-3 pl-2'>{encounter.scoreRight}</div>
-              <div className='col-span-4  pt-3 border-t border-dashed border-t-stone-300 pb-3 text-right'>
-                <RankChange rankChange={encounter.playerRankChangeRight} />
-                {getPlayerLink(encounter.playerRightSlug, encounter.playerRightName)}
-              </div>
-              </div>
-          ))}
+            ))}
           </div>
 
         </div>

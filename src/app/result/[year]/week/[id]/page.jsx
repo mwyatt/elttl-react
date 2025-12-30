@@ -4,7 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import GeneralLink from '@/components/GeneralLink'
 import { linkStyles } from '@/lib/styles'
 import SubHeading from '@/components/SubHeading'
-import { FredHoldenCupWeekTypes, getWeekTypeLabel, WeekTypeLabels, WeekTypes } from '@/constants/Week'
+import { FredHoldenCupWeekTypes, getWeekTypeLabel, WeekTypes } from '@/constants/Week'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import FixtureCard from '@/components/FixtureCard'
 import { formatDayWithSuffixOfMonth } from '@/lib/date'
@@ -41,7 +41,7 @@ export default async function Page ({ params }) {
       <SubHeading name={weekTypeLabel} />
 
       {week.type === WeekTypes.nothing && (
-          <p className='mb-12'>Nothing has been scheduled for this week.</p>
+        <p className='mb-12'>Nothing has been scheduled for this week.</p>
       )}
       {week.type === WeekTypes.vets && (
         <VetsCompetitionContent />
@@ -65,61 +65,61 @@ export default async function Page ({ params }) {
       )}
       {FredHoldenCupWeekTypes.includes(week.type) && (
         <>
-        <FredHoldenCupCompetitionContent />
-                {fredHoldenCupPress.length > 0 && (
-          <>
-            <h3 className='text-lg font-semibold mb-3 mt-5'>Related Press</h3>
-            <div className='space-y-4'>
-              {fredHoldenCupPress.map((content, index) => (
-          <div className='p-4 border-b' key={index}>
-            <p className='text-sm text-gray-500 mb-2'>
-              <DatePretty time={content.timePublished} />
-            </p>
-            <h2><GeneralLink className={linkStyles.join(' ')} href={`/press/${content.slug}`}>{content.title}</GeneralLink></h2>
-            <h3 className='mt-2'>{content.author}</h3>
-          </div>
-              ))}
-            </div>
-          </>
-        )}
-</>
+          <FredHoldenCupCompetitionContent />
+          {fredHoldenCupPress.length > 0 && (
+            <>
+              <h3 className='text-lg font-semibold mb-3 mt-5'>Related Press</h3>
+              <div className='space-y-4'>
+                {fredHoldenCupPress.map((content, index) => (
+                  <div className='p-4 border-b' key={index}>
+                    <p className='text-sm text-gray-500 mb-2'>
+                      <DatePretty time={content.timePublished} />
+                    </p>
+                    <h2><GeneralLink className={linkStyles.join(' ')} href={`/press/${content.slug}`}>{content.title}</GeneralLink></h2>
+                    <h3 className='mt-2'>{content.author}</h3>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </>
       )}
-            {week.type === WeekTypes.div && (
+      {week.type === WeekTypes.div && (
         <DivisionalHandicapCompetitionContent />
       )}
-            {week.type === WeekTypes.presentation && (
+      {week.type === WeekTypes.presentation && (
         <>
-                  <p className='my-6'>
-                    @todo information about the presentation night
-        </p>
+          <p className='my-6'>
+            @todo information about the presentation night
+          </p>
         </>
       )}
-            {week.type === WeekTypes.agm && (
+      {week.type === WeekTypes.agm && (
         <>
-                  <p className='my-6'>
-                    @todo information about the AGM
-        </p>
+          <p className='my-6'>
+            @todo information about the AGM
+          </p>
         </>
       )}
-            {week.type === WeekTypes.catchup && (
+      {week.type === WeekTypes.catchup && (
         <>
-                  <p className='my-6'>
-                    This week teams will have the opportunity to play any fixtures they may have missed earlier in the season. Here are the currently outstanding fixtures to be played:
-        </p>
-                {unfulfilledFixtures.length > 0 && (
-                    <div className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+          <p className='my-6'>
+            This week teams will have the opportunity to play any fixtures they may have missed earlier in the season. Here are the currently outstanding fixtures to be played:
+          </p>
+          {unfulfilledFixtures.length > 0 && (
+            <div className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
 
-            {unfulfilledFixtures.map((fixture, index) => (
-              <FixtureCard
-                key={index}
-                year={year}
-                teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
-                teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
-                timeFulfilled={fixture.timeFulfilled}
-              />
-            ))}
-          </div>
-            )}
+              {unfulfilledFixtures.map((fixture, index) => (
+                <FixtureCard
+                  key={index}
+                  year={year}
+                  teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
+                  teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
+                  timeFulfilled={fixture.timeFulfilled}
+                />
+              ))}
+            </div>
+          )}
 
         </>
       )}

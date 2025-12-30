@@ -13,11 +13,11 @@ export const WeekTypes = {
 }
 
 export const FredHoldenCupWeekTypes = [
-    WeekTypes.fred0,
-    WeekTypes.fred1,
-    WeekTypes.fred2,
-    WeekTypes.fred3,
-  ]
+  WeekTypes.fred0,
+  WeekTypes.fred1,
+  WeekTypes.fred2,
+  WeekTypes.fred3
+]
 
 export const WeekTypeLabels = {
   [WeekTypes.nothing]: 'No Events Scheduled',

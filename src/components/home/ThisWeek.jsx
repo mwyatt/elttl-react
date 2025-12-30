@@ -3,7 +3,15 @@
 import GeneralLink from '@/components/GeneralLink'
 import { allHomeButtonStyles } from '@/lib/styles'
 
-export default function ThisWeek ({ yearName }) {
+export default function ThisWeek ({ yearName, week, fixtures }) {
+  const isDisabled = true
+
+  if (isDisabled) {
+    return null
+  }
+
+  console.log(week, fixtures)
+
   // const date = dayjs()
 
   return (

@@ -9,8 +9,8 @@ export default function FixtureCard ({ year, teamLeft, teamRight, timeFulfilled 
     <GeneralLink
       href={`/result/${year}/fixture/${teamLeft.slug}/${teamRight.slug}`}
       className={classNames({
-        "border-stone-500 border text-stone-500": !timeFulfilled,
-        "border-primary-500 border text-primary-500": timeFulfilled,
+        'border-stone-500 border text-stone-500': !timeFulfilled,
+        'border-primary-500 border text-primary-500': timeFulfilled,
         'px-4 pt-4 pb-4 rounded': true
       })}
     >
