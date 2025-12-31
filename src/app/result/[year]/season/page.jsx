@@ -55,12 +55,16 @@ export default async function Page ({ params }) {
       <MainHeading name='Season Overview' />
       <p className='mb-12'>This is an overview of what is happening each week in the {year} season:</p>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
+      {weeks.length === 0 && (
+        <p>No weeks have been configured yet.</p>
+      )}
+      {weeks.length > 0 && (
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
 
-        {weeks.map((week) => <Week key={week.id} yearName={year} week={week} />)}
+          {weeks.map((week) => <Week key={week.id} yearName={year} week={week} />)}
 
-      </div>
-
+        </div>
+      )}
     </FrontLayout>
   )
 }

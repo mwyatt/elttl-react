@@ -23,6 +23,7 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
   const [currentDivisionId, setCurrentDivisionId] = useState(0)
   const [currentTeamId, setCurrentTeamId] = useState(0)
   const [weekRange, setWeekRange] = useState({ start: '', end: '' })
+  const weeksAreEstablished = weeks.length > 0
 
   const initWeeks = (weeks) => {
     weeks.forEach(week => {
@@ -63,7 +64,7 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
 
   const getDroppedFixtureDataByWeekId = () => {
     const weekData = {}
-    weeks.forEach(week => {
+    stateWeeks.forEach(week => {
       weekData[week.id] = {}
       weekData[week.id].fixtures = stateFixtures.filter(fixture => {
         return fixture.weekId === week.id && isFixtureVisible(fixture)
@@ -72,7 +73,6 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
         return fixture.weekId === week.id && isFixtureVisible(fixture) === false
       })
     })
-
     return weekData
   }
 
@@ -106,7 +106,7 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
   }
 
   const handlePlaceAllFixturesRandomly = () => {
-    const fixtureWeeks = weeks.filter(week => week.type === WeekTypes.fixture)
+    const fixtureWeeks = stateWeeks.filter(week => week.type === WeekTypes.fixture)
 
     divisions.forEach(division => {
       const divisionFixtures = stateFixtures.filter(fixture => fixture.divisionId === division.id)
@@ -216,6 +216,10 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
   }
 
   const handleGenerateWeeks = () => {
+    if (weeksAreEstablished) {
+      return setFeedbackMessage('Weeks have already been established.')
+    }
+
     if (weekRange.start === '' || weekRange.end === '') {
       return setFeedbackMessage('Please select both start and end weeks')
     }
@@ -223,6 +227,18 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
     const weeksBetween = getIsoWeeksBetween(weekRange.start, weekRange.end)
 
     setWeeks(weeksBetween)
+  }
+
+  const handleRemoveAllWeeks = () => {
+    setStateFixtures(prevFixtures => {
+      return prevFixtures.map(fixture => {
+        return {
+          ...fixture,
+          weekId: null
+        }
+      })
+    })
+    setWeeks([])
   }
 
   const handleChangeWeekRange = function (key, value) {
@@ -278,6 +294,8 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
     })
   }
 
+  const draggableFixtures = getDraggableFixtures()
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <Feedback message={feedbackMessage} />
@@ -295,16 +313,18 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
             type='week' name='weekEnd' className='border border-stone-300 p-2 m-2 text-sm'
             onChange={(e) => handleChangeWeekRange('end', e.target.value)} value={weekRange.end}
           />
-          <button className='bg-primary-500 text-white px-2 py-1 text-' onClick={handleGenerateWeeks}>Generate Weeks
+          <button className='bg-primary-500 text-white px-2 py-1' onClick={handleGenerateWeeks}>Generate Weeks
+          </button>
+          <button className='bg-primary-500 text-white px-2 py-1' onClick={handleRemoveAllWeeks}>Remove All Weeks
           </button>
         </div>
-        <button className='bg-primary-500 text-white px-2 py-1 text-' onClick={handleUnplaceAllFixtures}>Unplace all fixtures</button>
-        <button className='bg-primary-500 text-white px-2 py-1 text-' onClick={handlePlaceAllFixturesRandomly}>Place all fixtures randomly</button>
+        <button className='bg-primary-500 text-white px-2 py-1' onClick={handleUnplaceAllFixtures}>Unplace all fixtures</button>
+        <button className='bg-primary-500 text-white px-2 py-1' onClick={handlePlaceAllFixturesRandomly}>Place all fixtures randomly</button>
         <button className='bg-primary-500 text-white px-2 py-1' onClick={handleSave}>Save</button>
       </div>
       <div className='flex text-sm'>
         <div className='w-1/5'>
-          <div className='flex'>
+          <div className='flex items-center gap-2 mb-2'>
             <select
               name='division' id='division' className='grow border border-stone-300 p-1' value={currentDivisionId}
               onChange={(event) => handleFilterDivision(Number(event.target.value))}
@@ -328,9 +348,12 @@ export function WeekConfigurator ({ cookie, divisions, weeks, fixtures }) {
             <button className='bg-primary-500 text-white px-2 py-1 hidden' onClick={handleAutoPlaceFixtures}>Auto
               place
             </button>
+            <div>
+              {draggableFixtures.length}
+            </div>
           </div>
-          <div>
-            {getDraggableFixtures()}
+          <div className='overflow-y-scroll max-h-[600px]'>
+            {draggableFixtures}
           </div>
         </div>
         <div className='flex flex-wrap w-4/5'>

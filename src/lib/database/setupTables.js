@@ -1,13 +1,12 @@
 export default async function setupTables (connection) {
   const commands = [
     `
-  create table tennisYear
-    (
-        id    int unsigned,
-        name  varchar(10) not null,
-        value longtext    not null comment 'can be very large as older archives are just html constructs'
-    )
-    charset = utf8mb3;
+CREATE TABLE tennisYear (
+    id    INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name  VARCHAR(10) NOT NULL,
+    value LONGTEXT NOT NULL COMMENT 'can be very large as older archives are just html constructs',
+    PRIMARY KEY (id)
+) CHARSET = utf8mb3;
   `,
     `
 create table options
@@ -105,7 +104,19 @@ CREATE TABLE tennisVenue (
     INDEX id_idx (id),
     INDEX yearId_idx (yearId)
 ) CHARSET = utf8mb3;
-`
+`,
+    `
+create table tennisWeek
+(
+    id        int unsigned     not null,
+    timeStart int unsigned     not null,
+    type      tinyint unsigned not null,
+    yearId    int unsigned     not null,
+    primary key (id, yearId),
+    constraint tennisWeek_ibfk_1
+        foreign key (yearId) references tennisYear (id)
+);
+    `
   ]
 
   await Promise.all(commands.map(command => connection.query(command)))

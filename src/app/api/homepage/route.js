@@ -44,7 +44,7 @@ export async function GET () {
         and status != 'exclude'
       group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
       ORDER BY timeFulfilled DESC
-      LIMIT 6
+      LIMIT 10
   `, {
     yearId: currentYear.id
   })

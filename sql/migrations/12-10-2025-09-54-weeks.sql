@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS tennisWeek;
+# DEV
+# DROP TABLE IF EXISTS tennisWeek;
 
 CREATE TABLE tennisWeek
 (
@@ -14,6 +15,7 @@ CREATE TABLE tennisWeek
 ALTER TABLE tennisFixture
     ADD COLUMN weekId INT DEFAULT NULL;
 
+# DEV
 # update all tennisFixture rows so that weekId is null
-UPDATE tennisFixture
-SET weekId = NULL where weekId IS not NULL;
+# UPDATE tennisFixture
+# SET weekId = NULL where weekId IS not NULL;

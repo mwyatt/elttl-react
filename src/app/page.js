@@ -83,7 +83,7 @@ export default async function Page () {
       {latestFixtures.length > 0 && (
         <div>
           <h2 className='text-2xl p-4'>Latest Fulfilled Fixtures</h2>
-          <div className='flex flex-wrap gap-3 mb-6 p-4'>
+          <div className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-4'>
             {latestFixtures.map((fixture, index) => <FixtureCard
               key={index}
               year={currentYear} teamLeft={{
