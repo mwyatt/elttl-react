@@ -9,6 +9,7 @@ import { linkStyles } from '@/lib/styles'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
+import { getShortPlayerName } from '@/lib/player'
 
 export async function generateMetadata (
   { params }
@@ -32,11 +33,17 @@ export default async function Page ({ params }) {
 
   const getPlayerLink = (playerSlug, playerName) => {
     if (playerSlug === slug) {
-      return <span className='text-tertiary-500'>{playerName}</span>
+      return (
+        <>
+          <span className='sm:hidden text-tertiary-500'>{getShortPlayerName(playerName)}</span>
+          <span className='hidden sm:inline text-tertiary-500'>{playerName}</span>
+        </>
+      )
     }
     return (
       <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/player/${playerSlug}`}>
-        {playerName}
+        <span className='sm:hidden'>{getShortPlayerName(playerName)}</span>
+        <span className='hidden sm:inline'>{playerName}</span>
       </GeneralLink>
     )
   }
@@ -60,17 +67,21 @@ export default async function Page ({ params }) {
           <SubHeading name='General Information' />
           <p>Plays for the <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</GeneralLink> team with a rank of <span className='font-bold'>{player.rank}</span> and has had <span className='font-bold'>{encounters.length}</span> encounters with other players so far this season.</p>
 
-          <SubHeading name='Contact Information' />
-          {player.phoneLandline && (
-            <p className='mb-2'>Phone Landline: <a className='text-primary-500' href={`tel:${player.phoneLandline}`}>{player.phoneLandline}</a></p>
-          )}
-          {player.phoneMobile && (
-            <p className='mb-2'>Phone Mobile: <a className='text-primary-500' href={`tel:${player.phoneMobile}`}>{player.phoneMobile}</a></p>
+          {(player.phoneLandline || player.phoneMobile) && (
+            <>
+              <SubHeading name='Contact Information' />
+              {player.phoneLandline && (
+                <p className='mb-2'>Phone Landline: <a className='text-primary-500' href={`tel:${player.phoneLandline}`}>{player.phoneLandline}</a></p>
+              )}
+              {player.phoneMobile && (
+                <p className='mb-2'>Phone Mobile: <a className='text-primary-500' href={`tel:${player.phoneMobile}`}>{player.phoneMobile}</a></p>
+              )}
+            </>
           )}
 
           {/* @todo make this only fixtures that the player has been involved in */}
           <SubHeading name='Team Fixtures' />
-          <div className='flex flex-wrap gap-3'>
+          <div className='grid gap-3 sm:grid-cols-2 xl:grid-cols-3 '>
 
             {fixtures.map((fixture, index) => (
               <FixtureCard
@@ -89,20 +100,24 @@ export default async function Page ({ params }) {
 
           <SubHeading name='Season Performance' />
 
-          {encounters.map((encounter, index) => (
-            <div key={index} className='flex p-4 gap-4 border-t border-dashed hover:bg-gray-100'>
-              <div className='flex-2'>
-                {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
-                <RankChange rankChange={encounter.playerRankChangeLeft} />
+          <div className='grid grid-cols-10'>
+
+            {encounters.map((encounter, index) => (
+              <div key={index} className='contents'>
+                <div className='col-span-4 pt-3 border-t border-dashed border-t-stone-300 pb-3'>
+                  {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
+                  <RankChange rankChange={encounter.playerRankChangeLeft} />
+                </div>
+                <div className=' text-right pt-3 border-t border-dashed border-t-stone-300 pb-3 pr-2'>{encounter.scoreLeft}</div>
+                <div className=' pt-3 border-t border-dashed border-t-stone-300 pb-3 pl-2'>{encounter.scoreRight}</div>
+                <div className='col-span-4  pt-3 border-t border-dashed border-t-stone-300 pb-3 text-right'>
+                  <RankChange rankChange={encounter.playerRankChangeRight} />
+                  {getPlayerLink(encounter.playerRightSlug, encounter.playerRightName)}
+                </div>
               </div>
-              <div className='flex-1 text-right'>{encounter.scoreLeft}</div>
-              <div className='flex-1'>{encounter.scoreRight}</div>
-              <div className='flex-2'>
-                <RankChange rankChange={encounter.playerRankChangeRight} />
-                {getPlayerLink(encounter.playerRightSlug, encounter.playerRightName)}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
       </div>
 

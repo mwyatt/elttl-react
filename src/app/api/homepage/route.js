@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 import { StatusCodes } from 'http-status-codes'
+import dayjs from 'dayjs'
+import { WeekTypes } from '@/constants/Week'
 
 export async function GET () {
   const connection = await getConnection()
@@ -42,7 +44,7 @@ export async function GET () {
         and status != 'exclude'
       group by fixtureId, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled
       ORDER BY timeFulfilled DESC
-      LIMIT 6
+      LIMIT 10
   `, {
     yearId: currentYear.id
   })
@@ -101,6 +103,35 @@ export async function GET () {
   })
   const totalFixturesCount = totalFixtures.length
 
+  // this week
+  const [weeks] = await connection.execute(`
+      SELECT id,
+              timeStart,
+              type
+      FROM tennisWeek
+      WHERE yearId = :yearId
+        AND timeStart = :timeStart
+  `, {
+    yearId: currentYear.id,
+    timeStart: dayjs().startOf('week').unix()
+  })
+  let week = null
+  let weekFixtures = []
+  if (weeks.length > 0) {
+    week = weeks[0]
+    if (week.type === WeekTypes.fixture) {
+      [weekFixtures] = await connection.execute(`
+            SELECT id
+            FROM tennisFixture
+            WHERE yearId = :yearId
+              AND weekId = :weekId
+        `, {
+        yearId: currentYear.id,
+        weekId: week.id
+      })
+    }
+  }
+
   connection.release()
 
   return NextResponse.json({
@@ -123,6 +154,8 @@ export async function GET () {
         fulfilled: totalFixturesFulfilled,
         total: totalFixturesCount
       }
-    }
+    },
+    week,
+    weekFixtures
   }, { status: StatusCodes.OK })
 }

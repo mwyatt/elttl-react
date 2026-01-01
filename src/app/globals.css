@@ -16,11 +16,4 @@ body {
   font-style: normal;
   font-variation-settings:
     "wdth" 100;
-
-  /*background: linear-gradient(*/
-  /*    to bottom,*/
-  /*    transparent,*/
-  /*    rgb(var(--background-end-rgb))*/
-  /*  )*/
-  /*  rgb(var(--background-start-rgb));*/
 }

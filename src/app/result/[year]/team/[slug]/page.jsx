@@ -58,7 +58,7 @@ export default async function Page ({ params }) {
           )}
 
           <SubHeading name='Team Fixtures' />
-          <div className='flex flex-wrap gap-3'>
+          <div className='grid gap-3 sm:grid-cols-2 xl:grid-cols-3 '>
 
             {fixtures.map((fixture, index) => (
               <FixtureCard

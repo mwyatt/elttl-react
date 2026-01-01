@@ -46,12 +46,12 @@ export default async function Page ({ params }) {
         <div className='flex-1'>
 
           <SubHeading name='Teams Playing Here' />
-          <div className='flex flex-wrap gap-3'>
+          <div className='grid sm:grid-cols-2 xl:grid-cols-3 gap-3'>
 
             {teams.map((team) => (
               <GeneralLink
                 href={`/result/${year}/team/${team.slug}`}
-                className='p-4 border border-primary-500 text-primary-500 min-w-48 max-w-64 rounded grow basis-0'
+                className='p-4 border border-primary-500 text-primary-500 rounded'
                 key={team.slug}
               >
                 <span className='float-right text-gray-500 text-sm'>{team.divisionName}</span>
