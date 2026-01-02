@@ -6,26 +6,43 @@ import { WeekTypeLabels, WeekTypes } from '@/constants/Week'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import classNames from 'classnames'
 import { formatDayWithSuffixOfMonth, isCurrentWeek } from '@/lib/date'
+import { linkStyles } from '@/lib/styles'
+import { getWeekDate } from '@/lib/week'
+import { BiTrophy } from 'react-icons/bi'
 
 export const dynamic = 'force-dynamic'
 
 const Week = ({ yearName, week }) => {
   const currentWeek = isCurrentWeek(week.timeStart)
+  const formattedDate = formatDayWithSuffixOfMonth(
+    getWeekDate(week.type, week.timeStart)
+  )
+  const isEvent = [WeekTypes.fixture, WeekTypes.catchup, WeekTypes.nothing].includes(week.type) === false
 
   return (
     <div className={classNames({
       'border rounded': true,
       'border-primary-500': currentWeek,
-      'overflow-hidden': true
+      'overflow-hidden': true,
+      'flex flex-col': true,
+      'border-2': isEvent || currentWeek,
+      'border-b-primary-500': isEvent,
+      'opacity-60': week.type === WeekTypes.nothing,
+      'hover:opacity-100': week.type === WeekTypes.nothing
     })}
     >
-      <p className='p-2 text-center bg-stone-100'>{formatDayWithSuffixOfMonth(week.timeStart)}</p>
-      <div className='p-4'>
-        <h2 className='text-2xl'>{WeekTypeLabels[week.type]}</h2>
+      <p className='p-2 text-center bg-stone-100'>{formattedDate}</p>
+      <div className='p-4 flex flex-col gap-4 flex-grow'>
+        <h2 className='text-2xl flex-grow'>
+          {isEvent && (
+            <BiTrophy className='inline mr-1 mb-1 fill-primary-500' size={24} />
+          )}
+          {WeekTypeLabels[week.type]}
+        </h2>
         <div className='flex justify-end'>
           {week.type !== WeekTypes.nothing && (
             <GeneralLink
-              className='bg-primary-500 rounded px-5 py-2 text-white font-bold mt-6'
+              className={linkStyles.join(' ')}
               href={`/result/${yearName}/week/${week.id}`}
             >View
             </GeneralLink>
@@ -53,7 +70,7 @@ export default async function Page ({ params }) {
       />
 
       <MainHeading name='Season Overview' />
-      <p className='mb-12'>This is an overview of what is happening each week in the {year} season:</p>
+      <p className='mb-12'>This is an overview of what is happening in the {year} season:</p>
 
       {weeks.length === 0 && (
         <p>No weeks have been configured yet.</p>

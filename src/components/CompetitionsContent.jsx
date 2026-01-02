@@ -35,3 +35,18 @@ export const DivisionalHandicapCompetitionContent = () => {
     </>
   )
 }
+
+export const AnnualClosedCompetitionContent = () => {
+  return (
+    <>
+      <p className='my-6'>This full day event normally takes place on a Sunday in February and is open to all current League Members.</p>
+      <p className='my-6'>The competitions usually include an open Singles and a Plate together, so far as possible, with either, Doubles,
+        Handicapped Singles and/or, Handicapped Doubles.
+        The Tournaments Secretary will decide on the exact format dependent on the number of entries and time available. Further details will be provided closer to the day.
+      </p>
+      <p className='my-6'>Players will be required to pre-register for the day in advance. Individuals who turn up on the day without pre-registering will not be allowed to play.
+        There will be a small entry fee.
+      </p>
+    </>
+  )
+}

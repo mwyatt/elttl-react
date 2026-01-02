@@ -9,7 +9,8 @@ export const WeekTypes = {
   div: 7,
   presentation: 8,
   agm: 9,
-  catchup: 10
+  catchup: 10,
+  closedCompetition: 11
 }
 
 export const FredHoldenCupWeekTypes = [
@@ -21,16 +22,17 @@ export const FredHoldenCupWeekTypes = [
 
 export const WeekTypeLabels = {
   [WeekTypes.nothing]: 'No Events Scheduled',
-  [WeekTypes.fixture]: 'Fixtures', // Show all fixtures scheduled to be played
-  [WeekTypes.vets]: 'Vets Competitions', // Show fragment from /competitions/ page
-  [WeekTypes.fred0]: 'Fred Holden Preliminary Round', // Show recent press relating to this
-  [WeekTypes.fred1]: 'Fred Holden 1st Round', // Show recent press relating to this
-  [WeekTypes.fred2]: 'Fred Holden 2nd Round', // Show recent press relating to this
-  [WeekTypes.fred3]: 'Fred Holden 3rd Round', // Show recent press relating to this
-  [WeekTypes.div]: 'Divisional Handicap Competition', // Show fragment from /competitions/ page
+  [WeekTypes.fixture]: 'Fixtures',
+  [WeekTypes.vets]: 'Vets Competitions',
+  [WeekTypes.fred0]: 'Fred Holden Preliminary Round',
+  [WeekTypes.fred1]: 'Fred Holden 1st Round',
+  [WeekTypes.fred2]: 'Fred Holden 2nd Round',
+  [WeekTypes.fred3]: 'Fred Holden 3rd Round',
+  [WeekTypes.div]: 'Divisional Handicap Competition',
   [WeekTypes.presentation]: 'Presentation Night',
   [WeekTypes.agm]: 'Annual General Meeting',
-  [WeekTypes.catchup]: 'Catch-Up Week'
+  [WeekTypes.catchup]: 'Catch-Up Week',
+  [WeekTypes.closedCompetition]: 'Annual Closed Competition - The Big Day'
 }
 
 export const getWeekTypeLabel = (weekType) =>
