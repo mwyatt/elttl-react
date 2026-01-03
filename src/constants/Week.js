@@ -10,14 +10,26 @@ export const WeekTypes = {
   presentation: 8,
   agm: 9,
   catchup: 10,
-  closedCompetition: 11
+  closedCompetition: 11,
+  fredSemis: 12,
+  fredFinal: 13
 }
 
 export const FredHoldenCupWeekTypes = [
   WeekTypes.fred0,
   WeekTypes.fred1,
   WeekTypes.fred2,
-  WeekTypes.fred3
+  WeekTypes.fred3,
+  WeekTypes.fredSemis,
+  WeekTypes.fredFinal
+]
+
+export const ExactDayWeekTypes = [
+  WeekTypes.presentation,
+  WeekTypes.agm,
+  WeekTypes.closedCompetition,
+  WeekTypes.fredSemis,
+  WeekTypes.fredFinal
 ]
 
 export const WeekTypeLabels = {
@@ -32,7 +44,9 @@ export const WeekTypeLabels = {
   [WeekTypes.presentation]: 'Presentation Night',
   [WeekTypes.agm]: 'Annual General Meeting',
   [WeekTypes.catchup]: 'Catch-Up Week',
-  [WeekTypes.closedCompetition]: 'Annual Closed Competition - The Big Day'
+  [WeekTypes.closedCompetition]: 'Annual Closed Competition - The Big Day',
+  [WeekTypes.fredSemis]: 'Fred Holden Semi Finals',
+  [WeekTypes.fredFinal]: 'Fred Holden Final'
 }
 
 export const getWeekTypeLabel = (weekType) =>

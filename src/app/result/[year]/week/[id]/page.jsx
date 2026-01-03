@@ -4,7 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import GeneralLink from '@/components/GeneralLink'
 import { linkStyles } from '@/lib/styles'
 import SubHeading from '@/components/SubHeading'
-import { FredHoldenCupWeekTypes, getWeekTypeLabel, WeekTypes } from '@/constants/Week'
+import { ExactDayWeekTypes, FredHoldenCupWeekTypes, getWeekTypeLabel, WeekTypes } from '@/constants/Week'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import FixtureCard from '@/components/FixtureCard'
 import { formatDayWithSuffixOfMonth } from '@/lib/date'
@@ -26,15 +26,10 @@ const getHeading = (weekType, weekTimeStart) => {
   )
   let middleBit = ' Week Commencing '
 
-  switch (weekType) {
-    case WeekTypes.presentation:
-    case WeekTypes.agm:
-    case WeekTypes.closedCompetition:
-      middleBit = ' on '
-      break
-    case WeekTypes.catchup:
-      middleBit = ' Commencing '
-      break
+  if (ExactDayWeekTypes.includes(weekType)) {
+    middleBit = ' on '
+  } else if (weekType === WeekTypes.catchup) {
+    middleBit = ' Commencing '
   }
 
   return `${weekTypeLabel}${middleBit}${formattedDate}`

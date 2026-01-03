@@ -27,8 +27,9 @@ const Week = ({ yearName, week }) => {
       'flex flex-col': true,
       'border-2': isEvent || currentWeek,
       'border-b-primary-500': isEvent,
-      'opacity-60': week.type === WeekTypes.nothing,
-      'hover:opacity-100': week.type === WeekTypes.nothing
+      // 'opacity-60': week.type === WeekTypes.nothing,
+      // 'hover:opacity-100': week.type === WeekTypes.nothing
+      hidden: week.type === WeekTypes.nothing
     })}
     >
       <p className='p-2 text-center bg-stone-100'>{formattedDate}</p>
