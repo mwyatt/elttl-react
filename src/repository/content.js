@@ -7,7 +7,8 @@ export async function getPressByTitleLikeAndPublishedAfter (titleFragment, dateP
   select * from content 
            where type = 'press'
              and title like :title
-             and timePublished > :timePublished;
+             and timePublished > :timePublished
+  order by timePublished desc
   `, {
     title: `%${titleFragment}%`,
     timePublished: datePublished.unix()

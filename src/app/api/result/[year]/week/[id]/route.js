@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { StatusCodes } from 'http-status-codes'
 import { getYearByName } from '@/app/lib/year'
-import { getFixturesByWeekId, getUnfulfilledFixtures } from '@/repository/fixture'
+import { getFixturesByWeekId, getUnfulfilledFixtures, getUnfulfilledFixturesByWeekId } from '@/repository/fixture'
 import { getPressByTitleLikeAndPublishedAfter } from '@/repository/content'
 import dayjs from 'dayjs'
 import { FredHoldenCupWeekTypes, WeekTypes } from '@/constants/Week'
@@ -31,7 +31,7 @@ export async function GET (request, { params }) {
   }
 
   const week = weeks[0]
-  const fixtures = await getFixturesByWeekId(currentYear.id, id)
+  let fixtures = await getFixturesByWeekId(currentYear.id, id)
 
   let fredHoldenCupPress = []
   if (FredHoldenCupWeekTypes.includes(week.type)) {
@@ -41,12 +41,22 @@ export async function GET (request, { params }) {
 
   let unfulfilledFixtures = []
   if (week.type === WeekTypes.catchup) {
-    unfulfilledFixtures = await getUnfulfilledFixtures('fred', dayjs().subtract(40, 'weeks'))
+    unfulfilledFixtures = await getUnfulfilledFixtures(currentYear.id)
+  } else {
+    fixtures = fixtures.concat(await getUnfulfilledFixturesByWeekId(currentYear.id, id))
   }
+
+  const fixturesByDivisionName = {}
+  fixtures.forEach(fixture => {
+    if (!fixturesByDivisionName[fixture.divisionName]) {
+      fixturesByDivisionName[fixture.divisionName] = []
+    }
+    fixturesByDivisionName[fixture.divisionName].push(fixture)
+  })
 
   return NextResponse.json({
     week,
-    fixtures,
+    fixturesByDivisionName,
     fredHoldenCupPress,
     unfulfilledFixtures
   }, { status: StatusCodes.OK })

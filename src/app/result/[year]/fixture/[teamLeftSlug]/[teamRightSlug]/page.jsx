@@ -131,14 +131,16 @@ export default async function Page ({ params }) {
           </div>
         ))}
         {fixtureFulfilled && (
-          <div className='text-4xl flex p-6 mb-12 gap-10 bg-white rounded-bl rounded-br border border-dashed border-stone-300 border-t-0'>
-            <div className='w-1/2 text-right'>{getGrandTotal(SIDE_LEFT)}</div>
-            <div className='w-1/2 '>{getGrandTotal(SIDE_RIGHT)}</div>
-          </div>
-        )}
+          <>
+            <div className='text-4xl flex p-6 mb-12 gap-10 bg-white rounded-bl rounded-br border border-dashed border-stone-300 border-t-0'>
+              <div className='w-1/2 text-right'>{getGrandTotal(SIDE_LEFT)}</div>
+              <div className='w-1/2 '>{getGrandTotal(SIDE_RIGHT)}</div>
+            </div>
 
-        <SubHeading name='Performance' />
-        <FixtureEncounterChart year={year} teamLeftName={teamLeft.name} teamRightName={teamRight.name} encounters={encounters} />
+            <SubHeading name='Performance' />
+            <FixtureEncounterChart year={year} teamLeftName={teamLeft.name} teamRightName={teamRight.name} encounters={encounters} />
+          </>
+        )}
       </div>
     </FrontLayout>
   )

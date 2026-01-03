@@ -4,10 +4,10 @@ export const getDayAfter = (timeStart) => {
   return dayjs.unix(timeStart).add(1, 'day')
 }
 
-export const formatDayWithSuffixOfMonth = (timeStart) => {
-  const day = getDayAfter(timeStart).date()
-  const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || ~~(day % 100 / 10) === 1) ? 0 : day % 10]
-  return `${day}${suffix} of ${dayjs.unix(timeStart).format('MMMM')}`
+export const formatDayWithSuffixOfMonth = (dayJsDate) => {
+  const date = dayJsDate.date()
+  const suffix = ['th', 'st', 'nd', 'rd'][(date % 10 > 3 || ~~(date % 100 / 10) === 1) ? 0 : date % 10]
+  return `${date}${suffix} of ${dayJsDate.format('MMMM')}`
 }
 
 export const isCurrentWeek = (weekTimeStart) => {
