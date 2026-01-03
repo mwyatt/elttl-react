@@ -58,7 +58,10 @@ export async function GET (request, { params }) {
   const [teamDivisions] = await connection.execute(`
     select
         tp.id,
-        tt.divisionId
+        tt.divisionId,
+        tt.id as teamId,
+        tt.name as teamName,
+        tt.slug as teamSlug
     from tennisPlayer tp
     left join tennisTeam tt on tt.id = tp.teamId and tt.yearId = tp.yearId
     where tp.yearId = :yearId
@@ -72,6 +75,23 @@ export async function GET (request, { params }) {
   const playerIdsNotInDivision = teamDivisions.filter(td => td.divisionId !== yearDivisionId.divisionId).map(td => td.id)
 
   stats = stats.filter(s => !playerIdsNotInDivision.includes(s.player.id))
+
+  // Modify stats teams so that the team that the player is registered to is shown
+  // It was possible for a player playing up to then have their team showing the last team they played for
+  stats = stats.map(stat => {
+    const playerTeamDivision = teamDivisions.find(teamDivision => teamDivision.id === stat.player.id)
+    if (playerTeamDivision) {
+      return {
+        ...stat,
+        team: {
+          ...stat.team,
+          name: playerTeamDivision.teamName,
+          slug: playerTeamDivision.teamSlug,
+        }
+      }
+    }
+    return stat
+  })
 
   connection.release()
 
