@@ -10,6 +10,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import { getShortPlayerName } from '@/lib/player'
+import WeeksTimeline from '@/components/WeeksTimeline'
 
 export async function generateMetadata (
   { params }
@@ -29,7 +30,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { year, slug } = await params
-  const { player, encounters, fixtures } = await fetchJson(`/result/${year}/player/${slug}`)
+  const { player, encounters, fixtures, weeks } = await fetchJson(`/result/${year}/player/${slug}`)
 
   const getPlayerLink = (playerSlug, playerName) => {
     if (playerSlug === slug) {
@@ -63,18 +64,46 @@ export default async function Page ({ params }) {
       <MainHeading name={player.name} />
       <div className='lg:flex gap-16'>
         <div className='flex-1'>
-
           <SubHeading name='General Information' />
-          <p>Plays for the <GeneralLink className={linkStyles.join(' ')} href={`/result/${year}/team/${player.teamSlug}`}>{player.teamName}</GeneralLink> team with a rank of <span className='font-bold'>{player.rank}</span> and has had <span className='font-bold'>{encounters.length}</span> encounters with other players so far this season.</p>
+          <p>
+            {'Plays for the '}
+            <GeneralLink
+              className={linkStyles.join(' ')}
+              href={`/result/${year}/team/${player.teamSlug}`}
+            >
+              {player.teamName}
+            </GeneralLink>
+            {' team with a rank of '}
+            <span className='font-bold'>{player.rank}</span>
+            {' and has had '}
+            <span className='font-bold'>{encounters.length}</span>
+            {' encounters with other players so far this season.'}
+          </p>
 
           {(player.phoneLandline || player.phoneMobile) && (
             <>
               <SubHeading name='Contact Information' />
               {player.phoneLandline && (
-                <p className='mb-2'>Phone Landline: <a className='text-primary-500' href={`tel:${player.phoneLandline}`}>{player.phoneLandline}</a></p>
+                <p className='mb-2'>
+                  {'Phone Landline: '}
+                  <a
+                    className='text-primary-500'
+                    href={`tel:${player.phoneLandline}`}
+                  >
+                    {player.phoneLandline}
+                  </a>
+                </p>
               )}
               {player.phoneMobile && (
-                <p className='mb-2'>Phone Mobile: <a className='text-primary-500' href={`tel:${player.phoneMobile}`}>{player.phoneMobile}</a></p>
+                <p className='mb-2'>
+                  {'Phone Mobile: '}
+                  <a
+                    className='text-primary-500'
+                    href={`tel:${player.phoneMobile}`}
+                  >
+                    {player.phoneMobile}
+                  </a>
+                </p>
               )}
             </>
           )}
@@ -108,7 +137,10 @@ export default async function Page ({ params }) {
                   {getPlayerLink(encounter.playerLeftSlug, encounter.playerLeftName)}
                   <RankChange rankChange={encounter.playerRankChangeLeft} />
                 </div>
-                <div className=' text-right pt-3 border-t border-dashed border-t-stone-300 pb-3 pr-2'>{encounter.scoreLeft}</div>
+                <div
+                  className=' text-right pt-3 border-t border-dashed border-t-stone-300 pb-3 pr-2'
+                >{encounter.scoreLeft}
+                </div>
                 <div className=' pt-3 border-t border-dashed border-t-stone-300 pb-3 pl-2'>{encounter.scoreRight}</div>
                 <div className='col-span-4  pt-3 border-t border-dashed border-t-stone-300 pb-3 text-right'>
                   <RankChange rankChange={encounter.playerRankChangeRight} />
@@ -119,8 +151,13 @@ export default async function Page ({ params }) {
           </div>
 
         </div>
+
       </div>
 
+      <div>
+        <SubHeading name='Upcoming Events' />
+        <WeeksTimeline yearName={year} weeks={weeks} teamSlug={player.teamSlug} />
+      </div>
     </FrontLayout>
   )
 }

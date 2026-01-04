@@ -86,7 +86,7 @@ export async function GET (request, { params }) {
         team: {
           ...stat.team,
           name: playerTeamDivision.teamName,
-          slug: playerTeamDivision.teamSlug,
+          slug: playerTeamDivision.teamSlug
         }
       }
     }
