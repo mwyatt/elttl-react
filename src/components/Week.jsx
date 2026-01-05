@@ -53,7 +53,16 @@ export default function Week ({ yearName, week, teamSlug, closestWeekId }) {
       >
         <GeneralLink
           href={`/result/${yearName}/week/${week.id}`}
-        >{!isExactEventDate && <span className='border-b border-dashed border-stone-400 text-stone-400' title='Week Commencing'>w/c</span>} {formattedDate}
+        >{!isExactEventDate && (
+          <span
+            className={classNames({
+              'border-b border-dashed': true,
+              'border-stone-400 text-stone-400': !isCurrentWeek,
+              'text-emerald-200 border-emerald-200': isCurrentWeek
+            })} title='Week Commencing'
+          >w/c
+          </span>
+        )} {formattedDate}
         </GeneralLink>
       </div>
       <div className='col-span-4 flex flex-col sm:flex-row p-2 pr-0 gap-2 sm:gap-4 sm:items-center'>

@@ -59,10 +59,7 @@ export default async function Page ({ params }) {
           )}
 
           {weeks.length > 0 && (
-            <div>
-              <SubHeading name='Events' />
-              <WeeksTimeline yearName={year} weeks={weeks} teamSlug={team.slug} />
-            </div>
+            <WeeksTimeline yearName={year} weeks={weeks} teamSlug={team.slug} />
           )}
 
         </div>
