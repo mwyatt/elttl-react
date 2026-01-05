@@ -99,6 +99,7 @@ export async function getFixturesByTeamId (yearId, teamId) {
              ttl.homeWeekday,
              tv.name venueName,
              tv.slug venueSlug,
+             tv.location venueLocation,
             sum(scoreLeft) scoreLeft,
              ttr.name teamRightName,
              ttr.slug teamRightSlug,
@@ -113,7 +114,7 @@ export async function getFixturesByTeamId (yearId, teamId) {
                 left join tennisVenue tv on tv.id = ttl.venueId and tv.yearId = ttl.yearId
       where ttf.yearId = :yearId
         and (ttf.teamIdLeft = :teamId OR ttf.teamIdRight = :teamId)
-      group by ttf.id, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled, weekId, ttl.homeWeekday, venueName, venueSlug
+      group by ttf.id, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled, weekId, ttl.homeWeekday, venueName, venueSlug, venueLocation
   `, {
     yearId,
     teamId

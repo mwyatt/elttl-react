@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getConnection } from '@/lib/database'
 import { StatusCodes } from 'http-status-codes'
 import { getYearByName } from '@/app/lib/year'
+import { getAllWeeksByYear } from '@/repository/week'
+import { getFixturesByTeamId } from '@/repository/fixture'
 
 export async function GET (request, { params }) {
   const { year, slug } = await params
@@ -76,11 +78,20 @@ export async function GET (request, { params }) {
     teamId: team.id
   })
 
+  const weeks = await getAllWeeksByYear(currentYear.id)
+  const teamFixtures = await getFixturesByTeamId(currentYear.id, team.id)
+
+  // Attach fixtures to weeks
+  for (const week of weeks) {
+    week.fixtures = teamFixtures.filter(fixture => fixture.weekId === week.id)
+  }
+
   connection.release()
 
   return NextResponse.json({
     team,
     players,
-    fixtures
+    fixtures,
+    weeks
   }, { status: StatusCodes.OK })
 }

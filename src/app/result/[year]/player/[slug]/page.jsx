@@ -50,7 +50,7 @@ export default async function Page ({ params }) {
   }
 
   return (
-    <FrontLayout>
+    <FrontLayout visitingYearName={year}>
       <Breadcrumbs
         items={
           [
@@ -62,8 +62,8 @@ export default async function Page ({ params }) {
       />
 
       <MainHeading name={player.name} />
-      <div className='lg:flex gap-16'>
-        <div className='flex-1'>
+      <div className='lg:grid lg:grid-cols-8 gap-16'>
+        <div className='lg:col-span-5'>
           <SubHeading name='General Information' />
           <p>
             {'Plays for the '}
@@ -108,26 +108,17 @@ export default async function Page ({ params }) {
             </>
           )}
 
-          {/* @todo make this only fixtures that the player has been involved in */}
-          <SubHeading name='Team Fixtures' />
-          <div className='grid gap-3 sm:grid-cols-2 xl:grid-cols-3 '>
-
-            {fixtures.map((fixture, index) => (
-              <FixtureCard
-                key={index}
-                year={year}
-                teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
-                teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
-                timeFulfilled={fixture.timeFulfilled}
-              />
-            ))}
-
-          </div>
+          {weeks.length > 0 && (
+            <div>
+              <SubHeading name='Events' />
+              <WeeksTimeline yearName={year} weeks={weeks} teamSlug={player.teamSlug} />
+            </div>
+          )}
         </div>
 
-        <div className='flex-1'>
+        <div className='lg:col-span-3'>
 
-          <SubHeading name='Season Performance' />
+          <SubHeading name='Performance' />
 
           <div className='grid grid-cols-10'>
 
@@ -154,10 +145,22 @@ export default async function Page ({ params }) {
 
       </div>
 
-      <div>
-        <SubHeading name='Upcoming Events' />
-        <WeeksTimeline yearName={year} weeks={weeks} teamSlug={player.teamSlug} />
+      {/* @todo make this only fixtures that the player has been involved in */}
+      <SubHeading name='Fulfilled Team Fixtures' />
+      <div className='grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 '>
+
+        {fixtures.map((fixture, index) => (
+          <FixtureCard
+            key={index}
+            year={year}
+            teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
+            teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
+            timeFulfilled={fixture.timeFulfilled}
+          />
+        ))}
+
       </div>
+
     </FrontLayout>
   )
 }

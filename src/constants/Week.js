@@ -32,6 +32,10 @@ export const ExactDayWeekTypes = [
   WeekTypes.fredFinal
 ]
 
+export const NonEventTypes = [
+  WeekTypes.fixture, WeekTypes.catchup, WeekTypes.nothing
+]
+
 export const WeekTypeLabels = {
   [WeekTypes.nothing]: 'No Events Scheduled',
   [WeekTypes.fixture]: 'Fixtures',
