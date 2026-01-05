@@ -29,7 +29,7 @@ export default async function FrontLayout ({ visitingYearName, children, paddedC
   } = await fetchJson('/frontend')
   const cookieStore = await cookies()
   const isCookieBannerDismissed = cookieStore.get(CookieBannerConsentChoiceKey)?.value.length > 0
-  const isVisitingArchive = currentYearName !== visitingYearName
+  const isVisitingArchive = visitingYearName !== undefined && (currentYearName !== visitingYearName)
 
   return (
     <div data-version={process.env.NEXT_CURRENT_VERSION}>

@@ -120,7 +120,7 @@ export default function Week ({ yearName, week, teamSlug, closestWeekId }) {
             >View {fixture.timeFulfilled ? 'Result' : 'Fixture'}
             </GeneralLink>
           )}
-          {isEvent && (
+          {(isEvent || week.type === WeekTypes.catchup) && (
             <GeneralLink
               className='color-secondary-500 border-b border-secondary-500 whitespace-nowrap inline-block'
               href={`/result/${yearName}/week/${week.id}`}
