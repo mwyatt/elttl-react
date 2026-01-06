@@ -79,7 +79,7 @@ export default async function Page ({ params }) {
   }
 
   return (
-    <FrontLayout>
+    <FrontLayout visitingYearName={year}>
       <Breadcrumbs
         items={
           [

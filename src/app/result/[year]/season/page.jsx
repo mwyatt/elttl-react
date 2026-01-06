@@ -2,7 +2,7 @@ import FrontLayout from '@/app/frontLayout'
 import MainHeading from '@/components/MainHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import GeneralLink from '@/components/GeneralLink'
-import { WeekTypeLabels, WeekTypes } from '@/constants/Week'
+import { NonEventTypes, WeekTypeLabels, WeekTypes } from '@/constants/Week'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import classNames from 'classnames'
 import { formatDayWithSuffixOfMonth, isCurrentWeek } from '@/lib/date'
@@ -17,7 +17,7 @@ const Week = ({ yearName, week }) => {
   const formattedDate = formatDayWithSuffixOfMonth(
     getWeekDate(week.type, week.timeStart)
   )
-  const isEvent = [WeekTypes.fixture, WeekTypes.catchup, WeekTypes.nothing].includes(week.type) === false
+  const isEvent = NonEventTypes.includes(week.type) === false
 
   return (
     <div className={classNames({
@@ -27,8 +27,6 @@ const Week = ({ yearName, week }) => {
       'flex flex-col': true,
       'border-2': isEvent || currentWeek,
       'border-b-primary-500': isEvent,
-      // 'opacity-60': week.type === WeekTypes.nothing,
-      // 'hover:opacity-100': week.type === WeekTypes.nothing
       hidden: week.type === WeekTypes.nothing
     })}
     >
@@ -61,7 +59,7 @@ export default async function Page ({ params }) {
   } = await fetchJson(`/result/${year}/season`)
 
   return (
-    <FrontLayout maxWidth>
+    <FrontLayout visitingYearName={year} maxWidth>
       <Breadcrumbs
         items={
           [

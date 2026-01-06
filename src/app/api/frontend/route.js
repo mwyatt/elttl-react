@@ -66,6 +66,7 @@ export async function GET () {
     //   commonLinks.diciplineProcedure,
     //   commonLinks.safeguardingPolicy
     // ],
+    currentYearName: currentYear.name,
     footLinks: [
       { area: 1, name: 'About Us', url: '/about-us' },
       { area: 1, name: 'Coaching & Sessions', url: '/sessions' },

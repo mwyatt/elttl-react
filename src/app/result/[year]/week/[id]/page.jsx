@@ -46,7 +46,7 @@ export default async function Page ({ params }) {
   const weekTypeLabel = getWeekTypeLabel(week.type)
 
   return (
-    <FrontLayout maxWidth>
+    <FrontLayout visitingYearName={year} maxWidth>
       <Breadcrumbs items={
           [
             { name: 'Season', href: `/result/${year}/season` },

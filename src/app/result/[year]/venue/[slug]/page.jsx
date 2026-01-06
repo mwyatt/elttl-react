@@ -29,7 +29,7 @@ export default async function Page ({ params }) {
   const { teams, venue } = await fetchJson(`/result/${year}/venue/${slug}`)
 
   return (
-    <FrontLayout>
+    <FrontLayout visitingYearName={year}>
       <Breadcrumbs items={
           [
             { name: 'Results', href: '/result' },

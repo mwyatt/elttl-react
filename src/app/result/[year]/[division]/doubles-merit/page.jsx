@@ -27,7 +27,7 @@ export default async function Page ({ params }) {
   const { stats } = await fetchJson(`/result/${year}/${division}/doubles-merit`)
 
   return (
-    <FrontLayout>
+    <FrontLayout visitingYearName={year}>
       <Breadcrumbs
         items={
           [

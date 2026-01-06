@@ -19,19 +19,30 @@ export const metadata = {
   }
 }
 
-export default async function FrontLayout ({ children, paddedContent = true, maxWidth = true }) {
+export default async function FrontLayout ({ visitingYearName, children, paddedContent = true, maxWidth = true }) {
   const appName = getMetaTitle()
   const {
+    currentYearName,
     menuPrimary,
     footLinks,
     advertisementsSecondary
   } = await fetchJson('/frontend')
   const cookieStore = await cookies()
   const isCookieBannerDismissed = cookieStore.get(CookieBannerConsentChoiceKey)?.value.length > 0
+  const isVisitingArchive = visitingYearName !== undefined && (currentYearName !== visitingYearName)
 
   return (
     <div data-version={process.env.NEXT_CURRENT_VERSION}>
       <Header appName={appName} menuPrimary={menuPrimary} />
+
+      {isVisitingArchive && (
+        <div className='bg-amber-400 text-amber-900 text-center p-4'>
+          You are viewing an archived season ({visitingYearName}). For the latest information, please visit the{' '}
+          <GeneralLink className='underline font-bold' href={`/result/${currentYearName}/season`}>
+            current season ({currentYearName})
+          </GeneralLink>.
+        </div>
+      )}
 
       <div className={`${paddedContent ? 'p-4 sm:p-8' : ''} ${maxWidth ? 'max-w-[1440px] mx-auto' : ''} bg-white/80`}>
         {children}

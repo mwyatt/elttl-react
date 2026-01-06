@@ -89,3 +89,38 @@ export async function getUnfulfilledFixturesByWeekId (yearId, weekId) {
 
   return fixtures
 }
+
+export async function getFixturesByTeamId (yearId, teamId) {
+  const connection = await getConnection()
+
+  const [fixtures] = await connection.execute(`
+      select ttl.name teamLeftName,
+             ttl.slug teamLeftSlug,
+             ttl.homeWeekday,
+             tv.name venueName,
+             tv.slug venueSlug,
+             tv.location venueLocation,
+            sum(scoreLeft) scoreLeft,
+             ttr.name teamRightName,
+             ttr.slug teamRightSlug,
+            sum(scoreRight) scoreRight,
+             timeFulfilled,
+             weekId
+      from tennisFixture ttf
+          left join tennisEncounter te on te.fixtureId = ttf.id
+               left join tennisTeam ttl on ttl.id = ttf.teamIdLeft and ttl.yearId = ttf.yearId
+               left join tennisTeam ttr on ttr.id = ttf.teamIdRight and ttr.yearId = ttf.yearId
+               left join tennisWeek tw on tw.id = ttf.weekId and tw.yearId = ttf.yearId
+                left join tennisVenue tv on tv.id = ttl.venueId and tv.yearId = ttl.yearId
+      where ttf.yearId = :yearId
+        and (ttf.teamIdLeft = :teamId OR ttf.teamIdRight = :teamId)
+      group by ttf.id, teamLeftName, teamRightName, teamLeftSlug, teamRightSlug, timeFulfilled, weekId, ttl.homeWeekday, venueName, venueSlug, venueLocation
+  `, {
+    yearId,
+    teamId
+  })
+
+  connection.release()
+
+  return fixtures
+}

@@ -9,6 +9,7 @@ import { homeNightMap } from '@/constants/Team'
 import { apiUrl } from '@/constants/url'
 import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
+import WeeksTimeline from '@/components/WeeksTimeline'
 
 export async function generateMetadata (
   { params }
@@ -28,10 +29,10 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { year, slug } = await params
-  const { team, players, fixtures } = await fetchJson(`/result/${year}/team/${slug}`)
+  const { team, players, fixtures, weeks } = await fetchJson(`/result/${year}/team/${slug}`)
 
   return (
-    <FrontLayout>
+    <FrontLayout visitingYearName={year}>
       <Breadcrumbs
         items={
           [
@@ -57,20 +58,9 @@ export default async function Page ({ params }) {
             <p>There is no team secretary currently.</p>
           )}
 
-          <SubHeading name='Team Fixtures' />
-          <div className='grid gap-3 sm:grid-cols-2 xl:grid-cols-3 '>
-
-            {fixtures.map((fixture, index) => (
-              <FixtureCard
-                key={index}
-                year={year}
-                teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
-                teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
-                timeFulfilled={fixture.timeFulfilled}
-              />
-            ))}
-
-          </div>
+          {weeks.length > 0 && (
+            <WeeksTimeline yearName={year} weeks={weeks} teamSlug={team.slug} />
+          )}
 
         </div>
         <div className='flex-1'>
@@ -98,6 +88,21 @@ export default async function Page ({ params }) {
 
           {/* <SubHeading name='Directions' /> */}
           {/* <DirectionsButton url={data.venue.location} /> */}
+
+          <SubHeading name='Fixtures Fulfilled' />
+          <div className='grid gap-3 sm:grid-cols-2 xl:grid-cols-3 '>
+
+            {fixtures.map((fixture, index) => (
+              <FixtureCard
+                key={index}
+                year={year}
+                teamLeft={{ name: fixture.teamLeftName, slug: fixture.teamLeftSlug, score: fixture.scoreLeft }}
+                teamRight={{ name: fixture.teamRightName, slug: fixture.teamRightSlug, score: fixture.scoreRight }}
+                timeFulfilled={fixture.timeFulfilled}
+              />
+            ))}
+
+          </div>
 
         </div>
       </div>

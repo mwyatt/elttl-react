@@ -18,14 +18,17 @@ export default function SeasonTotals ({ yearName, totals }) {
       <div className='flex p-4 items-center'>
 
         <h2 className='text-2xl grow'>Season {yearName}-{parseInt(yearName) + 1}</h2>
-        <GeneralLink className={allHomeButtonStyles} href={`/result/${yearName}`}>Season Overview</GeneralLink>
+        <div className='flex gap-2'>
+          <GeneralLink className={allHomeButtonStyles} href={`/result/${yearName}`}>Team Information</GeneralLink>
+          <GeneralLink className={allHomeButtonStyles} href={`/result/${yearName}/season`}>Season Overview</GeneralLink>
+        </div>
       </div>
       <div className='flex flex-wrap gap-3 mb-6 p-4'>
         <Panel name='Divisions' url={`/result/${yearName}`} total={totals.divisions} />
         <Panel name='Teams' url={`/result/${yearName}`} total={totals.teams} />
         <Panel name='Players' url={`/result/${yearName}`} total={totals.players} />
         <Panel
-          name='Fixtures Fulfilled' url={`/result/${yearName}`} total={
+          name='Fixtures Fulfilled' url={`/result/${yearName}/season`} total={
             <span>
               {totals.fixtures.fulfilled}<span className='opacity-50'>/{totals.fixtures.total}</span>
             </span>
