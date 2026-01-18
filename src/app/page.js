@@ -14,6 +14,7 @@ import ThisWeek from '@/components/home/ThisWeek'
 import { WeekTypeLabels } from '@/constants/Week'
 import { formatDateWithDayAndSuffixOfMonth } from '@/lib/date'
 import { GiTrophyCup } from 'react-icons/gi'
+import Panel from '@/components/home/Panel'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -35,31 +36,30 @@ export default async function Page () {
 
   return (
     <FrontLayout paddedContent={false} maxWidth>
-      <div className='pt-6 sm:grid sm:grid-cols-2 md:grid-cols-3 gap-6'>
+      <div className='sm:p-6 sm:grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
         {upcomingEventWeek && (
-        <div className='p-6 border border-stone-300 rounded flex flex-col items-center justify-center gap-6 shadow-md'>
-          <div className={'grow flex gap-4'}>
-            <div>
-              <GiTrophyCup className='inline mr-1 mb-1 fill-primary-500' size={120} />
+          <Panel>
+            <div className='flex flex-col items-center justify-center gap-6 h-full'>
+              <div className='grow flex gap-4'>
+                <div>
+                  <GiTrophyCup className='inline mr-1 mb-1 fill-primary-500' size={120} />
+                </div>
+                <div>
+                  <h1 className='text-3xl font-bold mb-4'>{WeekTypeLabels[upcomingEventWeek.type]}</h1>
+                  <p className='text-xl grow'>{formatDateWithDayAndSuffixOfMonth(dayjs.unix(upcomingEventWeek.timeStart))}</p>
+                </div>
+              </div>
+              <div className='w-full flex gap-4 justify-end'>
+                <GeneralLink className='text-stone-500 border border-stone-400 px-2 py-1 rounded text-lg flex items-center' href={`/result/${currentYear}/season`}>Season Overview</GeneralLink>
+                <GeneralLink href={`/result/${currentYear}/week/${upcomingEventWeek.id}`} className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg'>More Info</GeneralLink>
+              </div>
             </div>
-            <div>
-              <h1 className='text-3xl font-bold mb-4'>{WeekTypeLabels[upcomingEventWeek.type]}</h1>
-              <p className='text-xl grow'>{formatDateWithDayAndSuffixOfMonth(dayjs.unix(upcomingEventWeek.timeStart))}</p>
-            </div>
-          </div>
-          <div className={'w-full flex gap-4 justify-end'}>
-          <GeneralLink className={'text-stone-500 border border-stone-400 px-2 py-1 rounded text-lg flex items-center'} href={`/result/${currentYear}/season`}>Season Overview</GeneralLink>
-            <GeneralLink href={`/result/${currentYear}/week/${upcomingEventWeek.id}`} className={'bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg'}>More Info</GeneralLink>
-          </div>
-        </div>
+          </Panel>
         )}
-        <div className='p-6 border border-stone-300 rounded shadow-md flex'>
+        <Panel>
           <ThisWeek yearName={currentYear} week={thisWeek} fixtures={weekFixtures} />
-        </div>
-        <div className='p-6 border border-stone-300 rounded shadow-md'>
-          <SessionsToday yearName={currentYear} />
-        </div>
-        <div className='p-6 border border-stone-300 rounded shadow-md row-span-2'>
+        </Panel>
+        <Panel rowSpan={2}>
           <div className='flex items-center'>
             <h2 className='text-2xl grow'>News Releases</h2>
             <div>
@@ -74,20 +74,24 @@ export default async function Page () {
               >
                 <RelativeTime timestamp={press.timePublished} />
               </p>
-              <h3 className='text-lg'><GeneralLink
-                className={linkStyles.join(' ')}
-                href={press.url}
-                                      >{press.title}
-              </GeneralLink>
+              <h3 className='text-lg'>
+                <GeneralLink
+                  className={linkStyles.join(' ')}
+                  href={press.url}
+                >
+                  {press.title}
+                </GeneralLink>
               </h3>
             </div>
           ))}
-
-        </div>
-        <div className='p-6 border border-stone-300 rounded shadow-md col-span-2'>
+        </Panel>
+        <Panel colSpan={2}>
           <SeasonTotals totals={seasonTotals} yearName={currentYear} />
-        </div>
-        <div className='p-6 border border-stone-300 rounded shadow-md col-span-2'>
+        </Panel>
+        <Panel>
+          <SessionsToday yearName={currentYear} />
+        </Panel>
+        <Panel colSpan={2}>
           {latestFixtures.length > 0 && (
             <>
               <h2 className='text-2xl mb-6'>Latest Fulfilled Fixtures</h2>
@@ -109,20 +113,28 @@ export default async function Page () {
               </div>
             </>
           )}
-        </div>
-        <div className='p-6 border border-stone-300 rounded shadow-md'>
+        </Panel>
+        <Panel>
           <ImageGallery />
-        </div>
-        <div className='p-6 border border-stone-300 rounded shadow-md'>
-          <h2 className='text-2xl mb-4'>Competitions Schedule</h2>
-          <p>Find out more about the various competitions being held this season.</p>
-          <GeneralLink className={'bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg'} href={'http://localhost:3000/competitions-schedule-2025-2026.pdf'}>Download</GeneralLink>
-        </div>
-        <div className='p-6 border border-stone-300 rounded shadow-md'>
-          <h2 className='text-2xl mb-4'>Welcome to Season 2025</h2>
-          <p>Welcome to the new season, download the handbook for fixtures and more.</p>
-          <GeneralLink className={'bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg'} href={'http://localhost:3000/handbook-2025-2026.pdf'}>Download</GeneralLink>
-        </div>
+        </Panel>
+        <Panel>
+          <div className='flex flex-col gap-4'>
+            <h2 className='text-2xl'>Competitions Schedule</h2>
+            <p>Find out more about the various competitions being held this season.</p>
+            <div className='flex justify-end'>
+              <GeneralLink className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg' href='http://localhost:3000/competitions-schedule-2025-2026.pdf'>Download</GeneralLink>
+            </div>
+          </div>
+        </Panel>
+        <Panel>
+          <div className='flex flex-col gap-4'>
+            <h2 className='text-2xl'>Welcome to Season 2025</h2>
+            <p>Welcome to the new season, download the handbook for fixtures and more.</p>
+            <div className='flex justify-end'>
+              <GeneralLink className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg' href='http://localhost:3000/handbook-2025-2026.pdf'>Download</GeneralLink>
+            </div>
+          </div>
+        </Panel>
       </div>
     </FrontLayout>
   )

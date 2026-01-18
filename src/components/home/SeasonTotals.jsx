@@ -14,7 +14,7 @@ const Panel = ({ name, total, url }) => (
 
 export default function SeasonTotals ({ yearName, totals }) {
   return (
-    <div className={'flex flex-col gap-6'}>
+    <div className='flex flex-col gap-6'>
       <div className='flex items-center'>
         <h2 className='text-2xl grow'>Season {yearName}-{parseInt(yearName) + 1}</h2>
         <div className='flex gap-2'>

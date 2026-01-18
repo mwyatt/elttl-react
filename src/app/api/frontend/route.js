@@ -45,7 +45,7 @@ export async function GET () {
       description: 'Your stats, never forgotten! See the previous seasons scores.',
       action: 'View',
       url: '/result/'
-    },
+    }
   ]
 
   const commonLinks = {
