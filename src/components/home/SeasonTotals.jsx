@@ -5,7 +5,7 @@ import { allHomeButtonStyles } from '@/lib/styles'
 
 const Panel = ({ name, total, url }) => (
   <GeneralLink
-    href={url} className='flex-wrap flex p-6 grow text-xl flex-col items-center gap-2 rounded bg-primary-500 text-white'
+    href={url} className='flex-wrap flex p-6 grow text-xl flex-col items-center gap-2 rounded bg-secondary-500 text-white'
   >
     <span className='text-5xl font-semibold'>{total}</span>
     {name}
@@ -14,16 +14,15 @@ const Panel = ({ name, total, url }) => (
 
 export default function SeasonTotals ({ yearName, totals }) {
   return (
-    <div>
-      <div className='flex p-4 items-center'>
-
+    <div className={'flex flex-col gap-6'}>
+      <div className='flex items-center'>
         <h2 className='text-2xl grow'>Season {yearName}-{parseInt(yearName) + 1}</h2>
         <div className='flex gap-2'>
           <GeneralLink className={allHomeButtonStyles} href={`/result/${yearName}`}>Team Information</GeneralLink>
           <GeneralLink className={allHomeButtonStyles} href={`/result/${yearName}/season`}>Season Overview</GeneralLink>
         </div>
       </div>
-      <div className='flex flex-wrap gap-3 mb-6 p-4'>
+      <div className='flex flex-wrap gap-3'>
         <Panel name='Divisions' url={`/result/${yearName}`} total={totals.divisions} />
         <Panel name='Teams' url={`/result/${yearName}`} total={totals.teams} />
         <Panel name='Players' url={`/result/${yearName}`} total={totals.players} />

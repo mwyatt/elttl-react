@@ -17,12 +17,12 @@ export default function SessionsToday ({ yearName }) {
   }
 
   return (
-    <div className='my-6 px-4 md:px-0'>
+    <div className='px-4 md:px-0'>
       <div className='flex items-center mb-4'>
         <h2 className='text-2xl grow'>{homeNightMap[date.day()]} Sessions</h2>
         <GeneralLink className={allHomeButtonStyles} href='/sessions'>All Sessions</GeneralLink>
       </div>
-      <div className='flex flex-wrap gap-3 mb-6'>
+      <div className='flex flex-wrap gap-3'>
 
         {Object.entries(sessions).map(([venueId, sessions]) => (
           <div key={venueId} className='mb-4'>

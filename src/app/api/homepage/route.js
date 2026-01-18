@@ -3,7 +3,7 @@ import { getConnection } from '@/lib/database'
 import { getCurrentYear } from '@/app/lib/year'
 import { StatusCodes } from 'http-status-codes'
 import dayjs from 'dayjs'
-import { WeekTypes } from '@/constants/Week'
+import { NonEventTypes, WeekTypes } from '@/constants/Week'
 
 export async function GET () {
   const connection = await getConnection()
@@ -115,21 +115,45 @@ export async function GET () {
     yearId: currentYear.id,
     timeStart: dayjs().startOf('week').unix()
   })
-  let week = null
+  let thisWeek = null
   let weekFixtures = []
   if (weeks.length > 0) {
-    week = weeks[0]
-    if (week.type === WeekTypes.fixture) {
-      [weekFixtures] = await connection.execute(`
+    const theWeek = weeks[0]
+    if (theWeek && theWeek.type === WeekTypes.fixture) {
+      thisWeek = theWeek
+      const [thisWeekFixtures] = await connection.execute(`
             SELECT id
             FROM tennisFixture
             WHERE yearId = :yearId
               AND weekId = :weekId
         `, {
         yearId: currentYear.id,
-        weekId: week.id
+        weekId: thisWeek.id
       })
+      weekFixtures = thisWeekFixtures
     }
+  }
+
+  const typesSql = Object.values(NonEventTypes).join(',')
+
+  // this week
+  const [upcomingEventWeeks] = await connection.execute(`
+      SELECT id,
+              timeStart,
+              type
+      FROM tennisWeek
+      WHERE yearId = :yearId
+        AND timeStart >= :timeStart
+        AND type NOT IN(${typesSql})
+      ORDER BY timeStart
+LIMIT 1;
+  `, {
+    yearId: currentYear.id,
+    timeStart: dayjs().unix()
+  })
+  let upcomingEventWeek = null
+  if (upcomingEventWeeks.length > 0) {
+    upcomingEventWeek = upcomingEventWeeks[0]
   }
 
   connection.release()
@@ -139,13 +163,6 @@ export async function GET () {
     latestPress,
     latestFixtures,
     currentYear: currentYear.name,
-    galleryImages: [
-      // { id: 1, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0857.jpg' },
-      // { id: 2, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0575.jpg' },
-      // { id: 3, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0635.jpg' },
-      // { id: 2, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0575.jpg' },
-      // { id: 3, url: 'https://eastlancstt.org.uk/thumb/championships-2017/GH4R0635.jpg' }
-    ],
     seasonTotals: {
       divisions: totalDivisions,
       teams: totalTeams,
@@ -155,7 +172,8 @@ export async function GET () {
         total: totalFixturesCount
       }
     },
-    week,
+    thisWeek,
+    upcomingEventWeek,
     weekFixtures
   }, { status: StatusCodes.OK })
 }

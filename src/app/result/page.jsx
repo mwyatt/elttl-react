@@ -1,6 +1,7 @@
 import FrontLayout from '@/app/frontLayout'
 import GeneralLink from '@/components/GeneralLink'
 import { fetchJson } from '@/app/lib/fetchWrapper'
+import MainHeading from '@/components/MainHeading'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,7 +10,7 @@ export default async function Page () {
 
   return (
     <FrontLayout maxWidth>
-      <h2 className='text-2xl mb-4'>Results by Season</h2>
+      <MainHeading name='Results by Season' />
       <p>Here are all the seasons past and present.</p>
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mt-8 text-center'>
         {data.map((season) => (

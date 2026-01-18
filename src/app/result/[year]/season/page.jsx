@@ -69,7 +69,7 @@ export default async function Page ({ params }) {
       />
 
       <MainHeading name='Season Overview' />
-      <p className='mb-12'>This is an overview of what is happening in the {year} season:</p>
+      <p className='mb-12'>This is an overview of what is happening each week in the {year} season:</p>
 
       {weeks.length === 0 && (
         <p>No weeks have been configured yet.</p>
