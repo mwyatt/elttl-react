@@ -59,7 +59,6 @@ export default async function FrontLayout ({ visitingYearName, children, paddedC
                   <GeneralLink
                     className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize'
                     href={advertisement.url}
-                    target='_blank' rel='noreferrer'
                   >{advertisement.action}
                   </GeneralLink>
                 )}

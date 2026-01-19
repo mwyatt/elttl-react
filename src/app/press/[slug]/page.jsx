@@ -30,7 +30,7 @@ export default async function Page ({ params }) {
       <div className='max-w-[768px] mx-auto'>
         <Breadcrumbs items={
           [
-            { name: 'Press Releases', href: '/press' },
+            { name: 'News Releases', href: '/press' },
             { name: data.title, href: `/press/${slug}` }
           ]
         }

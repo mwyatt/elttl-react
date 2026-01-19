@@ -2,7 +2,7 @@ import FrontLayout from '@/app/frontLayout'
 import MainHeading from '@/components/MainHeading'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import GeneralLink from '@/components/GeneralLink'
-import { NonEventTypes, WeekTypeLabels, WeekTypes } from '@/constants/Week'
+import { ExactDayWeekTypes, NonEventTypes, WeekTypeLabels, WeekTypes } from '@/constants/Week'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 import classNames from 'classnames'
 import { formatDayWithSuffixOfMonth, isCurrentWeek } from '@/lib/date'
@@ -18,6 +18,7 @@ const Week = ({ yearName, week }) => {
     getWeekDate(week.type, week.timeStart)
   )
   const isEvent = NonEventTypes.includes(week.type) === false
+  const isExactEventDate = ExactDayWeekTypes.includes(week.type)
 
   return (
     <div className={classNames({
@@ -30,7 +31,15 @@ const Week = ({ yearName, week }) => {
       hidden: week.type === WeekTypes.nothing
     })}
     >
-      <p className='p-2 text-center bg-stone-100'>{formattedDate}</p>
+      <p className='p-2 text-center bg-stone-100'>
+        {isExactEventDate === false && (
+          <>
+            <span className='border-b border-dashed border-stone-400 text-stone-400' title='Week Commencing'>w/c</span>
+            {' '}
+          </>
+        )}
+        {formattedDate}
+      </p>
       <div className='p-4 flex flex-col gap-4 flex-grow'>
         <h2 className='text-2xl flex-grow'>
           {isEvent && (
@@ -69,7 +78,7 @@ export default async function Page ({ params }) {
       />
 
       <MainHeading name='Season Overview' />
-      <p className='mb-12'>This is an overview of what is happening in the {year} season:</p>
+      <p className='mb-12'>This is an overview of what is happening each week in the {year} season:</p>
 
       {weeks.length === 0 && (
         <p>No weeks have been configured yet.</p>

@@ -27,12 +27,26 @@ export async function GET () {
     })
   })
 
-  const [advertisementsSecondary] = await connection.query(`
-      SELECT id, title, description, url, action
-      FROM ad
-      WHERE status = 1
-        AND groupKey = 'small-primary'
-  `)
+  const advertisementsSecondary = [
+    {
+      title: 'Get the Handbook',
+      description: 'Download this seasons handbook.',
+      action: 'Download',
+      url: '/handbook-2025-2026.pdf'
+    },
+    {
+      title: 'Fixtures Generated 2025',
+      description: 'The fixtures have been generated for the 2025 season, take a look!',
+      action: 'Season Overview',
+      url: `/result/${currentYear.name}/season`
+    },
+    {
+      title: 'Results Archive',
+      description: 'Your stats, never forgotten! See the previous seasons scores.',
+      action: 'View',
+      url: '/result/'
+    }
+  ]
 
   const commonLinks = {
     prePractice: { name: 'Prepaid Practice Scheme', url: '/prepaid-practice-scheme' },

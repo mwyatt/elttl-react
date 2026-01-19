@@ -44,7 +44,7 @@ export const WeekTypeLabels = {
   [WeekTypes.fred1]: 'Fred Holden 1st Round',
   [WeekTypes.fred2]: 'Fred Holden 2nd Round',
   [WeekTypes.fred3]: 'Fred Holden 3rd Round',
-  [WeekTypes.div]: 'Divisional Handicap Competition',
+  [WeekTypes.div]: 'Divisional Handicap Competitions',
   [WeekTypes.presentation]: 'Presentation Night',
   [WeekTypes.agm]: 'Annual General Meeting',
   [WeekTypes.catchup]: 'Catch-Up Week',
