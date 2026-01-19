@@ -12,7 +12,7 @@ export default function ThisWeek ({ yearName, week, fixtures = [] }) {
       </div>
       <div className='grow flex items-center text-center'>
         {fixtures.length > 0 && (
-          <p className='mt-2 text-2xl'>{fixtures.length} fixture{fixtures.length > 1 ? 's' : ''} are scheduled to be played this week.</p>
+          <p className='mt-2 text-2xl'>{fixtures.length} fixture{fixtures.length > 1 ? 's' : ''} are scheduled to be played this week</p>
         )}
       </div>
       <div className='flex justify-end'>

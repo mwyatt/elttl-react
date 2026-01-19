@@ -33,10 +33,27 @@ export async function GET (request, { params }) {
   const week = weeks[0]
   let fixtures = await getFixturesByWeekId(currentYear.id, id)
 
-  let fredHoldenCupPress = []
+  let relatedPress = []
+  let pressSearchTerm = ''
+
   if (FredHoldenCupWeekTypes.includes(week.type)) {
-    // @todo get weeks value from somewhere
-    fredHoldenCupPress = await getPressByTitleLikeAndPublishedAfter('fred', dayjs().subtract(40, 'weeks'))
+    pressSearchTerm = 'fred'
+  }
+  if (week.type === WeekTypes.div) {
+    pressSearchTerm = 'handicap competition'
+  }
+  if (week.type === WeekTypes.closedCompetition) {
+    pressSearchTerm = 'annual closed'
+  }
+  if (week.type === WeekTypes.presentation) {
+    pressSearchTerm = 'presentation'
+  }
+  if (week.type === WeekTypes.agm) {
+    pressSearchTerm = 'agm'
+  }
+
+  if (pressSearchTerm) {
+    relatedPress = await getPressByTitleLikeAndPublishedAfter(pressSearchTerm, dayjs().subtract(40, 'weeks'))
   }
 
   let unfulfilledFixtures = []
@@ -57,7 +74,7 @@ export async function GET (request, { params }) {
   return NextResponse.json({
     week,
     fixturesByDivisionName,
-    fredHoldenCupPress,
+    relatedPress,
     unfulfilledFixtures
   }, { status: StatusCodes.OK })
 }

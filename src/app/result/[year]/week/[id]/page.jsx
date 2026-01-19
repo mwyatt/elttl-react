@@ -40,7 +40,7 @@ export default async function Page ({ params }) {
   const {
     week,
     fixturesByDivisionName,
-    fredHoldenCupPress,
+    relatedPress,
     unfulfilledFixtures
   } = await fetchJson(`/result/${year}/week/${id}`)
   const weekTypeLabel = getWeekTypeLabel(week.type)
@@ -87,25 +87,7 @@ export default async function Page ({ params }) {
         </>
       )}
       {FredHoldenCupWeekTypes.includes(week.type) && (
-        <>
-          <FredHoldenCupCompetitionContent />
-          {fredHoldenCupPress.length > 0 && (
-            <>
-              <h3 className='text-lg font-semibold mb-3 mt-5'>Related Press</h3>
-              <div className='space-y-4'>
-                {fredHoldenCupPress.map((content, index) => (
-                  <div className='p-4 border-b' key={index}>
-                    <p className='text-sm text-gray-500 mb-2'>
-                      <DatePretty time={content.timePublished} />
-                    </p>
-                    <h2><GeneralLink className={linkStyles.join(' ')} href={`/press/${content.slug}`}>{content.title}</GeneralLink></h2>
-                    <h3 className='mt-2'>{content.author}</h3>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </>
+        <FredHoldenCupCompetitionContent />
       )}
       {week.type === WeekTypes.div && (
         <DivisionalHandicapCompetitionContent />
@@ -153,6 +135,23 @@ export default async function Page ({ params }) {
       )}
       {week.type === WeekTypes.closedCompetition && (
         <AnnualClosedCompetitionContent />
+      )}
+
+      {relatedPress.length > 0 && (
+        <>
+          <h3 className='text-lg font-semibold mb-3 mt-5'>Related News</h3>
+          <div className='space-y-4'>
+            {relatedPress.map((content, index) => (
+              <div className='p-4 border-b' key={index}>
+                <p className='text-sm text-gray-500 mb-2'>
+                  <DatePretty time={content.timePublished} />
+                </p>
+                <h2><GeneralLink className={linkStyles.join(' ')} href={`/press/${content.slug}`}>{content.title}</GeneralLink></h2>
+                <h3 className='mt-2'>{content.author}</h3>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
     </FrontLayout>

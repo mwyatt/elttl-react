@@ -11,10 +11,8 @@ import SessionsToday from '@/components/home/SessionsToday'
 import ImageGallery from '@/components/home/ImageGallery'
 import RelativeTime from '@/components/RelativeTime'
 import ThisWeek from '@/components/home/ThisWeek'
-import { WeekTypeLabels } from '@/constants/Week'
-import { formatDateWithDayAndSuffixOfMonth } from '@/lib/date'
-import { GiTrophyCup } from 'react-icons/gi'
 import Panel from '@/components/home/Panel'
+import UpcomingEventWeek from '@/components/home/UpcomingEventWeek'
 
 export const metadata = {
   title: getMetaTitle(),
@@ -39,21 +37,7 @@ export default async function Page () {
       <div className='sm:p-6 sm:grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
         {upcomingEventWeek && (
           <Panel>
-            <div className='flex flex-col items-center justify-center gap-6 h-full'>
-              <div className='grow flex gap-4'>
-                <div>
-                  <GiTrophyCup className='inline mr-1 mb-1 fill-primary-500' size={120} />
-                </div>
-                <div>
-                  <h1 className='text-3xl font-bold mb-4'>{WeekTypeLabels[upcomingEventWeek.type]}</h1>
-                  <p className='text-xl grow'>{formatDateWithDayAndSuffixOfMonth(dayjs.unix(upcomingEventWeek.timeStart))}</p>
-                </div>
-              </div>
-              <div className='w-full flex gap-4 justify-end'>
-                <GeneralLink className='text-stone-500 border border-stone-400 px-2 py-1 rounded text-lg flex items-center' href={`/result/${currentYear}/season`}>Season Overview</GeneralLink>
-                <GeneralLink href={`/result/${currentYear}/week/${upcomingEventWeek.id}`} className='bg-primary-500 rounded px-3 py-2 text-white font-bold capitalize transition-colors text-lg'>More Info</GeneralLink>
-              </div>
-            </div>
+            <UpcomingEventWeek yearName={currentYear} week={upcomingEventWeek} />
           </Panel>
         )}
         <Panel>
