@@ -34,3 +34,19 @@ export async function playerGetBySlugs (connection, yearId, slugs) {
 
   return players
 }
+
+export async function playerGetAll (connection, yearId) {
+  const [players] = await connection.execute(`
+      SELECT
+          id,
+          tp.rank,
+          CONCAT(tp.nameFirst, ' ', tp.nameLast) AS name
+      FROM tennisPlayer tp
+      WHERE yearId = :yearId
+      ORDER BY tp.nameLast ASC
+  `, {
+    yearId
+  })
+
+  return players
+}
