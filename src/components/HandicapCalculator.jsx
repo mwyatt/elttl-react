@@ -1,9 +1,10 @@
 'use client'
 
-import CreatableSelect from 'react-select/creatable'
+import dynamic from 'next/dynamic'
 import { SIDE_LEFT, SIDE_RIGHT } from '@/constants/encounter'
 import { getHandicap, getStartValue } from '@/constants/Handicap'
 import { useMemo, useState } from 'react'
+const CreatableSelect = dynamic(() => import('react-select/creatable'), { ssr: false })
 
 export default function HandicapCalculator ({ players }) {
   const [chosenPlayers, setChosenPlayers] = useState({})
@@ -33,6 +34,7 @@ export default function HandicapCalculator ({ players }) {
     return {
       [SIDE_LEFT]: handicapLeft,
       [SIDE_RIGHT]: handicapRight,
+      handicapDiff,
       disadvantagedPlayer,
       startValue
     }
@@ -46,39 +48,52 @@ export default function HandicapCalculator ({ players }) {
 
   return (
     <>
-      <div className='sm:flex gap-6 mb-4 mt-8'>
-        <div className='grow'>
+      <div className='flex gap-6 mb-4 mt-8 flex-col sm:flex-row'>
+        <div className='basis-1/2'>
           <CreatableSelect
+            isValidNewOption={() => false}
             className='text-lg'
             options={options}
             onChange={option => handleChangePlayer(SIDE_LEFT, option.value)}
           />
           {handicapInformation && (
-            <div className='text-lg p-4 text-center'>
+            <div className='text-lg pt-4 text-center'>
               <p>Handicap: {handicapInformation[SIDE_LEFT]}</p>
             </div>
           )}
         </div>
-        <div className='grow'>
-
+        <div className='basis-1/2'>
           <CreatableSelect
+            isValidNewOption={() => false}
             className='text-lg'
             options={options}
             onChange={option => handleChangePlayer(SIDE_RIGHT, option.value)}
           />
           {handicapInformation && (
-            <div className='text-lg p-4 text-center'>
+            <div className='text-lg pt-4 text-center'>
               <p>Handicap: {handicapInformation[SIDE_RIGHT]}</p>
             </div>
           )}
         </div>
       </div>
       {handicapInformation && (
-        <div className='mt-4 p-4 border border-gray-300 rounded bg-gray-50 text-2xl text-center'>
-          <p>
-            <strong>{handicapInformation.disadvantagedPlayer.name}</strong> starts with <strong>{handicapInformation.startValue}</strong>
-          </p>
-        </div>
+        <>
+          <div className='p-4 mt48 border-t text-lg text-center'>
+            Difference: {handicapInformation.handicapDiff}
+          </div>
+          <div className='p-4 mt-2 border rounded bg-primary-500 text-white text-2xl text-center'>
+            {handicapInformation.startValue > 0 && (
+              <p>
+                <strong>{handicapInformation.disadvantagedPlayer.name}</strong> starts with <strong className='border-b-white border-b-2'>{handicapInformation.startValue}</strong>
+              </p>
+            )}
+            {handicapInformation.startValue === 0 && (
+              <p>
+                <strong>Both players</strong> start on <strong>0</strong>
+              </p>
+            )}
+          </div>
+        </>
       )}
     </>
   )
