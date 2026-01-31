@@ -93,6 +93,7 @@ export async function GET () {
       { area: 2, ...commonLinks.gdpr },
       { area: 2, ...commonLinks.diciplineProcedure },
       { area: 2, ...commonLinks.safeguardingPolicy },
+      { area: 2, name: 'Handicap Calculator', url: '/handicap-calculator' },
       { area: 2, ...commonLinks.contactUs }
     ],
     menuPrimary: [

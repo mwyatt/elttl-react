@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
 import Environments from '@/constants/Environments'
 
-export async function GET ({ request }) {
+export async function GET (request) {
   if (process.env.NEXT_PUBLIC_ENVIRONMENT === Environments.LIVE) {
     return NextResponse.json(
       'This endpoint is not available in the live environment',
