@@ -92,7 +92,7 @@ export default async function Page () {
                 <td className='p-2 md:p-4'>
                   {member.role}
                 </td>
-                <td className='p-2 md:p-4 hidden sm:table-cell'>
+                <td className='p-2 md:p-4'>
                   {member.player && (
                     member.player.name
                   )}
@@ -119,7 +119,7 @@ export default async function Page () {
           <tbody>
             {otherCommitteeMembers.map((member, index) => (
               <tr key={index} className='border-t border-dashed hover:bg-gray-100'>
-                <td className='p-2 md:p-4 hidden sm:table-cell'>
+                <td className='p-2 md:p-4'>
                   {member.player && (
                     member.player.name
                   )}
