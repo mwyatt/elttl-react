@@ -20,7 +20,18 @@ export async function GET () {
     'robin-willoughby',
     'harry-rawcliffe',
     'fred-wade',
-    'adam-hek'
+    'adam-hek',
+    'ged-simpson',
+    'martin-ormsby',
+    'bernard-milnes',
+    'mike-turner',
+    'catherine-lawson',
+    'martin-wyatt',
+    'grant-saggers',
+    'colin-hooper',
+    'shamir-bose',
+    'chris-freely',
+    'jason-pilling'
   ])
 
   connection.release()
