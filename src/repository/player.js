@@ -24,7 +24,9 @@ export async function playerGetBySlugs (connection, yearId, slugs) {
       SELECT
           id,
           concat(nameFirst, ' ', nameLast) AS name,
-          slug
+          slug,
+          phoneLandline,
+          phoneMobile
       FROM tennisPlayer tp
       WHERE yearId = :yearId
       and slug in(${playerSlugsSql})

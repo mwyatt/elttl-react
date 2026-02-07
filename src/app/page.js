@@ -40,9 +40,11 @@ export default async function Page () {
             <UpcomingEventWeek yearName={currentYear} week={upcomingEventWeek} />
           </Panel>
         )}
-        <Panel>
-          <ThisWeek yearName={currentYear} week={thisWeek} fixtures={weekFixtures} />
-        </Panel>
+        {thisWeek && (
+          <Panel>
+            <ThisWeek yearName={currentYear} week={thisWeek} fixtures={weekFixtures} />
+          </Panel>
+        )}
         <Panel rowSpan={2}>
           <div className='flex items-center'>
             <h2 className='text-2xl grow'>News Releases</h2>

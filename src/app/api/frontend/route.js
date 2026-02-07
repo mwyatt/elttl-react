@@ -83,6 +83,7 @@ export async function GET () {
     currentYearName: currentYear.name,
     footLinks: [
       { area: 1, name: 'About Us', url: '/about-us' },
+      { area: 1, name: 'Committee Members', url: '/committee-members' },
       { area: 1, name: 'Coaching & Sessions', url: '/sessions' },
       { area: 1, ...commonLinks.prePractice },
       { area: 1, ...commonLinks.competitions },
