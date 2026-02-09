@@ -13,14 +13,14 @@ export default function StyledContent ({ html }) {
       if (node.name === 'h3' || node.name === 'h1') {
         node.attribs = {
           ...node.attribs,
-          class: 'text-2xl font-bold mb-3'
+          class: 'text-2xl mb-3'
         }
       }
 
       if (node.name === 'h4' || node.name === 'h2') {
         node.attribs = {
           ...node.attribs,
-          class: 'text-xl font-bold mb-2'
+          class: 'text-xl mb-2'
         }
       }
 
