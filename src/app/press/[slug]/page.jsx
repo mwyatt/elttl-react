@@ -4,6 +4,7 @@ import DatePretty from '@/components/DatePretty'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
+import StyledContent from '@/components/StyledContent'
 
 export async function generateMetadata (
   { params }
@@ -30,7 +31,7 @@ export default async function Page ({ params }) {
       <div className='max-w-[768px] mx-auto'>
         <Breadcrumbs items={
           [
-            { name: 'News Releases', href: '/press' },
+            { name: 'News Updates', href: '/press' },
             { name: data.title, href: `/press/${slug}` }
           ]
         }
@@ -42,7 +43,7 @@ export default async function Page ({ params }) {
             ' by ' + data.author
           )}
         </p>
-        <div className='text-base/7 text-stone-600' dangerouslySetInnerHTML={{ __html: data.html }} />
+        <StyledContent html={data.html} />
       </div>
     </FrontLayout>
   )

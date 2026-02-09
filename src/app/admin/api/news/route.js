@@ -18,7 +18,7 @@ export async function GET () {
       userId
       FROM content c
       order by c.timePublished DESC
-    limit 30
+    limit 10
   `, {
     yearId: currentYear.id
   })

@@ -1,19 +1,24 @@
 import { adminApiFetch } from '@/constants/url'
-import PlayerForm from '@/app/admin/player/[id]/PlayerForm'
 import { cookies } from 'next/headers'
-import Editor from '@/app/admin/news/[id]/Editor'
-
+import NewsForm from '@/app/admin/news/[id]/NewsForm'
+import { decrypt } from '@/app/lib/session'
+import { getUserById } from '@/repository/user'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page ({ params }) {
   const { id } = (await params)
 
-  // const response = await adminApiFetch(`/player/${id}`)
-  // const { player, teams } = await response.json()
+  const response = await adminApiFetch(`/news/${id}`)
+  const { newsArticle } = await response.json()
 
-  // const cookiePromise = await cookies()
-  // const cookie = cookiePromise.get('session')?.value
+  const cookiePromise = await cookies()
+  const cookie = cookiePromise.get('session')?.value
 
-  return <Editor />
+  const session = await decrypt(cookie)
+  const user = await getUserById(session?.userId)
+
+  return (
+    <NewsForm cookie={cookie} newsArticle={newsArticle} user={user} />
+  )
 }

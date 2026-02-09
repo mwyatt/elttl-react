@@ -1,8 +1,5 @@
 /* Base editor wrapper */
 .tiptap-editor {
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 16px;
   min-height: 200px;
   background: #fff;
 }
@@ -10,13 +7,6 @@
 /* Remove default outline */
 .tiptap-editor:focus {
   outline: none;
-}
-
-/* Headings */
-.tiptap-editor h1 {
-  font-size: 1.8rem;
-  margin: 1rem 0 0.5rem;
-  font-weight: 600;
 }
 
 .tiptap-editor h2 {
@@ -98,4 +88,25 @@
   height: auto;
   border-radius: 4px;
   margin: 0.5rem 0;
+}
+
+.tiptap-toolbar {
+  display: flex;
+  gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tiptap-toolbar span {
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.tiptap-editor-content > div {
+    min-height: 500px;
+   outline: none; /* optional */
+    border-radius: 6px;
+  border: 2px solid #ddd;
+  padding: 16px;
 }

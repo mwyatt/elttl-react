@@ -9,8 +9,8 @@ import { getMetaTitle } from '@/constants/MetaData'
 import { fetchJson } from '@/app/lib/fetchWrapper'
 
 export const metadata = {
-  title: getMetaTitle('News Releases'),
-  description: 'Latest news releases from the league, including news and updates about teams, fixtures, and events.'
+  title: getMetaTitle('News Updates'),
+  description: 'Latest news updates from the league, including news and updates about teams, fixtures, and events.'
 }
 
 export const dynamic = 'force-dynamic'
@@ -35,11 +35,11 @@ export default async function Page ({ searchParams }) {
       <div className='max-w-[768px] mx-auto'>
         <Breadcrumbs items={
           [
-            { name: 'News Releases' }
+            { name: 'News Updates' }
           ]
         }
         />
-        <MainHeading name='News Releases' />
+        <MainHeading name='News Updates' />
         <div className='flex justify-between my-6'>
           <GeneralLink className='flex items-center border border-primary-500 text-primary-500 py-1 pr-3 pl-2 rounded' href={`/press?page=${prevPage}`}>
             <BiCaretLeft size={21} className='mr-1' />

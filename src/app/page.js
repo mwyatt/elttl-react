@@ -47,7 +47,7 @@ export default async function Page () {
         )}
         <Panel rowSpan={2}>
           <div className='flex items-center'>
-            <h2 className='text-2xl grow'>News Releases</h2>
+            <h2 className='text-2xl grow'>News Updates</h2>
             <div>
               <GeneralLink className={allHomeButtonStyles} href='/press/'>All News</GeneralLink>
             </div>

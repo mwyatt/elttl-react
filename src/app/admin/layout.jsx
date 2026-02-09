@@ -16,6 +16,7 @@ export default async function Layout ({ children }) {
         </div>
         <div className='flex-1 flex gap-8 m-6'>
           <GeneralLink className='text-primary-500 border-b' href='/admin'>Dash</GeneralLink>
+          <GeneralLink className='text-primary-500 border-b' href='/admin/news'>News</GeneralLink>
           <GeneralLink className='text-primary-500 border-b' href='/admin/player'>Players</GeneralLink>
           <GeneralLink className='text-primary-500 border-b' href='/admin/fixture'>Fixtures</GeneralLink>
           {/* <GeneralLink className='text-primary-500 border-b' href='/admin/week'>Weeks</GeneralLink> */}
