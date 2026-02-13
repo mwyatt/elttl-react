@@ -18,3 +18,19 @@ export async function getPressByTitleLikeAndPublishedAfter (titleFragment, dateP
 
   return contents
 }
+
+export async function getPressBySlugLike (slug) {
+  const connection = await getConnection()
+
+  const [contents] = await connection.execute(`
+  select * from content 
+           where type = 'press'
+             and slug like :slug
+  `, {
+    slug: `%${slug}%`
+  })
+
+  connection.release()
+
+  return contents
+}
