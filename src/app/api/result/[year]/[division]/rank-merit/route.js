@@ -91,8 +91,7 @@ export async function GET (request, { params }) {
           }
 
           // 3 being total possible games to win, rounded to 2 decimal places
-          // @todo 40 is the division metric but why is this decided
-          const lossRankChangeChunk = Math.round((lossRankChange / 6) * 100) / 100
+          const lossRankChangeChunk = Math.round((lossRankChange / 3) * 100) / 100
 
           // Loss rank change could still be 0
           if (lossRankChangeChunk > 0) {

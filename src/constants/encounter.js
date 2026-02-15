@@ -31,14 +31,14 @@ export const rankChangeMap = {
 
 export const rankMeritChangeMap = {
   24: [[10, null], [10, null]],
-  49: [[9.5, null], [10.5, null]],
-  99: [[9.5, null], [10.5, null]],
-  149: [[9, null], [11, null]],
-  199: [[9, null], [11, null]],
-  299: [[8.5, null], [11.5, null]],
-  399: [[8.5, null], [11.5, null]],
-  499: [[8, null], [12, null]],
-  99999: [[8, null], [12, null]]
+  49: [[9, null], [11, null]],
+  99: [[8, null], [12, null]],
+  149: [[7, null], [13, null]],
+  199: [[6, null], [14, null]],
+  299: [[5, null], [15, null]],
+  399: [[4, null], [16, null]],
+  499: [[3, null], [17, null]],
+  99999: [[2, null], [18, null]]
 }
 
 // export const rankMeritChangeMap = {
