@@ -29,6 +29,41 @@ export const rankChangeMap = {
   99999: [[0, -0], [75, -50]]
 }
 
+export const rankMeritChangeMap = {
+  24: [[10, null], [10, null]],
+  49: [[9.5, null], [10.5, null]],
+  99: [[9.5, null], [10.5, null]],
+  149: [[9, null], [11, null]],
+  199: [[9, null], [11, null]],
+  299: [[8.5, null], [11.5, null]],
+  399: [[8.5, null], [11.5, null]],
+  499: [[8, null], [12, null]],
+  99999: [[8, null], [12, null]]
+}
+
+// export const rankMeritChangeMap = {
+//   24: [[8, null], [8, null]],
+//   49: [[7, null], [9, null]],
+//   99: [[6, null], [10, null]],
+//   149: [[5, null], [11, null]],
+//   199: [[4, null], [12, null]],
+//   299: [[3, null], [13, null]],
+//   399: [[2, null], [14, null]],
+//   499: [[1, null], [15, null]],
+//   99999: [[0, null], [16, null]]
+// }
+//
+// @todo
+export const rankMeritDescriptions = {
+  2: 'Beat a much lower ranked player',
+  6: 'Beat a lower ranked player',
+  12: 'Beat a player of similar rank',
+  14: 'Beat a stronger player',
+  21: 'Beat a much stronger player',
+  45: 'Beat a really strong player'
+//   otherwise 'picked up points'
+}
+
 export function getSides () {
   return [SIDE_LEFT, SIDE_RIGHT]
 }
