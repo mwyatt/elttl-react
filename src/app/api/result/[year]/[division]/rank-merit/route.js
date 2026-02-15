@@ -150,7 +150,6 @@ export async function GET (request, { params }) {
   //   return {playerName: pm.player.name, totalMerit: pm.totalMerit}
   // })
 
-
   return NextResponse.json({
     // playerNames,
     stats: sortedPlayerMeritsWithTeams
