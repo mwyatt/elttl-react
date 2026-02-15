@@ -19,7 +19,7 @@ export default function Header ({ appName, menuPrimary }) {
         return <BiBook className='mt-1 mr-2' size={20} />
       case 'Fixtures':
         return <BiCode className='mt-1 mr-2' size={20} />
-      case 'Press Releases':
+      case 'News Updates':
         return <BiNews className='mt-1 mr-2' size={20} />
       case 'Competitions':
         return <BiTrophy className='mt-1 mr-2' size={20} />

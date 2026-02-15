@@ -4,7 +4,10 @@ export async function playerGetMany (connection, yearId, playerIds) {
   const [players] = await connection.execute(`
       SELECT
           id,
-          tp.rank
+          concat(nameFirst, ' ', nameLast) AS name,
+          slug,
+          tp.rank,
+          teamId
       FROM tennisPlayer tp
       WHERE yearId = :yearId
       and id in(${playerIdsSql})

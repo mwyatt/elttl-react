@@ -104,7 +104,7 @@ export async function GET () {
         children: [
           { name: 'About Us', url: '/about-us' },
           { name: 'Download Handbook', url: '/handbook-2025-2026.pdf', target: '_blank' },
-          { name: 'Press Releases', url: '/press' },
+          { name: 'News Updates', url: '/press' },
           commonLinks.competitions,
           { name: 'Contact us', url: '/contact-us' }
         ]

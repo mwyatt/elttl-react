@@ -97,3 +97,20 @@ export function getEncounterMerit (encounters) {
 
   return stats
 }
+
+export function getOriginalRankChangeRowKeyFromRankChanges (changeLeft, changeRight) {
+  for (const [differenceThreshold, modifierGroups] of Object.entries(rankChangeMap)) {
+    for (const modifierGroup of modifierGroups) {
+      if (
+        modifierGroup[0] === changeLeft ||
+        modifierGroup[1] === changeRight ||
+        modifierGroup[0] === changeRight ||
+        modifierGroup[1] === changeLeft
+      ) {
+        return differenceThreshold
+      }
+    }
+  }
+
+  return null
+}
