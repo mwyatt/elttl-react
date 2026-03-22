@@ -1,5 +1,3 @@
-
-
 /** @type { import('@storybook/nextjs-vite').StorybookConfig } */
 const config = {
   "stories": [
