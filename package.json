@@ -13,7 +13,9 @@
     "test": "jest --detectOpenHandles",
     "test:watch": "jest --watch --detectOpenHandles",
     "checks": "npm run standard:fix && npm run lint:fix && npm run test",
-    "fix": "npm run standard:fix && npm run lint:fix"
+    "fix": "npm run standard:fix && npm run lint:fix",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -54,6 +56,19 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "standard": "^17.1.2",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "storybook": "^10.2.8",
+    "@storybook/nextjs-vite": "^10.2.8",
+    "@chromatic-com/storybook": "^5.0.1",
+    "@storybook/addon-vitest": "^10.2.8",
+    "@storybook/addon-a11y": "^10.2.8",
+    "@storybook/addon-docs": "^10.2.8",
+    "@storybook/addon-onboarding": "^10.2.8",
+    "vite": "^7.3.1",
+    "eslint-plugin-storybook": "^10.2.8",
+    "vitest": "^4.0.18",
+    "playwright": "^1.58.2",
+    "@vitest/browser-playwright": "^4.0.18",
+    "@vitest/coverage-v8": "^4.0.18"
   }
 }
