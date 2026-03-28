@@ -71,12 +71,15 @@ export async function GET (request, { params }) {
     }
   }
 
-  // sort stats by points
+  // sort stats by points, then wins, then fewest games played
   stats = Object.values(stats).sort((a, b) => {
     if (a.points === b.points) {
-      return a.played - b.played
+      if (a.won === b.won) {
+        return a.played - b.played // optional: fewest games played
+      }
+      return b.won - a.won // most wins
     }
-    return b.points - a.points
+    return b.points - a.points // most points
   })
 
   connection.release()
