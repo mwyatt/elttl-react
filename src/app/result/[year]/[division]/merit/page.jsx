@@ -72,7 +72,7 @@ export default async function Page ({ params }) {
               <td className='p-2 md:p-4 text-center'>{stat.player.rank}</td>
               <td className='p-2 md:p-4 text-center'>{stat.won}</td>
               <td className='p-2 md:p-4 text-center'>{stat.played}</td>
-              <td className='p-2 md:p-4 text-center'>{Math.floor(stat.average * 100)}</td>
+              <td className='p-2 md:p-4 text-center'>{Math.round(stat.average * 100)}</td>
               <td className='p-2 md:p-4 text-center'>{stat.encounter}</td>
             </tr>
           ))}
